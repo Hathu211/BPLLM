@@ -1,0 +1,29 @@
+# Python Bytecode & Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Data & Models Cache (Tránh push weights/data lớn)
+data/processed/*
+!data/processed/.gitkeep
+*.bin
+*.safetensors
+*.pth
+*.onnx
+checkpoints/
+
+# Environment Variables
+.env
+
+# Jupyter Outputs
+.ipynb_checkpoints/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
