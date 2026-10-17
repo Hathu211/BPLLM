@@ -1,0 +1,44 @@
+Structural Process Information (Activities and Events)
+The Food Delivery process defines the following activities, one per line:
+Customer Order Arrived
+Recover Client Info
+Create an account
+Check Payment
+Check CC and Payment
+Register the order
+Select rider and create work proposal
+Send work proposal
+The rider accepted the order
+The rider rejected the order
+Estimated Arrival Time
+Send confirmation to rider
+Send to customer the waiting time
+Send order collected notification
+Receive receipt confirmation from client
+Pay Rider
+Receive Customer Satisfaction
+Order Completed
+
+Behavioral Process Information (Sequence Flows)
+The Food Delivery process defines the following transitions:
+The process starts from "Customer Order Arrived".
+The process ends with "Order Completed".
+From "Customer Order Arrived", the process continues with "Recover Client Info" or "Create an account".
+From "Create an account", the process continues with "Check CC and Payment".
+From "Recover Client Info", the process continues with "Check Payment".
+From "Check CC and Payment", the process continues with "Register the order".
+From "Check Payment", the process continues with "Register the order".
+From "Register the order", the process continues with "Select rider and create work proposal".
+From "Select rider and create work proposal", the process continues with "Send work proposal".
+From "Send work proposal", the process branches based on order acceptance:
+- If accepted, the process continues with "The rider accepted the order".
+- If rejected, the process loops back to "Select rider and create work proposal".
+From "The rider accepted the order", the process proceeds in parallel with:
+- "Estimated Arrival Time"
+- "Send confirmation to rider"
+From both parallel branches, the process converges and continues with "Send to customer the waiting time".
+From "Send to customer the waiting time", the process continues with "Send order collected notification".
+From "Send order collected notification", the process continues with "Receive receipt confirmation from client".
+From "Receive receipt confirmation from client", the process continues with "Pay Rider".
+From "Pay Rider", the process continues with "Receive Customer Satisfaction".
+From "Receive Customer Satisfaction", the process ends with "Order Completed".
