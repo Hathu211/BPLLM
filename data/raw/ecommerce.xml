@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_EC" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Kimi" exporterVersion="1.0">
+  <bpmn:process id="Process_Ecommerce" name="E-commerce" isExecutable="false">
+    <bpmn:startEvent id="ec_start" name="New order received via e-commerce platform"><bpmn:outgoing>e1</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:task id="ec_verify" name="Verify customer's account status"><bpmn:incoming>e1</bpmn:incoming><bpmn:outgoing>e2</bpmn:outgoing></bpmn:task>
+    <bpmn:exclusiveGateway id="ec_gw_account" name="Account exists?" default="e3_no"><bpmn:incoming>e2</bpmn:incoming><bpmn:outgoing>e3_no</bpmn:outgoing><bpmn:outgoing>e3_yes</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:task id="ec_create_account" name="Generate account"><bpmn:incoming>e3_no</bpmn:incoming><bpmn:outgoing>e4</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="ec_store_payment" name="Store payment methods"><bpmn:incoming>e3_yes</bpmn:incoming><bpmn:incoming>e4</bpmn:incoming><bpmn:outgoing>e5</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="ec_record_order" name="Record new order"><bpmn:incoming>e5</bpmn:incoming><bpmn:outgoing>e6</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="ec_verify_courier" name="Verify courier availability"><bpmn:incoming>e6</bpmn:incoming><bpmn:outgoing>e7</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="ec_select_courier" name="Select optimal courier"><bpmn:incoming>e7</bpmn:incoming><bpmn:outgoing>e8</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="ec_assign_package" name="Assign package to courier"><bpmn:incoming>e8</bpmn:incoming><bpmn:outgoing>e9</bpmn:outgoing></bpmn:task>
+    <bpmn:intermediateCatchEvent id="ec_courier_confirm" name="Courier confirms assignment"><bpmn:incoming>e9</bpmn:incoming><bpmn:outgoing>e10</bpmn:outgoing></bpmn:intermediateCatchEvent>
+    <bpmn:task id="ec_delivery_date" name="Calculate and communicate delivery date"><bpmn:incoming>e10</bpmn:incoming><bpmn:outgoing>e11</bpmn:outgoing></bpmn:task>
+    <bpmn:intermediateCatchEvent id="ec_courier_retrieve" name="Courier retrieves package"><bpmn:incoming>e11</bpmn:incoming><bpmn:outgoing>e12</bpmn:outgoing></bpmn:intermediateCatchEvent>
+    <bpmn:task id="ec_send_confirm" name="Send confirmation to customer"><bpmn:incoming>e12</bpmn:incoming><bpmn:outgoing>e13</bpmn:outgoing></bpmn:task>
+    <bpmn:intermediateCatchEvent id="ec_customer_receipt" name="Customer confirms order receipt"><bpmn:incoming>e13</bpmn:incoming><bpmn:outgoing>e14</bpmn:outgoing></bpmn:intermediateCatchEvent>
+    <bpmn:task id="ec_questionnaire" name="Fill and return satisfaction questionnaire"><bpmn:incoming>e14</bpmn:incoming><bpmn:outgoing>e15</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="ec_pay_courier" name="Pay courier"><bpmn:incoming>e15</bpmn:incoming><bpmn:outgoing>e17</bpmn:outgoing></bpmn:task>
+    <bpmn:endEvent id="ec_end" name="Process complete"><bpmn:incoming>e17</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="e1" sourceRef="ec_start" targetRef="ec_verify"/>
+    <bpmn:sequenceFlow id="e2" sourceRef="ec_verify" targetRef="ec_gw_account"/>
+    <bpmn:sequenceFlow id="e3_no" sourceRef="ec_gw_account" targetRef="ec_create_account" name="No"/>
+    <bpmn:sequenceFlow id="e3_yes" sourceRef="ec_gw_account" targetRef="ec_store_payment" name="Yes"/>
+    <bpmn:sequenceFlow id="e4" sourceRef="ec_create_account" targetRef="ec_store_payment"/>
+    <bpmn:sequenceFlow id="e5" sourceRef="ec_store_payment" targetRef="ec_record_order"/>
+    <bpmn:sequenceFlow id="e6" sourceRef="ec_record_order" targetRef="ec_verify_courier"/>
+    <bpmn:sequenceFlow id="e7" sourceRef="ec_verify_courier" targetRef="ec_select_courier"/>
+    <bpmn:sequenceFlow id="e8" sourceRef="ec_select_courier" targetRef="ec_assign_package"/>
+    <bpmn:sequenceFlow id="e9" sourceRef="ec_assign_package" targetRef="ec_courier_confirm"/>
+    <bpmn:sequenceFlow id="e10" sourceRef="ec_courier_confirm" targetRef="ec_delivery_date"/>
+    <bpmn:sequenceFlow id="e11" sourceRef="ec_delivery_date" targetRef="ec_courier_retrieve"/>
+    <bpmn:sequenceFlow id="e12" sourceRef="ec_courier_retrieve" targetRef="ec_send_confirm"/>
+    <bpmn:sequenceFlow id="e13" sourceRef="ec_send_confirm" targetRef="ec_customer_receipt"/>
+    <bpmn:sequenceFlow id="e14" sourceRef="ec_customer_receipt" targetRef="ec_questionnaire"/>
+    <bpmn:sequenceFlow id="e15" sourceRef="ec_questionnaire" targetRef="ec_pay_courier"/>
+    <bpmn:sequenceFlow id="e17" sourceRef="ec_pay_courier" targetRef="ec_end"/>
+  </bpmn:process>
+</bpmn:definitions>
