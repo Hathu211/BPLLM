@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Customer Order Arrived' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 2,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Recover Client Info' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 3,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Create an account' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 4,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Check Payment' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 5,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Check CC and Payment' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 6,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Register the Order' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 7,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Select Rider and Create Work Proposal' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 8,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Send work proposal' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 9,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'The rider accepted the order' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 10,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Send confirmation to rider' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 11,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Estimated Arrival Time' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 12,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Send to customer the waiting time' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 13,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Pay Rider' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 14,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Receive Customer Satisfaction' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 15,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Order Completed' trong quy trình không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 16,
+    "type": "Structural",
+    "question": "Sự kiện bắt đầu của quy trình có tên là 'Customer Order' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 17,
+    "type": "Structural",
+    "question": "Quy trình có bao gồm cổng gateway loại trừ (exclusive gateway) kiểm tra xem khách hàng đã đăng ký chưa ('Is the customer registered?') không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 18,
+    "type": "Structural",
+    "question": "Quy trình có bao gồm cổng gateway kiểm tra xem đơn hàng có được chấp nhận không ('Has the order been accepted?') không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 19,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Cancel Order' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 20,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Select Courier' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 21,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Refund Customer' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 22,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Approve Expense Report' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 23,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Fill satisfaction questionnaire' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 24,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Check Courier Availability' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 25,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Update Restaurant Menu' trong quy trình không?",
+    "answer": "No"
+  },
+  {
+    "id": 26,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Call Customer Support' trong quy trình không?",
+    "answer": "No"
+  },
+  {
+    "id": 27,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Return Package' trong quy trình không?",
+    "answer": "No"
+  },
+  {
+    "id": 28,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Reject Payment' trong quy trình không?",
+    "answer": "No"
+  },
+  {
+    "id": 29,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Deliver to Post Office' trong quy trình không?",
+    "answer": "No"
+  },
+  {
+    "id": 30,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Transfer Amount to Bank Account' trong quy trình không?",
+    "answer": "No"
+  },
+  {
+    "id": 31,
+    "type": "Structural",
+    "question": "Có hoạt động 'Customer Order Arrived' là một phần của quy trình E-commerce thay vì Food Delivery phải không?",
+    "answer": "No"
+  },
+  {
+    "id": 32,
+    "type": "Structural",
+    "question": "Có hoạt động 'Select Rider and Create Work Proposal' nằm trong nhóm quy trình Reimbursement không?",
+    "answer": "No"
+  },
+  {
+    "id": 33,
+    "type": "Structural",
+    "question": "Có hoạt động 'Review the amount' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 34,
+    "type": "Structural",
+    "question": "Quy trình Food Delivery có hoạt động 'Submit to manager' không?",
+    "answer": "No"
+  },
+  {
+    "id": 35,
+    "type": "Structural",
+    "question": "Có tồn tại cổng gateway 'Is the amount below threshold?' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 36,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Calculate delivery date' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 37,
+    "type": "Structural",
+    "question": "Quy trình có bao gồm sự kiện kết thúc với thông điệp 'Send letter of refusal' không?",
+    "answer": "No"
+  },
+  {
+    "id": 38,
+    "type": "Structural",
+    "question": "Có tồn tại hoạt động 'Validate job offer' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 39,
+    "type": "Structural",
+    "question": "Có hoạt động 'Plan interview' trong hệ thống Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 40,
+    "type": "Structural",
+    "question": "Có hoạt động 'Assign contact partner' trong hệ thống Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 41,
+    "type": "Structural",
+    "question": "Quy trình có chứa một event sub-process tên là 'Withdrawal by applicant' không?",
+    "answer": "No"
+  },
+  {
+    "id": 42,
+    "type": "Structural",
+    "question": "Quy trình có sự kiện kết thúc (End event) tên là 'Order Completed' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 43,
+    "type": "Structural",
+    "question": "Quy trình có hoạt động 'Pay Rider' là một trong những bước cuối cùng không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 44,
+    "type": "Structural",
+    "question": "Có cổng gateway loại trừ nào tên là 'Gateway_03ncbpd' trong tài liệu BPMN mẫu không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 45,
+    "type": "Structural",
+    "question": "Có hoạt động với định danh ID 'Activity_074nbz9' tên là 'Register the order' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 46,
+    "type": "Structural",
+    "question": "Có hoạt động với định danh ID 'Activity_1r7emvp' tên là 'Send work proposal' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 47,
+    "type": "Structural",
+    "question": "Có hoạt động với định danh ID 'Activity_02rjtb4' tên là 'Send confirmation to rider' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 48,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Create account for employee' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 49,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Record the new order' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 50,
+    "type": "Structural",
+    "question": "Có hoạt động nào có tên là 'Check document' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 51,
+    "type": "Behavioral",
+    "question": "Quy trình có bắt đầu từ 'Customer Order Arrived' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 52,
+    "type": "Behavioral",
+    "question": "Quy trình có kết thúc bằng 'Order Completed' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 53,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra (outgoing sequence flow) nào từ 'Create an account' đến 'Check credit card and the payment' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 54,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Recover Client Info' đến 'Check Payment' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 55,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Select Rider and Create Work Proposal' đến 'Send work proposal' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 56,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Estimated Arrival Time' đến 'Send to customer the waiting time' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 57,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Customer Order' đến 'Recover Client Info' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 58,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Customer Order' đến 'Create an account' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 59,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Check Payment' đến 'Register the order' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 60,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Check CC and Payment' đến 'Register the order' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 61,
+    "type": "Behavioral",
+    "question": "Hoạt động 'Register the order' có xảy ra trước hoạt động 'Select Rider and Create Work Proposal' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 62,
+    "type": "Behavioral",
+    "question": "Luồng 'Flow_0agx772' có phải là luồng đầu ra của hoạt động 'Register the order' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 63,
+    "type": "Behavioral",
+    "question": "Hoạt động 'Send work proposal' có diễn ra sau 'Select rider and create work proposal' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 64,
+    "type": "Behavioral",
+    "question": "Có luồng nối trực tiếp từ cổng gateway 'Has the order been accepted?' tới hoạt động 'The rider accepted the order' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 65,
+    "type": "Behavioral",
+    "question": "Có luồng nối trực tiếp từ 'The rider accepted the order' tới 'Send confirmation to rider' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 66,
+    "type": "Behavioral",
+    "question": "Các hoạt động 'create an account' và 'recover client info' có bao giờ xảy ra đồng thời cùng lúc không?",
+    "answer": "No"
+  },
+  {
+    "id": 67,
+    "type": "Behavioral",
+    "question": "Các hoạt động 'check payment' và 'check credit card and the payment' có thể được thực thi cùng lúc không?",
+    "answer": "No"
+  },
+  {
+    "id": 68,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Recover Client Info' trực tiếp đến 'Register the order' mà không qua kiểm tra thanh toán không?",
+    "answer": "No"
+  },
+  {
+    "id": 69,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Create an account' trực tiếp đến 'Check Payment' không?",
+    "answer": "No"
+  },
+  {
+    "id": 70,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Check Payment' đi ngược lại 'Customer Order' không?",
+    "answer": "No"
+  },
+  {
+    "id": 71,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Pay Rider' đến 'Register the Order' không?",
+    "answer": "No"
+  },
+  {
+    "id": 72,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Receive Customer Satisfaction' đến 'Create an account' không?",
+    "answer": "No"
+  },
+  {
+    "id": 73,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Order Completed' đến 'Pay Rider' không?",
+    "answer": "No"
+  },
+  {
+    "id": 74,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự trực tiếp từ 'Customer Order' thẳng tới 'Register the order' không?",
+    "answer": "No"
+  },
+  {
+    "id": 75,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự từ 'Send to customer the waiting time' tới 'Recover Client Info' không?",
+    "answer": "No"
+  },
+  {
+    "id": 76,
+    "type": "Behavioral",
+    "question": "Hoạt động 'Check CC and Payment' có đi trước 'Create an account' không?",
+    "answer": "No"
+  },
+  {
+    "id": 77,
+    "type": "Behavioral",
+    "question": "Hoạt động 'Register the order' có đi trước 'Customer Order' không?",
+    "answer": "No"
+  },
+  {
+    "id": 78,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Check Courier Availability' đến 'Select Courier' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 79,
+    "type": "Behavioral",
+    "question": "Quy trình Food Delivery có kết thúc ngay lập tức nếu quản lý từ chối khoản tiền (manager evaluates and rejects) không?",
+    "answer": "No"
+  },
+  {
+    "id": 80,
+    "type": "Behavioral",
+    "question": "Có luồng nào nối 'Send confirmation to rider' đến 'Approve Expense Report' không?",
+    "answer": "No"
+  },
+  {
+    "id": 81,
+    "type": "Behavioral",
+    "question": "Nếu khách hàng chưa đăng ký (trả lời 'no' tại gateway), hoạt động tiếp theo có phải là 'Create an account' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 82,
+    "type": "Behavioral",
+    "question": "Nếu khách hàng đã đăng ký (trả lời 'yes' tại gateway), hoạt động tiếp theo có phải là 'Recover Client Info' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 83,
+    "type": "Behavioral",
+    "question": "Sau cổng gateway 'Has the order been accepted?', có thể có nhiều đường dẫn song song xảy ra không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 84,
+    "type": "Behavioral",
+    "question": "Hoạt động 'Send confirmation to rider' có phải là một trong những hoạt động dẫn đến việc kết thúc quy trình ('Order Completed') không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 85,
+    "type": "Behavioral",
+    "question": "Hoạt động 'Estimated Arrival Time' có diễn ra đồng thời hoặc nằm trên một nhánh khác cùng hướng tới kết thúc với 'Send confirmation to rider' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 86,
+    "type": "Behavioral",
+    "question": "Có luồng 'Flow_0k3ykxg' là luồng đầu ra của 'Send confirmation to rider' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 87,
+    "type": "Behavioral",
+    "question": "Có luồng 'Flow_1tpgntx' là luồng đầu vào của 'Register the order' không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 88,
+    "type": "Behavioral",
+    "question": "Có luồng 'Flow_0oe8kpj' nối cổng Gateway_03ncbpd và hoạt động 'Send work proposal' với nhau không?",
+    "answer": "Yes"
+  },
+  {
+    "id": 89,
+    "type": "Behavioral",
+    "question": "Nếu khách hàng đã đăng ký, quy trình có thực hiện 'Check CC and Payment' thay vì 'Check Payment' không?",
+    "answer": "No"
+  },
+  {
+    "id": 90,
+    "type": "Behavioral",
+    "question": "Quy trình có cho phép bỏ qua 'Register the order' và đi thẳng tới 'Select Rider and Create Work Proposal' không?",
+    "answer": "No"
+  },
+  {
+    "id": 91,
+    "type": "Behavioral",
+    "question": "Hoạt động 'Pay Rider' có diễn ra trước khi 'The rider accepted the order' được thực hiện không?",
+    "answer": "No"
+  },
+  {
+    "id": 92,
+    "type": "Behavioral",
+    "question": "Có luồng lặp (loop/duplicate transition) nào dẫn từ 'Register the order' quay ngược lại 'Customer Order' không?",
+    "answer": "No"
+  },
+  {
+    "id": 93,
+    "type": "Behavioral",
+    "question": "Có đường dẫn nào mà 'Create an account' và 'Recover Client Info' sẽ hội tụ (merge) trực tiếp mà không qua bước kiểm tra thanh toán không?",
+    "answer": "No"
+  },
+  {
+    "id": 94,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự nào từ hoạt động 'Obtain approval' sang 'Send contract' trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 95,
+    "type": "Behavioral",
+    "question": "Có luồng trình tự đầu ra nào từ 'Receive signed contract' tới kết thúc trong quy trình Food Delivery không?",
+    "answer": "No"
+  },
+  {
+    "id": 96,
+    "type": "Behavioral",
+    "question": "Có luồng 'Flow_0xnynh4' đi ngược về 'Send work proposal' không?",
+    "answer": "No"
+  },
+  {
+    "id": 97,
+    "type": "Behavioral",
+    "question": "Có đường dẫn nào nối trực tiếp từ 'Check Payment' đến 'Select Rider and Create Work Proposal' bỏ qua bước 'Register the order' không?",
+    "answer": "No"
+  },
+  {
+    "id": 98,
+    "type": "Behavioral",
+    "question": "Có nhánh song song nào bắt đầu ngay sau 'Customer Order Arrived' cho phép rider chấp nhận đơn hàng ngay lập tức không?",
+    "answer": "No"
+  },
+  {
+    "id": 99,
+    "type": "Behavioral",
+    "question": "Hoạt động 'Receive Customer Satisfaction' có bắt buộc phải được thực hiện trước khi 'Register the Order' diễn ra không?",
+    "answer": "No"
+  },
+  {
+    "id": 100,
+    "type": "Behavioral",
+    "question": "Có bất kỳ vòng lặp nào (loop flow) được định nghĩa rõ ràng giữa 'Send work proposal' và 'The rider accepted the order' không?",
+    "answer": "No"
+  }
+]
