@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2">
+  <collaboration id="Collaboration_0e53gvp">
+    <participant id="Participant_163kd16" name="Food Delivery system" processRef="Process_1" />
+  </collaboration>
+  <process id="Process_1">
+    <laneSet id="LaneSet_0w7a9sj">
+      <lane id="Lane_0f7txj4">
+        <flowNodeRef>Activity_1mf8wy9</flowNodeRef>
+        <flowNodeRef>Event_1iwqv9w</flowNodeRef>
+        <flowNodeRef>Activity_1axkrpg</flowNodeRef>
+        <flowNodeRef>Activity_0gh475d</flowNodeRef>
+        <flowNodeRef>Event_1uwsphs</flowNodeRef>
+        <flowNodeRef>Gateway_0f3iu05</flowNodeRef>
+        <flowNodeRef>Activity_1uxpywg</flowNodeRef>
+        <flowNodeRef>Activity_0zlhwln</flowNodeRef>
+        <flowNodeRef>Gateway_0z24z44</flowNodeRef>
+        <flowNodeRef>Activity_0mt2w5k</flowNodeRef>
+        <flowNodeRef>Activity_1x5mf5x</flowNodeRef>
+        <flowNodeRef>Activity_074nbz9</flowNodeRef>
+        <flowNodeRef>Gateway_1lf96zg</flowNodeRef>
+        <flowNodeRef>Activity_05qnapc</flowNodeRef>
+        <flowNodeRef>Activity_1r7emvp</flowNodeRef>
+        <flowNodeRef>Gateway_03ncbpd</flowNodeRef>
+        <flowNodeRef>Activity_00fcmsc</flowNodeRef>
+        <flowNodeRef>Gateway_0yayjl1</flowNodeRef>
+        <flowNodeRef>Activity_02rjtb4</flowNodeRef>
+        <flowNodeRef>Activity_1623ajo</flowNodeRef>
+        <flowNodeRef>Activity_1nwzzzm</flowNodeRef>
+        <flowNodeRef>Activity_13779o3</flowNodeRef>
+        <flowNodeRef>Gateway_0iw6ax3</flowNodeRef>
+        <flowNodeRef>Activity_1ww6nps</flowNodeRef>
+        <flowNodeRef>Activity_1iwh9bs</flowNodeRef>
+      </lane>
+    </laneSet>
+
+    <startEvent id="Event_1uwsphs" name="customer order">
+      <outgoing>Flow_08ptwir</outgoing>
+    </startEvent>
+    <exclusiveGateway id="Gateway_0f3iu05" name="is the customer registered?">
+      <incoming>Flow_08ptwir</incoming>
+      <outgoing>Flow_08xsx3q</outgoing>
+      <outgoing>Flow_0npkvg0</outgoing>
+    </exclusiveGateway>
+    <task id="Activity_1uxpywg" name="create an account">
+      <incoming>Flow_08xsx3q</incoming>
+      <outgoing>Flow_1gno5ei</outgoing>
+      <dataOutputAssociation id="DataOutputAssociation_05j6629">
+        <targetRef>DataStoreReference_19ys4f0</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <task id="Activity_0zlhwln" name="recover client info">
+      <incoming>Flow_0npkvg0</incoming>
+      <outgoing>Flow_07gf68e</outgoing>
+      <dataOutputAssociation id="DataOutputAssociation_1sd0iya">
+        <targetRef>DataStoreReference_19ys4f0</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <task id="Activity_1x5mf5x" name="check credit card and the payment">
+      <incoming>Flow_1gno5ei</incoming>
+      <outgoing>Flow_0d2a1d9</outgoing>
+    </task>
+    <task id="Activity_0mt2w5k" name="check payment">
+      <incoming>Flow_07gf68e</incoming>
+      <outgoing>Flow_0l8n3mx</outgoing>
+    </task>
+    <exclusiveGateway id="Gateway_0z24z44">
+      <incoming>Flow_0d2a1d9</incoming>
+      <incoming>Flow_0l8n3mx</incoming>
+      <outgoing>Flow_1tpgntx</outgoing>
+    </exclusiveGateway>
+    <task id="Activity_074nbz9" name="register the order">
+      <incoming>Flow_1tpgntx</incoming>
+      <outgoing>Flow_0agx772</outgoing>
+    </task>
+    <exclusiveGateway id="Gateway_1lf96zg">
+      <incoming>Flow_096zrl8</incoming>
+      <incoming>Flow_0agx772</incoming>
+      <outgoing>Flow_0eb9w8a</outgoing>
+    </exclusiveGateway>
+    <task id="Activity_05qnapc" name="select rider and create work proposal">
+      <incoming>Flow_0eb9w8a</incoming>
+      <outgoing>Flow_14atypc</outgoing>
+    </task>
+    <sendTask id="Activity_1r7emvp" name="send work proposal">
+      <incoming>Flow_14atypc</incoming>
+      <outgoing>Flow_0oe8kpj</outgoing>
+    </sendTask>
+    <exclusiveGateway id="Gateway_03ncbpd" name="has the order been accepted?">
+      <incoming>Flow_0oe8kpj</incoming>
+      <outgoing>Flow_03y8s2m</outgoing>
+      <outgoing>Flow_0xnynh4</outgoing>
+    </exclusiveGateway>
+    <task id="Activity_1mf8wy9" name="the rider refused the order">
+      <incoming>Flow_0xnynh4</incoming>
+      <outgoing>Flow_096zrl8</outgoing>
+    </task>
+    <task id="Activity_00fcmsc" name="the rider accepted the order">
+      <incoming>Flow_03y8s2m</incoming>
+      <outgoing>Flow_0a6icc7</outgoing>
+    </task>
+    <parallelGateway id="Gateway_0yayjl1">
+      <incoming>Flow_0a6icc7</incoming>
+      <outgoing>Flow_0vdee2b</outgoing>
+      <outgoing>Flow_1qp3xmw</outgoing>
+    </parallelGateway>
+    <task id="Activity_02rjtb4" name="send confirmation to rider">
+      <incoming>Flow_0vdee2b</incoming>
+      <outgoing>Flow_0k3ykxg</outgoing>
+    </task>
+    <task id="Activity_1623ajo" name="Estimated Arrival Time">
+      <incoming>Flow_1qp3xmw</incoming>
+      <outgoing>Flow_04khsl9</outgoing>
+    </task>
+    <task id="Activity_1nwzzzm" name="send to customer the waiting time">
+      <incoming>Flow_04khsl9</incoming>
+      <outgoing>Flow_0g20lkr</outgoing>
+    </task>
+    <parallelGateway id="Gateway_0iw6ax3">
+      <incoming>Flow_0k3ykxg</incoming>
+      <incoming>Flow_0g20lkr</incoming>
+      <outgoing>Flow_0yjijpp</outgoing>
+    </parallelGateway>
+    <receiveTask id="Activity_13779o3" name="notification order retired">
+      <incoming>Flow_0yjijpp</incoming>
+      <outgoing>Flow_0wmlhtj</outgoing>
+    </receiveTask>
+    <sendTask id="Activity_1ww6nps" name="notification order retired to the client">
+      <incoming>Flow_0wmlhtj</incoming>
+      <outgoing>Flow_1ueot8n</outgoing>
+    </sendTask>
+    <receiveTask id="Activity_0gh475d" name="notification order complete">
+      <incoming>Flow_1ueot8n</incoming>
+      <outgoing>Flow_1n1np4q</outgoing>
+    </receiveTask>
+    <receiveTask id="Activity_1iwh9bs" name="receive Customer Satisfaction">
+      <incoming>Flow_1n1np4q</incoming>
+      <outgoing>Flow_1shbkt3</outgoing>
+      <dataOutputAssociation id="DataOutputAssociation_1iqwbbz">
+        <targetRef>DataStoreReference_19ys4f0</targetRef>
+      </dataOutputAssociation>
+    </receiveTask>
+    <task id="Activity_1axkrpg" name="pay rider">
+      <incoming>Flow_1shbkt3</incoming>
+      <outgoing>Flow_0qsqis4</outgoing>
+      <dataOutputAssociation id="DataOutputAssociation_1q7ga9z">
+        <targetRef>DataStoreReference_0ac1ndt</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <endEvent id="Event_1iwqv9w" name="order completed">
+      <incoming>Flow_0qsqis4</incoming>
+    </endEvent>
+
+    <dataStoreReference id="DataStoreReference_19ys4f0" name="customer database" />
+    <dataStoreReference id="DataStoreReference_0ac1ndt" name="payment database" />
+
+    <sequenceFlow id="Flow_08ptwir" sourceRef="Event_1uwsphs" targetRef="Gateway_0f3iu05" />
+    <sequenceFlow id="Flow_08xsx3q" name="no" sourceRef="Gateway_0f3iu05" targetRef="Activity_1uxpywg" />
+    <sequenceFlow id="Flow_0npkvg0" name="yes" sourceRef="Gateway_0f3iu05" targetRef="Activity_0zlhwln" />
+    <sequenceFlow id="Flow_1gno5ei" sourceRef="Activity_1uxpywg" targetRef="Activity_1x5mf5x" />
+    <sequenceFlow id="Flow_07gf68e" sourceRef="Activity_0zlhwln" targetRef="Activity_0mt2w5k" />
+    <sequenceFlow id="Flow_0d2a1d9" sourceRef="Activity_1x5mf5x" targetRef="Gateway_0z24z44" />
+    <sequenceFlow id="Flow_0l8n3mx" sourceRef="Activity_0mt2w5k" targetRef="Gateway_0z24z44" />
+    <sequenceFlow id="Flow_1tpgntx" sourceRef="Gateway_0z24z44" targetRef="Activity_074nbz9" />
+    <sequenceFlow id="Flow_0agx772" sourceRef="Activity_074nbz9" targetRef="Gateway_1lf96zg" />
+    <sequenceFlow id="Flow_0eb9w8a" sourceRef="Gateway_1lf96zg" targetRef="Activity_05qnapc" />
+    <sequenceFlow id="Flow_14atypc" sourceRef="Activity_05qnapc" targetRef="Activity_1r7emvp" />
+    <sequenceFlow id="Flow_0oe8kpj" sourceRef="Activity_1r7emvp" targetRef="Gateway_03ncbpd" />
+    <sequenceFlow id="Flow_0xnynh4" name="no" sourceRef="Gateway_03ncbpd" targetRef="Activity_1mf8wy9" />
+    <sequenceFlow id="Flow_096zrl8" sourceRef="Activity_1mf8wy9" targetRef="Gateway_1lf96zg" />
+    <sequenceFlow id="Flow_03y8s2m" name="yes" sourceRef="Gateway_03ncbpd" targetRef="Activity_00fcmsc" />
+    <sequenceFlow id="Flow_0a6icc7" sourceRef="Activity_00fcmsc" targetRef="Gateway_0yayjl1" />
+    <sequenceFlow id="Flow_0vdee2b" sourceRef="Gateway_0yayjl1" targetRef="Activity_02rjtb4" />
+    <sequenceFlow id="Flow_1qp3xmw" sourceRef="Gateway_0yayjl1" targetRef="Activity_1623ajo" />
+    <sequenceFlow id="Flow_04khsl9" sourceRef="Activity_1623ajo" targetRef="Activity_1nwzzzm" />
+    <sequenceFlow id="Flow_0k3ykxg" sourceRef="Activity_02rjtb4" targetRef="Gateway_0iw6ax3" />
+    <sequenceFlow id="Flow_0g20lkr" sourceRef="Activity_1nwzzzm" targetRef="Gateway_0iw6ax3" />
+    <sequenceFlow id="Flow_0yjijpp" sourceRef="Gateway_0iw6ax3" targetRef="Activity_13779o3" />
+    <sequenceFlow id="Flow_0wmlhtj" sourceRef="Activity_13779o3" targetRef="Activity_1ww6nps" />
+    <sequenceFlow id="Flow_1ueot8n" sourceRef="Activity_1ww6nps" targetRef="Activity_0gh475d" />
+    <sequenceFlow id="Flow_1n1np4q" sourceRef="Activity_0gh475d" targetRef="Activity_1iwh9bs" />
+    <sequenceFlow id="Flow_1shbkt3" sourceRef="Activity_1iwh9bs" targetRef="Activity_1axkrpg" />
+    <sequenceFlow id="Flow_0qsqis4" sourceRef="Activity_1axkrpg" targetRef="Event_1iwqv9w" />
+  </process>
+</definitions>

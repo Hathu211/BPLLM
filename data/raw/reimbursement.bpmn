@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="_2023012906415">
+  <collaboration id="Id_08bae575-8525-468b-925a-c7c9e30aba44" name="BPMN">
+    <participant id="Id_bb956684-1e2e-4606-a184-528fd626c85b" name="Administration Office" processRef="Id_9991882f-a923-4c61-bbbb-9daa28e6f121" />
+  </collaboration>
+  <process id="Id_9991882f-a923-4c61-bbbb-9daa28e6f121" name="BPMN">
+    <startEvent id="Id_fa5d9e26-c99d-4b68-8819-8461f4725121" name="Expense report received">
+      <outgoing>Flow_05t7k6b</outgoing>
+      <messageEventDefinition id="Id_86ada07f-ec52-4b20-a29a-15ec4e18fbba" />
+    </startEvent>
+    <task id="Activity_05ixu0l" name="Notify Employee">
+      <incoming>Flow_05t7k6b</incoming>
+      <outgoing>Flow_1hyof5d</outgoing>
+    </task>
+    <exclusiveGateway id="Id_004d696c-83de-4e53-a2d9-514f6f27ce2c" name="Is a new account required?">
+      <incoming>Flow_1hyof5d</incoming>
+      <outgoing>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</outgoing>
+      <outgoing>Id_104f1377-4163-4147-b854-55a5ba0eea20</outgoing>
+    </exclusiveGateway>
+    <task id="Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de" name="Create Employee Account">
+      <incoming>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</incoming>
+      <outgoing>Id_e276783d-44de-4a56-bda3-d51ba6cfd360</outgoing>
+    </task>
+    <exclusiveGateway id="Id_64e4c2ad-686e-4527-b9b5-7eeb40351417">
+      <incoming>Id_104f1377-4163-4147-b854-55a5ba0eea20</incoming>
+      <incoming>Id_e276783d-44de-4a56-bda3-d51ba6cfd360</incoming>
+      <outgoing>Flow_18hsnqo</outgoing>
+    </exclusiveGateway>
+    <task id="Id_e397f9af-fca3-4aee-b3d8-7426a8876228" name="Review amount">
+      <incoming>Flow_18hsnqo</incoming>
+      <outgoing>Flow_1eefdha</outgoing>
+    </task>
+    <exclusiveGateway id="Gateway_08rst62" name="How much is the amount to be reimbursed?">
+      <incoming>Flow_1eefdha</incoming>
+      <outgoing>Flow_1m8lru7</outgoing>
+      <outgoing>Flow_1vr0goi</outgoing>
+    </exclusiveGateway>
+    <task id="Activity_0v4lv53" name="Reformat and send expense report">
+      <incoming>Flow_1vr0goi</incoming>
+      <outgoing>Flow_0uilgiq</outgoing>
+    </task>
+    <task id="Activity_1mybaex" name="Assess evaluation report">
+      <incoming>Flow_0uilgiq</incoming>
+      <outgoing>Flow_0unpe9u</outgoing>
+    </task>
+    <task id="Activity_1wl94dy" name="Approve expense report without assessment">
+      <incoming>Flow_1m8lru7</incoming>
+      <outgoing>Flow_0l1aptn</outgoing>
+    </task>
+    <exclusiveGateway id="Gateway_1wkso6h">
+      <incoming>Flow_0l1aptn</incoming>
+      <incoming>Flow_0unpe9u</incoming>
+      <outgoing>Flow_06j4qqo</outgoing>
+    </exclusiveGateway>
+    <task id="Activity_08u3u2t" name="Review expense report">
+      <incoming>Flow_06j4qqo</incoming>
+      <outgoing>Flow_0tmojyu</outgoing>
+    </task>
+    <exclusiveGateway id="Gateway_098odj7" name="Expense report is OK?">
+      <incoming>Flow_0tmojyu</incoming>
+      <outgoing>Id_a07af8bb-6cee-477a-9e03-2d1614524715</outgoing>
+      <outgoing>Flow_0rtaeg2</outgoing>
+    </exclusiveGateway>
+    <task id="Id_baa0ed78-1a85-4033-baec-2177e138f466" name="Reject expense report">
+      <incoming>Id_a07af8bb-6cee-477a-9e03-2d1614524715</incoming>
+      <outgoing>Id_ef9286e2-d9b4-465c-8a9a-74f15051b870</outgoing>
+    </task>
+    <endEvent id="Id_0d6d53c6-db6e-4333-b06e-ba007abba16a" name="Reimbursement rejected">
+      <incoming>Id_ef9286e2-d9b4-465c-8a9a-74f15051b870</incoming>
+    </endEvent>
+    <task id="Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8" name="Approve expense report">
+      <incoming>Flow_0rtaeg2</incoming>
+      <outgoing>Flow_1rxe59t</outgoing>
+      <dataOutputAssociation id="DataOutputAssociation_0fkggr8">
+        <targetRef>DataStoreReference_17oxv7e</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <task id="Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a" name="Transfer money to bank account">
+      <incoming>Flow_1rxe59t</incoming>
+      <outgoing>Flow_0yghqs0</outgoing>
+    </task>
+    <task id="Activity_0q4b4ku" name="Send approval notification">
+      <incoming>Flow_0yghqs0</incoming>
+      <outgoing>Flow_0aac4lq</outgoing>
+    </task>
+    <endEvent id="Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6" name="Money transferred">
+      <incoming>Flow_0aac4lq</incoming>
+    </endEvent>
+
+    <dataStoreReference id="DataStoreReference_17oxv7e" name="Expenses DB" />
+
+    <sequenceFlow id="Flow_05t7k6b" sourceRef="Id_fa5d9e26-c99d-4b68-8819-8461f4725121" targetRef="Activity_05ixu0l" />
+    <sequenceFlow id="Flow_1hyof5d" sourceRef="Activity_05ixu0l" targetRef="Id_004d696c-83de-4e53-a2d9-514f6f27ce2c" />
+    <sequenceFlow id="Id_b3f87643-821e-41ad-b2dc-b619f49b2684" name="New account required" sourceRef="Id_004d696c-83de-4e53-a2d9-514f6f27ce2c" targetRef="Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de" />
+    <sequenceFlow id="Id_104f1377-4163-4147-b854-55a5ba0eea20" name="Account already existing" sourceRef="Id_004d696c-83de-4e53-a2d9-514f6f27ce2c" targetRef="Id_64e4c2ad-686e-4527-b9b5-7eeb40351417" />
+    <sequenceFlow id="Id_e276783d-44de-4a56-bda3-d51ba6cfd360" sourceRef="Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de" targetRef="Id_64e4c2ad-686e-4527-b9b5-7eeb40351417" />
+    <sequenceFlow id="Flow_18hsnqo" sourceRef="Id_64e4c2ad-686e-4527-b9b5-7eeb40351417" targetRef="Id_e397f9af-fca3-4aee-b3d8-7426a8876228" />
+    <sequenceFlow id="Flow_1eefdha" sourceRef="Id_e397f9af-fca3-4aee-b3d8-7426a8876228" targetRef="Gateway_08rst62" />
+    <sequenceFlow id="Flow_1vr0goi" name="Amount &gt;= 1000" sourceRef="Gateway_08rst62" targetRef="Activity_0v4lv53" />
+    <sequenceFlow id="Flow_1m8lru7" name="Amount &lt; 1000" sourceRef="Gateway_08rst62" targetRef="Activity_1wl94dy" />
+    <sequenceFlow id="Flow_0uilgiq" sourceRef="Activity_0v4lv53" targetRef="Activity_1mybaex" />
+    <sequenceFlow id="Flow_0unpe9u" sourceRef="Activity_1mybaex" targetRef="Gateway_1wkso6h" />
+    <sequenceFlow id="Flow_0l1aptn" sourceRef="Activity_1wl94dy" targetRef="Gateway_1wkso6h" />
+    <sequenceFlow id="Flow_06j4qqo" sourceRef="Gateway_1wkso6h" targetRef="Activity_08u3u2t" />
+    <sequenceFlow id="Flow_0tmojyu" sourceRef="Activity_08u3u2t" targetRef="Gateway_098odj7" />
+    <sequenceFlow id="Id_a07af8bb-6cee-477a-9e03-2d1614524715" name="Expense report rejected" sourceRef="Gateway_098odj7" targetRef="Id_baa0ed78-1a85-4033-baec-2177e138f466" />
+    <sequenceFlow id="Flow_0rtaeg2" name="Expense report approved" sourceRef="Gateway_098odj7" targetRef="Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8" />
+    <sequenceFlow id="Id_ef9286e2-d9b4-465c-8a9a-74f15051b870" sourceRef="Id_baa0ed78-1a85-4033-baec-2177e138f466" targetRef="Id_0d6d53c6-db6e-4333-b06e-ba007abba16a" />
+    <sequenceFlow id="Flow_1rxe59t" sourceRef="Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8" targetRef="Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a" />
+    <sequenceFlow id="Flow_0yghqs0" sourceRef="Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a" targetRef="Activity_0q4b4ku" />
+    <sequenceFlow id="Flow_0aac4lq" sourceRef="Activity_0q4b4ku" targetRef="Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6" />
+  </process>
+</definitions>
