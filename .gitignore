@@ -27,3 +27,5 @@ checkpoints/
 .vscode/
 .idea/
 .DS_Store
+
+!data/processed/bpmn_chunks_summary.csv
