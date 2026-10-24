@@ -1,593 +1,69 @@
 ﻿file_name,strategy,chunk_id,content
-ecommerce.bpmn,BPMN-specific,1,"<startEvent id=""StartEvent_1y45yut"" name=""Customer order arrived""><outgoing>Flow_04xrks0</outgoing></startEvent>"
-ecommerce.bpmn,BPMN-specific,2,"<exclusiveGateway id=""Gateway_12cpf55"" name=""Is this a new customer?""><incoming>Flow_04xrks0</incoming><outgoing>Flow_0fwrf3j</outgoing><outgoing>Flow_06i63c5</outgoing></exclusiveGateway>"
-ecommerce.bpmn,BPMN-specific,3,"<task id=""Activity_0t3x20h"" name=""Create new account""><incoming>Flow_0fwrf3j</incoming><outgoing>Flow_145je0t</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,4,"<task id=""Activity_0wbkoaw"" name=""Store payment method""><incoming>Flow_145je0t</incoming><outgoing>Flow_14pfywp</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,5,"<task id=""Activity_0z80v8w"" name=""Recover client history""><incoming>Flow_06i63c5</incoming><outgoing>Flow_1jvddc3</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,6,"<task id=""Activity_14vn9vh"" name=""Check payment method""><incoming>Flow_1jvddc3</incoming><outgoing>Flow_0995wbv</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,7,"<exclusiveGateway id=""Gateway_0unq6v1""><incoming>Flow_14pfywp</incoming><incoming>Flow_0995wbv</incoming><outgoing>Flow_0a3m79l</outgoing></exclusiveGateway>"
-ecommerce.bpmn,BPMN-specific,8,"<task id=""Activity_014dn3v"" name=""Register new order""><incoming>Flow_0a3m79l</incoming><outgoing>Flow_12py4o4</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,9,"<exclusiveGateway id=""Gateway_0wwxa0w""><incoming>Flow_12py4o4</incoming><incoming>Flow_17cnjcu</incoming><outgoing>Flow_1ckcie7</outgoing></exclusiveGateway>"
-ecommerce.bpmn,BPMN-specific,10,"<task id=""Activity_06glfsw"" name=""Select courier""><incoming>Flow_1ckcie7</incoming><outgoing>Flow_1ru60yl</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,11,"<task id=""Activity_1sn8s5h"" name=""Check courier availability""><incoming>Flow_1ru60yl</incoming><outgoing>Flow_1tc2kvv</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,12,"<exclusiveGateway id=""Gateway_1rvurt9"" name=""Is the courier available?""><incoming>Flow_1tc2kvv</incoming><outgoing>Flow_17cnjcu</outgoing><outgoing>Flow_10icutz</outgoing></exclusiveGateway>"
-ecommerce.bpmn,BPMN-specific,13,"<task id=""Activity_0e0gavq"" name=""Assign package to courier""><incoming>Flow_10icutz</incoming><outgoing>Flow_1gmeelo</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,14,"<task id=""Activity_124kws5"" name=""Receive courier confirmation""><incoming>Flow_1gmeelo</incoming><outgoing>Flow_14e8pbb</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,15,"<task id=""Activity_1rd1k4w"" name=""Estimate arrival time""><incoming>Flow_14e8pbb</incoming><outgoing>Flow_1wxf9m3</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,16,"<task id=""Activity_0hru42u"" name=""Send waiting time to the customer""><incoming>Flow_1wxf9m3</incoming><outgoing>Flow_104fczi</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,17,"<task id=""Activity_0d7dniy"" name=""Receive notification order retired by the courier""><incoming>Flow_104fczi</incoming><outgoing>Flow_1cjy3mj</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,18,"<task id=""Activity_13pfl2x"" name=""Receive notification order retired by the client""><incoming>Flow_1cjy3mj</incoming><outgoing>Flow_14l1rwc</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,19,"<task id=""Activity_0zk8u1z"" name=""Receive customer satisfaction""><incoming>Flow_14l1rwc</incoming><outgoing>Flow_1gkmlc7</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,20,"<task id=""Activity_1rr3vas"" name=""Pay courier""><incoming>Flow_1gkmlc7</incoming><outgoing>Flow_0vj9lnh</outgoing></task>"
-ecommerce.bpmn,BPMN-specific,21,"<endEvent id=""Event_14jgpi0"" name=""Order Fulfilled""><incoming>Flow_0vj9lnh</incoming></endEvent>"
-ecommerce.bpmn,BPMN-specific,22,"<sequenceFlow id=""Flow_04xrks0"" sourceRef=""StartEvent_1y45yut"" targetRef=""Gateway_12cpf55"" />"
-ecommerce.bpmn,BPMN-specific,23,"<sequenceFlow id=""Flow_0fwrf3j"" name=""Yes"" sourceRef=""Gateway_12cpf55"" targetRef=""Activity_0t3x20h"" />"
-ecommerce.bpmn,BPMN-specific,24,"<sequenceFlow id=""Flow_06i63c5"" sourceRef=""Gateway_12cpf55"" targetRef=""Activity_0z80v8w"" />"
-ecommerce.bpmn,BPMN-specific,25,"<sequenceFlow id=""Flow_145je0t"" sourceRef=""Activity_0t3x20h"" targetRef=""Activity_0wbkoaw"" />"
-ecommerce.bpmn,BPMN-specific,26,"<sequenceFlow id=""Flow_14pfywp"" sourceRef=""Activity_0wbkoaw"" targetRef=""Gateway_0unq6v1"" />"
-ecommerce.bpmn,BPMN-specific,27,"<sequenceFlow id=""Flow_1jvddc3"" sourceRef=""Activity_0z80v8w"" targetRef=""Activity_14vn9vh"" />"
-ecommerce.bpmn,BPMN-specific,28,"<sequenceFlow id=""Flow_0995wbv"" sourceRef=""Activity_14vn9vh"" targetRef=""Gateway_0unq6v1"" />"
-ecommerce.bpmn,BPMN-specific,29,"<sequenceFlow id=""Flow_0a3m79l"" sourceRef=""Gateway_0unq6v1"" targetRef=""Activity_014dn3v"" />"
-ecommerce.bpmn,BPMN-specific,30,"<sequenceFlow id=""Flow_12py4o4"" sourceRef=""Activity_014dn3v"" targetRef=""Gateway_0wwxa0w"" />"
-ecommerce.bpmn,BPMN-specific,31,"<sequenceFlow id=""Flow_17cnjcu"" name=""No"" sourceRef=""Gateway_1rvurt9"" targetRef=""Gateway_0wwxa0w"" />"
-ecommerce.bpmn,BPMN-specific,32,"<sequenceFlow id=""Flow_1ckcie7"" sourceRef=""Gateway_0wwxa0w"" targetRef=""Activity_06glfsw"" />"
-ecommerce.bpmn,BPMN-specific,33,"<sequenceFlow id=""Flow_1ru60yl"" sourceRef=""Activity_06glfsw"" targetRef=""Activity_1sn8s5h"" />"
-ecommerce.bpmn,BPMN-specific,34,"<sequenceFlow id=""Flow_1tc2kvv"" sourceRef=""Activity_1sn8s5h"" targetRef=""Gateway_1rvurt9"" />"
-ecommerce.bpmn,BPMN-specific,35,"<sequenceFlow id=""Flow_10icutz"" sourceRef=""Gateway_1rvurt9"" targetRef=""Activity_0e0gavq"" />"
-ecommerce.bpmn,BPMN-specific,36,"<sequenceFlow id=""Flow_1gmeelo"" sourceRef=""Activity_0e0gavq"" targetRef=""Activity_124kws5"" />"
-ecommerce.bpmn,BPMN-specific,37,"<sequenceFlow id=""Flow_14e8pbb"" sourceRef=""Activity_124kws5"" targetRef=""Activity_1rd1k4w"" />"
-ecommerce.bpmn,BPMN-specific,38,"<sequenceFlow id=""Flow_1wxf9m3"" sourceRef=""Activity_1rd1k4w"" targetRef=""Activity_0hru42u"" />"
-ecommerce.bpmn,BPMN-specific,39,"<sequenceFlow id=""Flow_104fczi"" sourceRef=""Activity_0hru42u"" targetRef=""Activity_0d7dniy"" />"
-ecommerce.bpmn,BPMN-specific,40,"<sequenceFlow id=""Flow_1cjy3mj"" sourceRef=""Activity_0d7dniy"" targetRef=""Activity_13pfl2x"" />"
-ecommerce.bpmn,BPMN-specific,41,"<sequenceFlow id=""Flow_14l1rwc"" sourceRef=""Activity_13pfl2x"" targetRef=""Activity_0zk8u1z"" />"
-ecommerce.bpmn,BPMN-specific,42,"<sequenceFlow id=""Flow_1gkmlc7"" sourceRef=""Activity_0zk8u1z"" targetRef=""Activity_1rr3vas"" />"
-ecommerce.bpmn,BPMN-specific,43,"<sequenceFlow id=""Flow_0vj9lnh"" sourceRef=""Activity_1rr3vas"" targetRef=""Event_14jgpi0"" />"
-ecommerce.bpmn,Fixed-size,1,"<?xml version=""1.0"" encoding=""UTF-8""?> <definitions xmlns=""http://www.omg.org/spec/BPMN/20100524/MODEL"" id=""sid-38422fae-e03e-43a3-bef4-bd33b32041b2""> <collaboration id=""Collaboration_170rsio""> <participant id=""Participant_1ndvkwj"" name=""Ecommerce System"" processRef=""Process_1"" /> </collaboration> <process id=""Process_1""> <startEvent id=""StartEvent_1y45yut"" name=""Customer order arrived""> <outgoing>Flow_04xrks0</outgoing> </startEvent> <exclusiveGateway id=""Gateway_12cpf55"" name=""Is this a new customer?""> <incoming>Flow_04xrks0</incoming>"
-ecommerce.bpmn,Fixed-size,2,"<outgoing>Flow_04xrks0</outgoing> </startEvent> <exclusiveGateway id=""Gateway_12cpf55"" name=""Is this a new customer?""> <incoming>Flow_04xrks0</incoming> <outgoing>Flow_0fwrf3j</outgoing> <outgoing>Flow_06i63c5</outgoing> </exclusiveGateway> <task id=""Activity_0t3x20h"" name=""Create new account""> <incoming>Flow_0fwrf3j</incoming> <outgoing>Flow_145je0t</outgoing> </task> <task id=""Activity_0wbkoaw"" name=""Store payment method""> <incoming>Flow_145je0t</incoming> <outgoing>Flow_14pfywp</outgoing> </task> <task id=""Activity_0z80v8w"" name=""Recover"
-ecommerce.bpmn,Fixed-size,3,"id=""Activity_0wbkoaw"" name=""Store payment method""> <incoming>Flow_145je0t</incoming> <outgoing>Flow_14pfywp</outgoing> </task> <task id=""Activity_0z80v8w"" name=""Recover client history""> <incoming>Flow_06i63c5</incoming> <outgoing>Flow_1jvddc3</outgoing> </task> <task id=""Activity_14vn9vh"" name=""Check payment method""> <incoming>Flow_1jvddc3</incoming> <outgoing>Flow_0995wbv</outgoing> </task> <exclusiveGateway id=""Gateway_0unq6v1""> <incoming>Flow_14pfywp</incoming> <incoming>Flow_0995wbv</incoming> <outgoing>Flow_0a3m79l</outgoing> </exclusiveGateway> <task id=""Activity_014dn3v"" name=""Register"
-ecommerce.bpmn,Fixed-size,4,"</task> <exclusiveGateway id=""Gateway_0unq6v1""> <incoming>Flow_14pfywp</incoming> <incoming>Flow_0995wbv</incoming> <outgoing>Flow_0a3m79l</outgoing> </exclusiveGateway> <task id=""Activity_014dn3v"" name=""Register new order""> <incoming>Flow_0a3m79l</incoming> <outgoing>Flow_12py4o4</outgoing> </task> <exclusiveGateway id=""Gateway_0wwxa0w""> <incoming>Flow_12py4o4</incoming> <incoming>Flow_17cnjcu</incoming> <outgoing>Flow_1ckcie7</outgoing> </exclusiveGateway> <task id=""Activity_06glfsw"" name=""Select courier""> <incoming>Flow_1ckcie7</incoming> <outgoing>Flow_1ru60yl</outgoing> </task> <task id=""Activity_1sn8s5h"" name=""Check courier"
-ecommerce.bpmn,Fixed-size,5,"id=""Activity_06glfsw"" name=""Select courier""> <incoming>Flow_1ckcie7</incoming> <outgoing>Flow_1ru60yl</outgoing> </task> <task id=""Activity_1sn8s5h"" name=""Check courier availability""> <incoming>Flow_1ru60yl</incoming> <outgoing>Flow_1tc2kvv</outgoing> </task> <exclusiveGateway id=""Gateway_1rvurt9"" name=""Is the courier available?""> <incoming>Flow_1tc2kvv</incoming> <outgoing>Flow_17cnjcu</outgoing> <outgoing>Flow_10icutz</outgoing> </exclusiveGateway> <task id=""Activity_0e0gavq"" name=""Assign package to courier""> <incoming>Flow_10icutz</incoming> <outgoing>Flow_1gmeelo</outgoing>"
-ecommerce.bpmn,Fixed-size,6,"<outgoing>Flow_10icutz</outgoing> </exclusiveGateway> <task id=""Activity_0e0gavq"" name=""Assign package to courier""> <incoming>Flow_10icutz</incoming> <outgoing>Flow_1gmeelo</outgoing> </task> <task id=""Activity_124kws5"" name=""Receive courier confirmation""> <incoming>Flow_1gmeelo</incoming> <outgoing>Flow_14e8pbb</outgoing> </task> <task id=""Activity_1rd1k4w"" name=""Estimate arrival time""> <incoming>Flow_14e8pbb</incoming> <outgoing>Flow_1wxf9m3</outgoing> </task> <task id=""Activity_0hru42u"" name=""Send waiting time"
-ecommerce.bpmn,Fixed-size,7,"arrival time""> <incoming>Flow_14e8pbb</incoming> <outgoing>Flow_1wxf9m3</outgoing> </task> <task id=""Activity_0hru42u"" name=""Send waiting time to the customer""> <incoming>Flow_1wxf9m3</incoming> <outgoing>Flow_104fczi</outgoing> </task> <task id=""Activity_0d7dniy"" name=""Receive notification order retired by the courier""> <incoming>Flow_104fczi</incoming> <outgoing>Flow_1cjy3mj</outgoing> </task> <task id=""Activity_13pfl2x"" name=""Receive notification"
-ecommerce.bpmn,Fixed-size,8,"by the courier""> <incoming>Flow_104fczi</incoming> <outgoing>Flow_1cjy3mj</outgoing> </task> <task id=""Activity_13pfl2x"" name=""Receive notification order retired by the client""> <incoming>Flow_1cjy3mj</incoming> <outgoing>Flow_14l1rwc</outgoing> </task> <task id=""Activity_0zk8u1z"" name=""Receive customer satisfaction""> <incoming>Flow_14l1rwc</incoming> <outgoing>Flow_1gkmlc7</outgoing> </task> <task id=""Activity_1rr3vas"" name=""Pay courier""> <incoming>Flow_1gkmlc7</incoming> <outgoing>Flow_0vj9lnh</outgoing>"
-ecommerce.bpmn,Fixed-size,9,"satisfaction""> <incoming>Flow_14l1rwc</incoming> <outgoing>Flow_1gkmlc7</outgoing> </task> <task id=""Activity_1rr3vas"" name=""Pay courier""> <incoming>Flow_1gkmlc7</incoming> <outgoing>Flow_0vj9lnh</outgoing> </task> <endEvent id=""Event_14jgpi0"" name=""Order Fulfilled""> <incoming>Flow_0vj9lnh</incoming> </endEvent> <sequenceFlow id=""Flow_04xrks0"" sourceRef=""StartEvent_1y45yut"" targetRef=""Gateway_12cpf55"" /> <sequenceFlow id=""Flow_0fwrf3j"" name=""Yes"" sourceRef=""Gateway_12cpf55"" targetRef=""Activity_0t3x20h"" /> <sequenceFlow id=""Flow_06i63c5"" sourceRef=""Gateway_12cpf55"" targetRef=""Activity_0z80v8w"""
-ecommerce.bpmn,Fixed-size,10,"<sequenceFlow id=""Flow_0fwrf3j"" name=""Yes"" sourceRef=""Gateway_12cpf55"" targetRef=""Activity_0t3x20h"" /> <sequenceFlow id=""Flow_06i63c5"" sourceRef=""Gateway_12cpf55"" targetRef=""Activity_0z80v8w"" /> <sequenceFlow id=""Flow_145je0t"" sourceRef=""Activity_0t3x20h"" targetRef=""Activity_0wbkoaw"" /> <sequenceFlow id=""Flow_14pfywp"" sourceRef=""Activity_0wbkoaw"" targetRef=""Gateway_0unq6v1"" /> <sequenceFlow id=""Flow_1jvddc3"" sourceRef=""Activity_0z80v8w"" targetRef=""Activity_14vn9vh"" /> <sequenceFlow id=""Flow_0995wbv"" sourceRef=""Activity_14vn9vh"" targetRef=""Gateway_0unq6v1"" /> <sequenceFlow"
-ecommerce.bpmn,Fixed-size,11,"id=""Flow_1jvddc3"" sourceRef=""Activity_0z80v8w"" targetRef=""Activity_14vn9vh"" /> <sequenceFlow id=""Flow_0995wbv"" sourceRef=""Activity_14vn9vh"" targetRef=""Gateway_0unq6v1"" /> <sequenceFlow id=""Flow_0a3m79l"" sourceRef=""Gateway_0unq6v1"" targetRef=""Activity_014dn3v"" /> <sequenceFlow id=""Flow_12py4o4"" sourceRef=""Activity_014dn3v"" targetRef=""Gateway_0wwxa0w"" /> <sequenceFlow id=""Flow_17cnjcu"" name=""No"" sourceRef=""Gateway_1rvurt9"" targetRef=""Gateway_0wwxa0w"" /> <sequenceFlow id=""Flow_1ckcie7"" sourceRef=""Gateway_0wwxa0w"" targetRef=""Activity_06glfsw"" /> <sequenceFlow id=""Flow_1ru60yl"""
-ecommerce.bpmn,Fixed-size,12,"sourceRef=""Gateway_1rvurt9"" targetRef=""Gateway_0wwxa0w"" /> <sequenceFlow id=""Flow_1ckcie7"" sourceRef=""Gateway_0wwxa0w"" targetRef=""Activity_06glfsw"" /> <sequenceFlow id=""Flow_1ru60yl"" sourceRef=""Activity_06glfsw"" targetRef=""Activity_1sn8s5h"" /> <sequenceFlow id=""Flow_1tc2kvv"" sourceRef=""Activity_1sn8s5h"" targetRef=""Gateway_1rvurt9"" /> <sequenceFlow id=""Flow_10icutz"" sourceRef=""Gateway_1rvurt9"" targetRef=""Activity_0e0gavq"" /> <sequenceFlow id=""Flow_1gmeelo"" sourceRef=""Activity_0e0gavq"" targetRef=""Activity_124kws5"" /> <sequenceFlow id=""Flow_14e8pbb"" sourceRef=""Activity_124kws5"" targetRef=""Activity_1rd1k4w"""
-ecommerce.bpmn,Fixed-size,13,"/> <sequenceFlow id=""Flow_1gmeelo"" sourceRef=""Activity_0e0gavq"" targetRef=""Activity_124kws5"" /> <sequenceFlow id=""Flow_14e8pbb"" sourceRef=""Activity_124kws5"" targetRef=""Activity_1rd1k4w"" /> <sequenceFlow id=""Flow_1wxf9m3"" sourceRef=""Activity_1rd1k4w"" targetRef=""Activity_0hru42u"" /> <sequenceFlow id=""Flow_104fczi"" sourceRef=""Activity_0hru42u"" targetRef=""Activity_0d7dniy"" /> <sequenceFlow id=""Flow_1cjy3mj"" sourceRef=""Activity_0d7dniy"" targetRef=""Activity_13pfl2x"" /> <sequenceFlow id=""Flow_14l1rwc"" sourceRef=""Activity_13pfl2x"" targetRef=""Activity_0zk8u1z"" /> <sequenceFlow"
-ecommerce.bpmn,Fixed-size,14,"id=""Flow_1cjy3mj"" sourceRef=""Activity_0d7dniy"" targetRef=""Activity_13pfl2x"" /> <sequenceFlow id=""Flow_14l1rwc"" sourceRef=""Activity_13pfl2x"" targetRef=""Activity_0zk8u1z"" /> <sequenceFlow id=""Flow_1gkmlc7"" sourceRef=""Activity_0zk8u1z"" targetRef=""Activity_1rr3vas"" /> <sequenceFlow id=""Flow_0vj9lnh"" sourceRef=""Activity_1rr3vas"" targetRef=""Event_14jgpi0"" /> </process> </definitions>"
-ecommerce.bpmn,Recursive,1,"<?xml version=""1.0"" encoding=""UTF-8""?>
-<definitions xmlns=""http://www.omg.org/spec/BPMN/20100524/MODEL"" id=""sid-38422fae-e03e-43a3-bef4-bd33b32041b2"">
-  <collaboration id=""Collaboration_170rsio"">
-    <participant id=""Participant_1ndvkwj"" name=""Ecommerce System"" processRef=""Process_1"" />
-  </collaboration>
-  <process id=""Process_1"">
-    <startEvent id=""StartEvent_1y45yut"" name=""Customer order arrived"">
-      <outgoing>Flow_04xrks0</outgoing>
-    </startEvent>
-    <exclusiveGateway id=""Gateway_12cpf55"" name=""Is this a new customer?"">
-      <incoming>Flow_04xrks0</incoming>
-      <outgoing>Flow_0fwrf3j</outgoing>
-      <outgoing>Flow_06i63c5</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_0t3x20h"" name=""Create new account"">
-      <incoming>Flow_0fwrf3j</incoming>
-      <outgoing>Flow_145je0t</outgoing>
-    </task>
-    <task id=""Activity_0wbkoaw"" name=""Store payment method"">
-      <incoming>Flow_145je0t</incoming>
-      <outgoing>Flow_14pfywp</outgoing>
-    </task>
-    <task id=""Activity_0z80v8w"" name=""Recover client history"">
-      <incoming>Flow_06i63c5</incoming>
-      <outgoing>Flow_1jvddc3</outgoing>
-    </task>
-    <task id=""Activity_14vn9vh"" name=""Check payment method"">
-      <incoming>Flow_1jvddc3</incoming>
-      <outgoing>Flow_0995wbv</outgoing>
-    </task>
-    <exclusiveGateway id=""Gateway_0unq6v1"">
-      <incoming>Flow_14pfywp</incoming>
-      <incoming>Flow_0995wbv</incoming>
-      <outgoing>Flow_0a3m79l</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_014dn3v"" name=""Register new order"">
-      <incoming>Flow_0a3m79l</incoming>
-      <outgoing>Flow_12py4o4</outgoing>
-    </task>
-    <exclusiveGateway id=""Gateway_0wwxa0w"">
-      <incoming>Flow_12py4o4</incoming>
-      <incoming>Flow_17cnjcu</incoming>
-      <outgoing>Flow_1ckcie7</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_06glfsw"" name=""Select courier"">
-      <incoming>Flow_1ckcie7</incoming>
-      <outgoing>Flow_1ru60yl</outgoing>
-    </task>
-    <task id=""Activity_1sn8s5h"" name=""Check courier availability"">
-      <incoming>Flow_1ru60yl</incoming>
-      <outgoing>Flow_1tc2kvv</outgoing>
-    </task>
-    <exclusiveGateway id=""Gateway_1rvurt9"" name=""Is the courier available?"">
-      <incoming>Flow_1tc2kvv</incoming>
-      <outgoing>Flow_17cnjcu</outgoing>
-      <outgoing>Flow_10icutz</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_0e0gavq"" name=""Assign package to courier"">
-      <incoming>Flow_10icutz</incoming>
-      <outgoing>Flow_1gmeelo</outgoing>
-    </task>
-    <task id=""Activity_124kws5"" name=""Receive courier confirmation"">
-      <incoming>Flow_1gmeelo</incoming>
-      <outgoing>Flow_14e8pbb</outgoing>
-    </task>
-    <task id=""Activity_1rd1k4w"" name=""Estimate arrival time"">
-      <incoming>Flow_14e8pbb</incoming>
-      <outgoing>Flow_1wxf9m3</outgoing>
-    </task>
-    <task id=""Activity_0hru42u"" name=""Send waiting time to the customer"">
-      <incoming>Flow_1wxf9m3</incoming>
-      <outgoing>Flow_104fczi</outgoing>
-    </task>
-    <task id=""Activity_0d7dniy"" name=""Receive notification order retired by the courier"">
-      <incoming>Flow_104fczi</incoming>
-      <outgoing>Flow_1cjy3mj</outgoing>
-    </task>
-    <task id=""Activity_13pfl2x"" name=""Receive notification order retired by the client"">
-      <incoming>Flow_1cjy3mj</incoming>
-      <outgoing>Flow_14l1rwc</outgoing>
-    </task>
-    <task id=""Activity_0zk8u1z"" name=""Receive customer satisfaction"">
-      <incoming>Flow_14l1rwc</incoming>
-      <outgoing>Flow_1gkmlc7</outgoing>
-    </task>
-    <task id=""Activity_1rr3vas"" name=""Pay courier"">
-      <incoming>Flow_1gkmlc7</incoming>
-      <outgoing>Flow_0vj9lnh</outgoing>
-    </task>
-    <endEvent id=""Event_14jgpi0"" name=""Order Fulfilled"">
-      <incoming>Flow_0vj9lnh</incoming>
-    </endEvent>"
-ecommerce.bpmn,Recursive,2,"<sequenceFlow id=""Flow_04xrks0"" sourceRef=""StartEvent_1y45yut"" targetRef=""Gateway_12cpf55"" />
-    <sequenceFlow id=""Flow_0fwrf3j"" name=""Yes"" sourceRef=""Gateway_12cpf55"" targetRef=""Activity_0t3x20h"" />
-    <sequenceFlow id=""Flow_06i63c5"" sourceRef=""Gateway_12cpf55"" targetRef=""Activity_0z80v8w"" />
-    <sequenceFlow id=""Flow_145je0t"" sourceRef=""Activity_0t3x20h"" targetRef=""Activity_0wbkoaw"" />
-    <sequenceFlow id=""Flow_14pfywp"" sourceRef=""Activity_0wbkoaw"" targetRef=""Gateway_0unq6v1"" />
-    <sequenceFlow id=""Flow_1jvddc3"" sourceRef=""Activity_0z80v8w"" targetRef=""Activity_14vn9vh"" />
-    <sequenceFlow id=""Flow_0995wbv"" sourceRef=""Activity_14vn9vh"" targetRef=""Gateway_0unq6v1"" />
-    <sequenceFlow id=""Flow_0a3m79l"" sourceRef=""Gateway_0unq6v1"" targetRef=""Activity_014dn3v"" />
-    <sequenceFlow id=""Flow_12py4o4"" sourceRef=""Activity_014dn3v"" targetRef=""Gateway_0wwxa0w"" />
-    <sequenceFlow id=""Flow_17cnjcu"" name=""No"" sourceRef=""Gateway_1rvurt9"" targetRef=""Gateway_0wwxa0w"" />
-    <sequenceFlow id=""Flow_1ckcie7"" sourceRef=""Gateway_0wwxa0w"" targetRef=""Activity_06glfsw"" />
-    <sequenceFlow id=""Flow_1ru60yl"" sourceRef=""Activity_06glfsw"" targetRef=""Activity_1sn8s5h"" />
-    <sequenceFlow id=""Flow_1tc2kvv"" sourceRef=""Activity_1sn8s5h"" targetRef=""Gateway_1rvurt9"" />
-    <sequenceFlow id=""Flow_10icutz"" sourceRef=""Gateway_1rvurt9"" targetRef=""Activity_0e0gavq"" />
-    <sequenceFlow id=""Flow_1gmeelo"" sourceRef=""Activity_0e0gavq"" targetRef=""Activity_124kws5"" />
-    <sequenceFlow id=""Flow_14e8pbb"" sourceRef=""Activity_124kws5"" targetRef=""Activity_1rd1k4w"" />
-    <sequenceFlow id=""Flow_1wxf9m3"" sourceRef=""Activity_1rd1k4w"" targetRef=""Activity_0hru42u"" />
-    <sequenceFlow id=""Flow_104fczi"" sourceRef=""Activity_0hru42u"" targetRef=""Activity_0d7dniy"" />
-    <sequenceFlow id=""Flow_1cjy3mj"" sourceRef=""Activity_0d7dniy"" targetRef=""Activity_13pfl2x"" />
-    <sequenceFlow id=""Flow_14l1rwc"" sourceRef=""Activity_13pfl2x"" targetRef=""Activity_0zk8u1z"" />
-    <sequenceFlow id=""Flow_1gkmlc7"" sourceRef=""Activity_0zk8u1z"" targetRef=""Activity_1rr3vas"" />
-    <sequenceFlow id=""Flow_0vj9lnh"" sourceRef=""Activity_1rr3vas"" targetRef=""Event_14jgpi0"" />
-  </process>
-</definitions>"
-food_delivery.bpmn,BPMN-specific,1,"<startEvent id=""Event_1uwsphs"" name=""customer order""><outgoing>Flow_08ptwir</outgoing></startEvent>"
-food_delivery.bpmn,BPMN-specific,2,"<exclusiveGateway id=""Gateway_0f3iu05"" name=""is the customer registered?""><incoming>Flow_08ptwir</incoming><outgoing>Flow_08xsx3q</outgoing><outgoing>Flow_0npkvg0</outgoing></exclusiveGateway>"
-food_delivery.bpmn,BPMN-specific,3,"<task id=""Activity_1uxpywg"" name=""create an account""><incoming>Flow_08xsx3q</incoming><outgoing>Flow_1gno5ei</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,4,"<task id=""Activity_0zlhwln"" name=""recover client info""><incoming>Flow_0npkvg0</incoming><outgoing>Flow_07gf68e</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,5,"<task id=""Activity_1x5mf5x"" name=""check credit card and the payment""><incoming>Flow_1gno5ei</incoming><outgoing>Flow_0d2a1d9</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,6,"<task id=""Activity_0mt2w5k"" name=""check payment""><incoming>Flow_07gf68e</incoming><outgoing>Flow_0l8n3mx</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,7,"<exclusiveGateway id=""Gateway_0z24z44""><incoming>Flow_0d2a1d9</incoming><incoming>Flow_0l8n3mx</incoming><outgoing>Flow_1tpgntx</outgoing></exclusiveGateway>"
-food_delivery.bpmn,BPMN-specific,8,"<task id=""Activity_074nbz9"" name=""register the order""><incoming>Flow_1tpgntx</incoming><outgoing>Flow_0agx772</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,9,"<exclusiveGateway id=""Gateway_1lf96zg""><incoming>Flow_096zrl8</incoming><incoming>Flow_0agx772</incoming><outgoing>Flow_0eb9w8a</outgoing></exclusiveGateway>"
-food_delivery.bpmn,BPMN-specific,10,"<task id=""Activity_05qnapc"" name=""select rider and create work proposal""><incoming>Flow_0eb9w8a</incoming><outgoing>Flow_14atypc</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,11,"<sendTask id=""Activity_1r7emvp"" name=""send work proposal""><incoming>Flow_14atypc</incoming><outgoing>Flow_0oe8kpj</outgoing></sendTask>"
-food_delivery.bpmn,BPMN-specific,12,"<exclusiveGateway id=""Gateway_03ncbpd"" name=""has the order been accepted?""><incoming>Flow_0oe8kpj</incoming><outgoing>Flow_03y8s2m</outgoing><outgoing>Flow_0xnynh4</outgoing></exclusiveGateway>"
-food_delivery.bpmn,BPMN-specific,13,"<task id=""Activity_1mf8wy9"" name=""the rider refused the order""><incoming>Flow_0xnynh4</incoming><outgoing>Flow_096zrl8</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,14,"<task id=""Activity_00fcmsc"" name=""the rider accepted the order""><incoming>Flow_03y8s2m</incoming><outgoing>Flow_0a6icc7</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,15,"<parallelGateway id=""Gateway_0yayjl1""><incoming>Flow_0a6icc7</incoming><outgoing>Flow_0vdee2b</outgoing><outgoing>Flow_1qp3xmw</outgoing></parallelGateway>"
-food_delivery.bpmn,BPMN-specific,16,"<task id=""Activity_02rjtb4"" name=""send confirmation to rider""><incoming>Flow_0vdee2b</incoming><outgoing>Flow_0k3ykxg</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,17,"<task id=""Activity_1623ajo"" name=""Estimated Arrival Time""><incoming>Flow_1qp3xmw</incoming><outgoing>Flow_04khsl9</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,18,"<task id=""Activity_1nwzzzm"" name=""send to customer the waiting time""><incoming>Flow_04khsl9</incoming><outgoing>Flow_0g20lkr</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,19,"<parallelGateway id=""Gateway_0iw6ax3""><incoming>Flow_0k3ykxg</incoming><incoming>Flow_0g20lkr</incoming><outgoing>Flow_0yjijpp</outgoing></parallelGateway>"
-food_delivery.bpmn,BPMN-specific,20,"<receiveTask id=""Activity_13779o3"" name=""notification order retired""><incoming>Flow_0yjijpp</incoming><outgoing>Flow_0wmlhtj</outgoing></receiveTask>"
-food_delivery.bpmn,BPMN-specific,21,"<sendTask id=""Activity_1ww6nps"" name=""notification order retired to the client""><incoming>Flow_0wmlhtj</incoming><outgoing>Flow_1ueot8n</outgoing></sendTask>"
-food_delivery.bpmn,BPMN-specific,22,"<receiveTask id=""Activity_0gh475d"" name=""notification order complete""><incoming>Flow_1ueot8n</incoming><outgoing>Flow_1n1np4q</outgoing></receiveTask>"
-food_delivery.bpmn,BPMN-specific,23,"<receiveTask id=""Activity_1iwh9bs"" name=""receive Customer Satisfaction""><incoming>Flow_1n1np4q</incoming><outgoing>Flow_1shbkt3</outgoing></receiveTask>"
-food_delivery.bpmn,BPMN-specific,24,"<task id=""Activity_1axkrpg"" name=""pay rider""><incoming>Flow_1shbkt3</incoming><outgoing>Flow_0qsqis4</outgoing></task>"
-food_delivery.bpmn,BPMN-specific,25,"<endEvent id=""Event_1iwqv9w"" name=""order completed""><incoming>Flow_0qsqis4</incoming></endEvent>"
-food_delivery.bpmn,BPMN-specific,26,"<sequenceFlow id=""Flow_08ptwir"" sourceRef=""Event_1uwsphs"" targetRef=""Gateway_0f3iu05"" />"
-food_delivery.bpmn,BPMN-specific,27,"<sequenceFlow id=""Flow_08xsx3q"" name=""no"" sourceRef=""Gateway_0f3iu05"" targetRef=""Activity_1uxpywg"" />"
-food_delivery.bpmn,BPMN-specific,28,"<sequenceFlow id=""Flow_0npkvg0"" name=""yes"" sourceRef=""Gateway_0f3iu05"" targetRef=""Activity_0zlhwln"" />"
-food_delivery.bpmn,BPMN-specific,29,"<sequenceFlow id=""Flow_1gno5ei"" sourceRef=""Activity_1uxpywg"" targetRef=""Activity_1x5mf5x"" />"
-food_delivery.bpmn,BPMN-specific,30,"<sequenceFlow id=""Flow_07gf68e"" sourceRef=""Activity_0zlhwln"" targetRef=""Activity_0mt2w5k"" />"
-food_delivery.bpmn,BPMN-specific,31,"<sequenceFlow id=""Flow_0d2a1d9"" sourceRef=""Activity_1x5mf5x"" targetRef=""Gateway_0z24z44"" />"
-food_delivery.bpmn,BPMN-specific,32,"<sequenceFlow id=""Flow_0l8n3mx"" sourceRef=""Activity_0mt2w5k"" targetRef=""Gateway_0z24z44"" />"
-food_delivery.bpmn,BPMN-specific,33,"<sequenceFlow id=""Flow_1tpgntx"" sourceRef=""Gateway_0z24z44"" targetRef=""Activity_074nbz9"" />"
-food_delivery.bpmn,BPMN-specific,34,"<sequenceFlow id=""Flow_0agx772"" sourceRef=""Activity_074nbz9"" targetRef=""Gateway_1lf96zg"" />"
-food_delivery.bpmn,BPMN-specific,35,"<sequenceFlow id=""Flow_0eb9w8a"" sourceRef=""Gateway_1lf96zg"" targetRef=""Activity_05qnapc"" />"
-food_delivery.bpmn,BPMN-specific,36,"<sequenceFlow id=""Flow_14atypc"" sourceRef=""Activity_05qnapc"" targetRef=""Activity_1r7emvp"" />"
-food_delivery.bpmn,BPMN-specific,37,"<sequenceFlow id=""Flow_0oe8kpj"" sourceRef=""Activity_1r7emvp"" targetRef=""Gateway_03ncbpd"" />"
-food_delivery.bpmn,BPMN-specific,38,"<sequenceFlow id=""Flow_0xnynh4"" name=""no"" sourceRef=""Gateway_03ncbpd"" targetRef=""Activity_1mf8wy9"" />"
-food_delivery.bpmn,BPMN-specific,39,"<sequenceFlow id=""Flow_096zrl8"" sourceRef=""Activity_1mf8wy9"" targetRef=""Gateway_1lf96zg"" />"
-food_delivery.bpmn,BPMN-specific,40,"<sequenceFlow id=""Flow_03y8s2m"" name=""yes"" sourceRef=""Gateway_03ncbpd"" targetRef=""Activity_00fcmsc"" />"
-food_delivery.bpmn,BPMN-specific,41,"<sequenceFlow id=""Flow_0a6icc7"" sourceRef=""Activity_00fcmsc"" targetRef=""Gateway_0yayjl1"" />"
-food_delivery.bpmn,BPMN-specific,42,"<sequenceFlow id=""Flow_0vdee2b"" sourceRef=""Gateway_0yayjl1"" targetRef=""Activity_02rjtb4"" />"
-food_delivery.bpmn,BPMN-specific,43,"<sequenceFlow id=""Flow_1qp3xmw"" sourceRef=""Gateway_0yayjl1"" targetRef=""Activity_1623ajo"" />"
-food_delivery.bpmn,BPMN-specific,44,"<sequenceFlow id=""Flow_04khsl9"" sourceRef=""Activity_1623ajo"" targetRef=""Activity_1nwzzzm"" />"
-food_delivery.bpmn,BPMN-specific,45,"<sequenceFlow id=""Flow_0k3ykxg"" sourceRef=""Activity_02rjtb4"" targetRef=""Gateway_0iw6ax3"" />"
-food_delivery.bpmn,BPMN-specific,46,"<sequenceFlow id=""Flow_0g20lkr"" sourceRef=""Activity_1nwzzzm"" targetRef=""Gateway_0iw6ax3"" />"
-food_delivery.bpmn,BPMN-specific,47,"<sequenceFlow id=""Flow_0yjijpp"" sourceRef=""Gateway_0iw6ax3"" targetRef=""Activity_13779o3"" />"
-food_delivery.bpmn,BPMN-specific,48,"<sequenceFlow id=""Flow_0wmlhtj"" sourceRef=""Activity_13779o3"" targetRef=""Activity_1ww6nps"" />"
-food_delivery.bpmn,BPMN-specific,49,"<sequenceFlow id=""Flow_1ueot8n"" sourceRef=""Activity_1ww6nps"" targetRef=""Activity_0gh475d"" />"
-food_delivery.bpmn,BPMN-specific,50,"<sequenceFlow id=""Flow_1n1np4q"" sourceRef=""Activity_0gh475d"" targetRef=""Activity_1iwh9bs"" />"
-food_delivery.bpmn,BPMN-specific,51,"<sequenceFlow id=""Flow_1shbkt3"" sourceRef=""Activity_1iwh9bs"" targetRef=""Activity_1axkrpg"" />"
-food_delivery.bpmn,BPMN-specific,52,"<sequenceFlow id=""Flow_0qsqis4"" sourceRef=""Activity_1axkrpg"" targetRef=""Event_1iwqv9w"" />"
-food_delivery.bpmn,Fixed-size,1,"<?xml version=""1.0"" encoding=""UTF-8""?> <definitions xmlns=""http://www.omg.org/spec/BPMN/20100524/MODEL"" id=""sid-38422fae-e03e-43a3-bef4-bd33b32041b2""> <collaboration id=""Collaboration_0e53gvp""> <participant id=""Participant_163kd16"" name=""Food Delivery system"" processRef=""Process_1"" /> </collaboration> <process id=""Process_1""> <laneSet id=""LaneSet_0w7a9sj""> <lane id=""Lane_0f7txj4""> <flowNodeRef>Activity_1mf8wy9</flowNodeRef> <flowNodeRef>Event_1iwqv9w</flowNodeRef> <flowNodeRef>Activity_1axkrpg</flowNodeRef> <flowNodeRef>Activity_0gh475d</flowNodeRef> <flowNodeRef>Event_1uwsphs</flowNodeRef> <flowNodeRef>Gateway_0f3iu05</flowNodeRef> <flowNodeRef>Activity_1uxpywg</flowNodeRef> <flowNodeRef>Activity_0zlhwln</flowNodeRef> <flowNodeRef>Gateway_0z24z44</flowNodeRef> <flowNodeRef>Activity_0mt2w5k</flowNodeRef>"
-food_delivery.bpmn,Fixed-size,2,"<flowNodeRef>Activity_1mf8wy9</flowNodeRef> <flowNodeRef>Event_1iwqv9w</flowNodeRef> <flowNodeRef>Activity_1axkrpg</flowNodeRef> <flowNodeRef>Activity_0gh475d</flowNodeRef> <flowNodeRef>Event_1uwsphs</flowNodeRef> <flowNodeRef>Gateway_0f3iu05</flowNodeRef> <flowNodeRef>Activity_1uxpywg</flowNodeRef> <flowNodeRef>Activity_0zlhwln</flowNodeRef> <flowNodeRef>Gateway_0z24z44</flowNodeRef> <flowNodeRef>Activity_0mt2w5k</flowNodeRef> <flowNodeRef>Activity_1x5mf5x</flowNodeRef> <flowNodeRef>Activity_074nbz9</flowNodeRef> <flowNodeRef>Gateway_1lf96zg</flowNodeRef> <flowNodeRef>Activity_05qnapc</flowNodeRef> <flowNodeRef>Activity_1r7emvp</flowNodeRef> <flowNodeRef>Gateway_03ncbpd</flowNodeRef> <flowNodeRef>Activity_00fcmsc</flowNodeRef> <flowNodeRef>Gateway_0yayjl1</flowNodeRef> <flowNodeRef>Activity_02rjtb4</flowNodeRef> <flowNodeRef>Activity_1623ajo</flowNodeRef> <flowNodeRef>Activity_1nwzzzm</flowNodeRef> <flowNodeRef>Activity_13779o3</flowNodeRef> <flowNodeRef>Gateway_0iw6ax3</flowNodeRef> <flowNodeRef>Activity_1ww6nps</flowNodeRef> <flowNodeRef>Activity_1iwh9bs</flowNodeRef> </lane> </laneSet> <startEvent id=""Event_1uwsphs"" name=""customer order""> <outgoing>Flow_08ptwir</outgoing>"
-food_delivery.bpmn,Fixed-size,3,"<flowNodeRef>Gateway_0iw6ax3</flowNodeRef> <flowNodeRef>Activity_1ww6nps</flowNodeRef> <flowNodeRef>Activity_1iwh9bs</flowNodeRef> </lane> </laneSet> <startEvent id=""Event_1uwsphs"" name=""customer order""> <outgoing>Flow_08ptwir</outgoing> </startEvent> <exclusiveGateway id=""Gateway_0f3iu05"" name=""is the customer registered?""> <incoming>Flow_08ptwir</incoming> <outgoing>Flow_08xsx3q</outgoing> <outgoing>Flow_0npkvg0</outgoing> </exclusiveGateway> <task id=""Activity_1uxpywg"" name=""create an account""> <incoming>Flow_08xsx3q</incoming> <outgoing>Flow_1gno5ei</outgoing> <dataOutputAssociation id=""DataOutputAssociation_05j6629""> <targetRef>DataStoreReference_19ys4f0</targetRef> </dataOutputAssociation>"
-food_delivery.bpmn,Fixed-size,4,"id=""Activity_1uxpywg"" name=""create an account""> <incoming>Flow_08xsx3q</incoming> <outgoing>Flow_1gno5ei</outgoing> <dataOutputAssociation id=""DataOutputAssociation_05j6629""> <targetRef>DataStoreReference_19ys4f0</targetRef> </dataOutputAssociation> </task> <task id=""Activity_0zlhwln"" name=""recover client info""> <incoming>Flow_0npkvg0</incoming> <outgoing>Flow_07gf68e</outgoing> <dataOutputAssociation id=""DataOutputAssociation_1sd0iya""> <targetRef>DataStoreReference_19ys4f0</targetRef> </dataOutputAssociation> </task> <task id=""Activity_1x5mf5x"" name=""check credit card and the payment""> <incoming>Flow_1gno5ei</incoming>"
-food_delivery.bpmn,Fixed-size,5,"</task> <task id=""Activity_1x5mf5x"" name=""check credit card and the payment""> <incoming>Flow_1gno5ei</incoming> <outgoing>Flow_0d2a1d9</outgoing> </task> <task id=""Activity_0mt2w5k"" name=""check payment""> <incoming>Flow_07gf68e</incoming> <outgoing>Flow_0l8n3mx</outgoing> </task> <exclusiveGateway id=""Gateway_0z24z44""> <incoming>Flow_0d2a1d9</incoming> <incoming>Flow_0l8n3mx</incoming> <outgoing>Flow_1tpgntx</outgoing> </exclusiveGateway> <task id=""Activity_074nbz9"" name=""register the order""> <incoming>Flow_1tpgntx</incoming> <outgoing>Flow_0agx772</outgoing>"
-food_delivery.bpmn,Fixed-size,6,"<incoming>Flow_0l8n3mx</incoming> <outgoing>Flow_1tpgntx</outgoing> </exclusiveGateway> <task id=""Activity_074nbz9"" name=""register the order""> <incoming>Flow_1tpgntx</incoming> <outgoing>Flow_0agx772</outgoing> </task> <exclusiveGateway id=""Gateway_1lf96zg""> <incoming>Flow_096zrl8</incoming> <incoming>Flow_0agx772</incoming> <outgoing>Flow_0eb9w8a</outgoing> </exclusiveGateway> <task id=""Activity_05qnapc"" name=""select rider and create work proposal""> <incoming>Flow_0eb9w8a</incoming> <outgoing>Flow_14atypc</outgoing> </task> <sendTask id=""Activity_1r7emvp"" name=""send work"
-food_delivery.bpmn,Fixed-size,7,"create work proposal""> <incoming>Flow_0eb9w8a</incoming> <outgoing>Flow_14atypc</outgoing> </task> <sendTask id=""Activity_1r7emvp"" name=""send work proposal""> <incoming>Flow_14atypc</incoming> <outgoing>Flow_0oe8kpj</outgoing> </sendTask> <exclusiveGateway id=""Gateway_03ncbpd"" name=""has the order been accepted?""> <incoming>Flow_0oe8kpj</incoming> <outgoing>Flow_03y8s2m</outgoing> <outgoing>Flow_0xnynh4</outgoing> </exclusiveGateway> <task id=""Activity_1mf8wy9"" name=""the rider refused the order"">"
-food_delivery.bpmn,Fixed-size,8,"<outgoing>Flow_03y8s2m</outgoing> <outgoing>Flow_0xnynh4</outgoing> </exclusiveGateway> <task id=""Activity_1mf8wy9"" name=""the rider refused the order""> <incoming>Flow_0xnynh4</incoming> <outgoing>Flow_096zrl8</outgoing> </task> <task id=""Activity_00fcmsc"" name=""the rider accepted the order""> <incoming>Flow_03y8s2m</incoming> <outgoing>Flow_0a6icc7</outgoing> </task> <parallelGateway id=""Gateway_0yayjl1""> <incoming>Flow_0a6icc7</incoming> <outgoing>Flow_0vdee2b</outgoing> <outgoing>Flow_1qp3xmw</outgoing> </parallelGateway> <task id=""Activity_02rjtb4"" name=""send"
-food_delivery.bpmn,Fixed-size,9,"</task> <parallelGateway id=""Gateway_0yayjl1""> <incoming>Flow_0a6icc7</incoming> <outgoing>Flow_0vdee2b</outgoing> <outgoing>Flow_1qp3xmw</outgoing> </parallelGateway> <task id=""Activity_02rjtb4"" name=""send confirmation to rider""> <incoming>Flow_0vdee2b</incoming> <outgoing>Flow_0k3ykxg</outgoing> </task> <task id=""Activity_1623ajo"" name=""Estimated Arrival Time""> <incoming>Flow_1qp3xmw</incoming> <outgoing>Flow_04khsl9</outgoing> </task> <task id=""Activity_1nwzzzm"" name=""send to customer the waiting time"">"
-food_delivery.bpmn,Fixed-size,10,"<outgoing>Flow_04khsl9</outgoing> </task> <task id=""Activity_1nwzzzm"" name=""send to customer the waiting time""> <incoming>Flow_04khsl9</incoming> <outgoing>Flow_0g20lkr</outgoing> </task> <parallelGateway id=""Gateway_0iw6ax3""> <incoming>Flow_0k3ykxg</incoming> <incoming>Flow_0g20lkr</incoming> <outgoing>Flow_0yjijpp</outgoing> </parallelGateway> <receiveTask id=""Activity_13779o3"" name=""notification order retired""> <incoming>Flow_0yjijpp</incoming> <outgoing>Flow_0wmlhtj</outgoing> </receiveTask> <sendTask id=""Activity_1ww6nps"" name=""notification order retired"
-food_delivery.bpmn,Fixed-size,11,"order retired""> <incoming>Flow_0yjijpp</incoming> <outgoing>Flow_0wmlhtj</outgoing> </receiveTask> <sendTask id=""Activity_1ww6nps"" name=""notification order retired to the client""> <incoming>Flow_0wmlhtj</incoming> <outgoing>Flow_1ueot8n</outgoing> </sendTask> <receiveTask id=""Activity_0gh475d"" name=""notification order complete""> <incoming>Flow_1ueot8n</incoming> <outgoing>Flow_1n1np4q</outgoing> </receiveTask> <receiveTask id=""Activity_1iwh9bs"" name=""receive Customer Satisfaction""> <incoming>Flow_1n1np4q</incoming> <outgoing>Flow_1shbkt3</outgoing> <dataOutputAssociation"
-food_delivery.bpmn,Fixed-size,12,"<outgoing>Flow_1n1np4q</outgoing> </receiveTask> <receiveTask id=""Activity_1iwh9bs"" name=""receive Customer Satisfaction""> <incoming>Flow_1n1np4q</incoming> <outgoing>Flow_1shbkt3</outgoing> <dataOutputAssociation id=""DataOutputAssociation_1iqwbbz""> <targetRef>DataStoreReference_19ys4f0</targetRef> </dataOutputAssociation> </receiveTask> <task id=""Activity_1axkrpg"" name=""pay rider""> <incoming>Flow_1shbkt3</incoming> <outgoing>Flow_0qsqis4</outgoing> <dataOutputAssociation id=""DataOutputAssociation_1q7ga9z""> <targetRef>DataStoreReference_0ac1ndt</targetRef> </dataOutputAssociation> </task> <endEvent id=""Event_1iwqv9w"" name=""order completed""> <incoming>Flow_0qsqis4</incoming> </endEvent> <dataStoreReference"
-food_delivery.bpmn,Fixed-size,13,"<targetRef>DataStoreReference_0ac1ndt</targetRef> </dataOutputAssociation> </task> <endEvent id=""Event_1iwqv9w"" name=""order completed""> <incoming>Flow_0qsqis4</incoming> </endEvent> <dataStoreReference id=""DataStoreReference_19ys4f0"" name=""customer database"" /> <dataStoreReference id=""DataStoreReference_0ac1ndt"" name=""payment database"" /> <sequenceFlow id=""Flow_08ptwir"" sourceRef=""Event_1uwsphs"" targetRef=""Gateway_0f3iu05"" /> <sequenceFlow id=""Flow_08xsx3q"" name=""no"" sourceRef=""Gateway_0f3iu05"" targetRef=""Activity_1uxpywg"" /> <sequenceFlow id=""Flow_0npkvg0"""
-food_delivery.bpmn,Fixed-size,14,"targetRef=""Gateway_0f3iu05"" /> <sequenceFlow id=""Flow_08xsx3q"" name=""no"" sourceRef=""Gateway_0f3iu05"" targetRef=""Activity_1uxpywg"" /> <sequenceFlow id=""Flow_0npkvg0"" name=""yes"" sourceRef=""Gateway_0f3iu05"" targetRef=""Activity_0zlhwln"" /> <sequenceFlow id=""Flow_1gno5ei"" sourceRef=""Activity_1uxpywg"" targetRef=""Activity_1x5mf5x"" /> <sequenceFlow id=""Flow_07gf68e"" sourceRef=""Activity_0zlhwln"" targetRef=""Activity_0mt2w5k"" /> <sequenceFlow id=""Flow_0d2a1d9"" sourceRef=""Activity_1x5mf5x"" targetRef=""Gateway_0z24z44"" /> <sequenceFlow id=""Flow_0l8n3mx"" sourceRef=""Activity_0mt2w5k"""
-food_delivery.bpmn,Fixed-size,15,"targetRef=""Activity_0mt2w5k"" /> <sequenceFlow id=""Flow_0d2a1d9"" sourceRef=""Activity_1x5mf5x"" targetRef=""Gateway_0z24z44"" /> <sequenceFlow id=""Flow_0l8n3mx"" sourceRef=""Activity_0mt2w5k"" targetRef=""Gateway_0z24z44"" /> <sequenceFlow id=""Flow_1tpgntx"" sourceRef=""Gateway_0z24z44"" targetRef=""Activity_074nbz9"" /> <sequenceFlow id=""Flow_0agx772"" sourceRef=""Activity_074nbz9"" targetRef=""Gateway_1lf96zg"" /> <sequenceFlow id=""Flow_0eb9w8a"" sourceRef=""Gateway_1lf96zg"" targetRef=""Activity_05qnapc"" /> <sequenceFlow id=""Flow_14atypc"" sourceRef=""Activity_05qnapc"" targetRef=""Activity_1r7emvp"" />"
-food_delivery.bpmn,Fixed-size,16,"<sequenceFlow id=""Flow_0eb9w8a"" sourceRef=""Gateway_1lf96zg"" targetRef=""Activity_05qnapc"" /> <sequenceFlow id=""Flow_14atypc"" sourceRef=""Activity_05qnapc"" targetRef=""Activity_1r7emvp"" /> <sequenceFlow id=""Flow_0oe8kpj"" sourceRef=""Activity_1r7emvp"" targetRef=""Gateway_03ncbpd"" /> <sequenceFlow id=""Flow_0xnynh4"" name=""no"" sourceRef=""Gateway_03ncbpd"" targetRef=""Activity_1mf8wy9"" /> <sequenceFlow id=""Flow_096zrl8"" sourceRef=""Activity_1mf8wy9"" targetRef=""Gateway_1lf96zg"" /> <sequenceFlow id=""Flow_03y8s2m"" name=""yes"" sourceRef=""Gateway_03ncbpd"" targetRef=""Activity_00fcmsc"" />"
-food_delivery.bpmn,Fixed-size,17,"id=""Flow_096zrl8"" sourceRef=""Activity_1mf8wy9"" targetRef=""Gateway_1lf96zg"" /> <sequenceFlow id=""Flow_03y8s2m"" name=""yes"" sourceRef=""Gateway_03ncbpd"" targetRef=""Activity_00fcmsc"" /> <sequenceFlow id=""Flow_0a6icc7"" sourceRef=""Activity_00fcmsc"" targetRef=""Gateway_0yayjl1"" /> <sequenceFlow id=""Flow_0vdee2b"" sourceRef=""Gateway_0yayjl1"" targetRef=""Activity_02rjtb4"" /> <sequenceFlow id=""Flow_1qp3xmw"" sourceRef=""Gateway_0yayjl1"" targetRef=""Activity_1623ajo"" /> <sequenceFlow id=""Flow_04khsl9"" sourceRef=""Activity_1623ajo"" targetRef=""Activity_1nwzzzm"" /> <sequenceFlow id=""Flow_0k3ykxg"""
-food_delivery.bpmn,Fixed-size,18,"sourceRef=""Gateway_0yayjl1"" targetRef=""Activity_1623ajo"" /> <sequenceFlow id=""Flow_04khsl9"" sourceRef=""Activity_1623ajo"" targetRef=""Activity_1nwzzzm"" /> <sequenceFlow id=""Flow_0k3ykxg"" sourceRef=""Activity_02rjtb4"" targetRef=""Gateway_0iw6ax3"" /> <sequenceFlow id=""Flow_0g20lkr"" sourceRef=""Activity_1nwzzzm"" targetRef=""Gateway_0iw6ax3"" /> <sequenceFlow id=""Flow_0yjijpp"" sourceRef=""Gateway_0iw6ax3"" targetRef=""Activity_13779o3"" /> <sequenceFlow id=""Flow_0wmlhtj"" sourceRef=""Activity_13779o3"" targetRef=""Activity_1ww6nps"" /> <sequenceFlow id=""Flow_1ueot8n"" sourceRef=""Activity_1ww6nps"" targetRef=""Activity_0gh475d"""
-food_delivery.bpmn,Fixed-size,19,"/> <sequenceFlow id=""Flow_0wmlhtj"" sourceRef=""Activity_13779o3"" targetRef=""Activity_1ww6nps"" /> <sequenceFlow id=""Flow_1ueot8n"" sourceRef=""Activity_1ww6nps"" targetRef=""Activity_0gh475d"" /> <sequenceFlow id=""Flow_1n1np4q"" sourceRef=""Activity_0gh475d"" targetRef=""Activity_1iwh9bs"" /> <sequenceFlow id=""Flow_1shbkt3"" sourceRef=""Activity_1iwh9bs"" targetRef=""Activity_1axkrpg"" /> <sequenceFlow id=""Flow_0qsqis4"" sourceRef=""Activity_1axkrpg"" targetRef=""Event_1iwqv9w"" /> </process> </definitions>"
-food_delivery.bpmn,Fixed-size,20,"id=""Flow_0qsqis4"" sourceRef=""Activity_1axkrpg"" targetRef=""Event_1iwqv9w"" /> </process> </definitions>"
-food_delivery.bpmn,Recursive,1,"<?xml version=""1.0"" encoding=""UTF-8""?>
-<definitions xmlns=""http://www.omg.org/spec/BPMN/20100524/MODEL"" id=""sid-38422fae-e03e-43a3-bef4-bd33b32041b2"">
-  <collaboration id=""Collaboration_0e53gvp"">
-    <participant id=""Participant_163kd16"" name=""Food Delivery system"" processRef=""Process_1"" />
-  </collaboration>
-  <process id=""Process_1"">
-    <laneSet id=""LaneSet_0w7a9sj"">
-      <lane id=""Lane_0f7txj4"">
-        <flowNodeRef>Activity_1mf8wy9</flowNodeRef>
-        <flowNodeRef>Event_1iwqv9w</flowNodeRef>
-        <flowNodeRef>Activity_1axkrpg</flowNodeRef>
-        <flowNodeRef>Activity_0gh475d</flowNodeRef>
-        <flowNodeRef>Event_1uwsphs</flowNodeRef>
-        <flowNodeRef>Gateway_0f3iu05</flowNodeRef>
-        <flowNodeRef>Activity_1uxpywg</flowNodeRef>
-        <flowNodeRef>Activity_0zlhwln</flowNodeRef>
-        <flowNodeRef>Gateway_0z24z44</flowNodeRef>
-        <flowNodeRef>Activity_0mt2w5k</flowNodeRef>
-        <flowNodeRef>Activity_1x5mf5x</flowNodeRef>
-        <flowNodeRef>Activity_074nbz9</flowNodeRef>
-        <flowNodeRef>Gateway_1lf96zg</flowNodeRef>
-        <flowNodeRef>Activity_05qnapc</flowNodeRef>
-        <flowNodeRef>Activity_1r7emvp</flowNodeRef>
-        <flowNodeRef>Gateway_03ncbpd</flowNodeRef>
-        <flowNodeRef>Activity_00fcmsc</flowNodeRef>
-        <flowNodeRef>Gateway_0yayjl1</flowNodeRef>
-        <flowNodeRef>Activity_02rjtb4</flowNodeRef>
-        <flowNodeRef>Activity_1623ajo</flowNodeRef>
-        <flowNodeRef>Activity_1nwzzzm</flowNodeRef>
-        <flowNodeRef>Activity_13779o3</flowNodeRef>
-        <flowNodeRef>Gateway_0iw6ax3</flowNodeRef>
-        <flowNodeRef>Activity_1ww6nps</flowNodeRef>
-        <flowNodeRef>Activity_1iwh9bs</flowNodeRef>
-      </lane>
-    </laneSet>"
-food_delivery.bpmn,Recursive,2,"<startEvent id=""Event_1uwsphs"" name=""customer order"">
-      <outgoing>Flow_08ptwir</outgoing>
-    </startEvent>
-    <exclusiveGateway id=""Gateway_0f3iu05"" name=""is the customer registered?"">
-      <incoming>Flow_08ptwir</incoming>
-      <outgoing>Flow_08xsx3q</outgoing>
-      <outgoing>Flow_0npkvg0</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_1uxpywg"" name=""create an account"">
-      <incoming>Flow_08xsx3q</incoming>
-      <outgoing>Flow_1gno5ei</outgoing>
-      <dataOutputAssociation id=""DataOutputAssociation_05j6629"">
-        <targetRef>DataStoreReference_19ys4f0</targetRef>
-      </dataOutputAssociation>
-    </task>
-    <task id=""Activity_0zlhwln"" name=""recover client info"">
-      <incoming>Flow_0npkvg0</incoming>
-      <outgoing>Flow_07gf68e</outgoing>
-      <dataOutputAssociation id=""DataOutputAssociation_1sd0iya"">
-        <targetRef>DataStoreReference_19ys4f0</targetRef>
-      </dataOutputAssociation>
-    </task>
-    <task id=""Activity_1x5mf5x"" name=""check credit card and the payment"">
-      <incoming>Flow_1gno5ei</incoming>
-      <outgoing>Flow_0d2a1d9</outgoing>
-    </task>
-    <task id=""Activity_0mt2w5k"" name=""check payment"">
-      <incoming>Flow_07gf68e</incoming>
-      <outgoing>Flow_0l8n3mx</outgoing>
-    </task>
-    <exclusiveGateway id=""Gateway_0z24z44"">
-      <incoming>Flow_0d2a1d9</incoming>
-      <incoming>Flow_0l8n3mx</incoming>
-      <outgoing>Flow_1tpgntx</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_074nbz9"" name=""register the order"">
-      <incoming>Flow_1tpgntx</incoming>
-      <outgoing>Flow_0agx772</outgoing>
-    </task>
-    <exclusiveGateway id=""Gateway_1lf96zg"">
-      <incoming>Flow_096zrl8</incoming>
-      <incoming>Flow_0agx772</incoming>
-      <outgoing>Flow_0eb9w8a</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_05qnapc"" name=""select rider and create work proposal"">
-      <incoming>Flow_0eb9w8a</incoming>
-      <outgoing>Flow_14atypc</outgoing>
-    </task>
-    <sendTask id=""Activity_1r7emvp"" name=""send work proposal"">
-      <incoming>Flow_14atypc</incoming>
-      <outgoing>Flow_0oe8kpj</outgoing>
-    </sendTask>
-    <exclusiveGateway id=""Gateway_03ncbpd"" name=""has the order been accepted?"">
-      <incoming>Flow_0oe8kpj</incoming>
-      <outgoing>Flow_03y8s2m</outgoing>
-      <outgoing>Flow_0xnynh4</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_1mf8wy9"" name=""the rider refused the order"">
-      <incoming>Flow_0xnynh4</incoming>
-      <outgoing>Flow_096zrl8</outgoing>
-    </task>
-    <task id=""Activity_00fcmsc"" name=""the rider accepted the order"">
-      <incoming>Flow_03y8s2m</incoming>
-      <outgoing>Flow_0a6icc7</outgoing>
-    </task>
-    <parallelGateway id=""Gateway_0yayjl1"">
-      <incoming>Flow_0a6icc7</incoming>
-      <outgoing>Flow_0vdee2b</outgoing>
-      <outgoing>Flow_1qp3xmw</outgoing>
-    </parallelGateway>
-    <task id=""Activity_02rjtb4"" name=""send confirmation to rider"">
-      <incoming>Flow_0vdee2b</incoming>
-      <outgoing>Flow_0k3ykxg</outgoing>
-    </task>
-    <task id=""Activity_1623ajo"" name=""Estimated Arrival Time"">
-      <incoming>Flow_1qp3xmw</incoming>
-      <outgoing>Flow_04khsl9</outgoing>
-    </task>
-    <task id=""Activity_1nwzzzm"" name=""send to customer the waiting time"">
-      <incoming>Flow_04khsl9</incoming>
-      <outgoing>Flow_0g20lkr</outgoing>
-    </task>
-    <parallelGateway id=""Gateway_0iw6ax3"">
-      <incoming>Flow_0k3ykxg</incoming>
-      <incoming>Flow_0g20lkr</incoming>
-      <outgoing>Flow_0yjijpp</outgoing>
-    </parallelGateway>
-    <receiveTask id=""Activity_13779o3"" name=""notification order retired"">
-      <incoming>Flow_0yjijpp</incoming>
-      <outgoing>Flow_0wmlhtj</outgoing>
-    </receiveTask>
-    <sendTask id=""Activity_1ww6nps"" name=""notification order retired to the client"">
-      <incoming>Flow_0wmlhtj</incoming>
-      <outgoing>Flow_1ueot8n</outgoing>
-    </sendTask>
-    <receiveTask id=""Activity_0gh475d"" name=""notification order complete"">
-      <incoming>Flow_1ueot8n</incoming>
-      <outgoing>Flow_1n1np4q</outgoing>
-    </receiveTask>
-    <receiveTask id=""Activity_1iwh9bs"" name=""receive Customer Satisfaction"">
-      <incoming>Flow_1n1np4q</incoming>
-      <outgoing>Flow_1shbkt3</outgoing>
-      <dataOutputAssociation id=""DataOutputAssociation_1iqwbbz"">
-        <targetRef>DataStoreReference_19ys4f0</targetRef>
-      </dataOutputAssociation>
-    </receiveTask>
-    <task id=""Activity_1axkrpg"" name=""pay rider"">
-      <incoming>Flow_1shbkt3</incoming>
-      <outgoing>Flow_0qsqis4</outgoing>
-      <dataOutputAssociation id=""DataOutputAssociation_1q7ga9z"">
-        <targetRef>DataStoreReference_0ac1ndt</targetRef>
-      </dataOutputAssociation>
-    </task>
-    <endEvent id=""Event_1iwqv9w"" name=""order completed"">
-      <incoming>Flow_0qsqis4</incoming>
-    </endEvent>"
-food_delivery.bpmn,Recursive,3,"<dataStoreReference id=""DataStoreReference_19ys4f0"" name=""customer database"" />
-    <dataStoreReference id=""DataStoreReference_0ac1ndt"" name=""payment database"" />"
-food_delivery.bpmn,Recursive,4,"<sequenceFlow id=""Flow_08ptwir"" sourceRef=""Event_1uwsphs"" targetRef=""Gateway_0f3iu05"" />
-    <sequenceFlow id=""Flow_08xsx3q"" name=""no"" sourceRef=""Gateway_0f3iu05"" targetRef=""Activity_1uxpywg"" />
-    <sequenceFlow id=""Flow_0npkvg0"" name=""yes"" sourceRef=""Gateway_0f3iu05"" targetRef=""Activity_0zlhwln"" />
-    <sequenceFlow id=""Flow_1gno5ei"" sourceRef=""Activity_1uxpywg"" targetRef=""Activity_1x5mf5x"" />
-    <sequenceFlow id=""Flow_07gf68e"" sourceRef=""Activity_0zlhwln"" targetRef=""Activity_0mt2w5k"" />
-    <sequenceFlow id=""Flow_0d2a1d9"" sourceRef=""Activity_1x5mf5x"" targetRef=""Gateway_0z24z44"" />
-    <sequenceFlow id=""Flow_0l8n3mx"" sourceRef=""Activity_0mt2w5k"" targetRef=""Gateway_0z24z44"" />
-    <sequenceFlow id=""Flow_1tpgntx"" sourceRef=""Gateway_0z24z44"" targetRef=""Activity_074nbz9"" />
-    <sequenceFlow id=""Flow_0agx772"" sourceRef=""Activity_074nbz9"" targetRef=""Gateway_1lf96zg"" />
-    <sequenceFlow id=""Flow_0eb9w8a"" sourceRef=""Gateway_1lf96zg"" targetRef=""Activity_05qnapc"" />
-    <sequenceFlow id=""Flow_14atypc"" sourceRef=""Activity_05qnapc"" targetRef=""Activity_1r7emvp"" />
-    <sequenceFlow id=""Flow_0oe8kpj"" sourceRef=""Activity_1r7emvp"" targetRef=""Gateway_03ncbpd"" />
-    <sequenceFlow id=""Flow_0xnynh4"" name=""no"" sourceRef=""Gateway_03ncbpd"" targetRef=""Activity_1mf8wy9"" />
-    <sequenceFlow id=""Flow_096zrl8"" sourceRef=""Activity_1mf8wy9"" targetRef=""Gateway_1lf96zg"" />
-    <sequenceFlow id=""Flow_03y8s2m"" name=""yes"" sourceRef=""Gateway_03ncbpd"" targetRef=""Activity_00fcmsc"" />
-    <sequenceFlow id=""Flow_0a6icc7"" sourceRef=""Activity_00fcmsc"" targetRef=""Gateway_0yayjl1"" />
-    <sequenceFlow id=""Flow_0vdee2b"" sourceRef=""Gateway_0yayjl1"" targetRef=""Activity_02rjtb4"" />
-    <sequenceFlow id=""Flow_1qp3xmw"" sourceRef=""Gateway_0yayjl1"" targetRef=""Activity_1623ajo"" />
-    <sequenceFlow id=""Flow_04khsl9"" sourceRef=""Activity_1623ajo"" targetRef=""Activity_1nwzzzm"" />
-    <sequenceFlow id=""Flow_0k3ykxg"" sourceRef=""Activity_02rjtb4"" targetRef=""Gateway_0iw6ax3"" />
-    <sequenceFlow id=""Flow_0g20lkr"" sourceRef=""Activity_1nwzzzm"" targetRef=""Gateway_0iw6ax3"" />
-    <sequenceFlow id=""Flow_0yjijpp"" sourceRef=""Gateway_0iw6ax3"" targetRef=""Activity_13779o3"" />
-    <sequenceFlow id=""Flow_0wmlhtj"" sourceRef=""Activity_13779o3"" targetRef=""Activity_1ww6nps"" />
-    <sequenceFlow id=""Flow_1ueot8n"" sourceRef=""Activity_1ww6nps"" targetRef=""Activity_0gh475d"" />
-    <sequenceFlow id=""Flow_1n1np4q"" sourceRef=""Activity_0gh475d"" targetRef=""Activity_1iwh9bs"" />
-    <sequenceFlow id=""Flow_1shbkt3"" sourceRef=""Activity_1iwh9bs"" targetRef=""Activity_1axkrpg"" />
-    <sequenceFlow id=""Flow_0qsqis4"" sourceRef=""Activity_1axkrpg"" targetRef=""Event_1iwqv9w"" />
-  </process>
-</definitions>"
-reimbursement.bpmn,BPMN-specific,1,"<startEvent id=""Id_fa5d9e26-c99d-4b68-8819-8461f4725121"" name=""Expense report received""><outgoing>Flow_05t7k6b</outgoing></startEvent>"
-reimbursement.bpmn,BPMN-specific,2,"<task id=""Activity_05ixu0l"" name=""Notify Employee""><incoming>Flow_05t7k6b</incoming><outgoing>Flow_1hyof5d</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,3,"<exclusiveGateway id=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" name=""Is a new account required?""><incoming>Flow_1hyof5d</incoming><outgoing>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</outgoing><outgoing>Id_104f1377-4163-4147-b854-55a5ba0eea20</outgoing></exclusiveGateway>"
-reimbursement.bpmn,BPMN-specific,4,"<task id=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" name=""Create Employee Account""><incoming>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</incoming><outgoing>Id_e276783d-44de-4a56-bda3-d51ba6cfd360</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,5,"<exclusiveGateway id=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417""><incoming>Id_104f1377-4163-4147-b854-55a5ba0eea20</incoming><incoming>Id_e276783d-44de-4a56-bda3-d51ba6cfd360</incoming><outgoing>Flow_18hsnqo</outgoing></exclusiveGateway>"
-reimbursement.bpmn,BPMN-specific,6,"<task id=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" name=""Review amount""><incoming>Flow_18hsnqo</incoming><outgoing>Flow_1eefdha</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,7,"<exclusiveGateway id=""Gateway_08rst62"" name=""How much is the amount to be reimbursed?""><incoming>Flow_1eefdha</incoming><outgoing>Flow_1m8lru7</outgoing><outgoing>Flow_1vr0goi</outgoing></exclusiveGateway>"
-reimbursement.bpmn,BPMN-specific,8,"<task id=""Activity_0v4lv53"" name=""Reformat and send expense report""><incoming>Flow_1vr0goi</incoming><outgoing>Flow_0uilgiq</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,9,"<task id=""Activity_1mybaex"" name=""Assess evaluation report""><incoming>Flow_0uilgiq</incoming><outgoing>Flow_0unpe9u</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,10,"<task id=""Activity_1wl94dy"" name=""Approve expense report without assessment""><incoming>Flow_1m8lru7</incoming><outgoing>Flow_0l1aptn</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,11,"<exclusiveGateway id=""Gateway_1wkso6h""><incoming>Flow_0l1aptn</incoming><incoming>Flow_0unpe9u</incoming><outgoing>Flow_06j4qqo</outgoing></exclusiveGateway>"
-reimbursement.bpmn,BPMN-specific,12,"<task id=""Activity_08u3u2t"" name=""Review expense report""><incoming>Flow_06j4qqo</incoming><outgoing>Flow_0tmojyu</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,13,"<exclusiveGateway id=""Gateway_098odj7"" name=""Expense report is OK?""><incoming>Flow_0tmojyu</incoming><outgoing>Id_a07af8bb-6cee-477a-9e03-2d1614524715</outgoing><outgoing>Flow_0rtaeg2</outgoing></exclusiveGateway>"
-reimbursement.bpmn,BPMN-specific,14,"<task id=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" name=""Reject expense report""><incoming>Id_a07af8bb-6cee-477a-9e03-2d1614524715</incoming><outgoing>Id_ef9286e2-d9b4-465c-8a9a-74f15051b870</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,15,"<endEvent id=""Id_0d6d53c6-db6e-4333-b06e-ba007abba16a"" name=""Reimbursement rejected""><incoming>Id_ef9286e2-d9b4-465c-8a9a-74f15051b870</incoming></endEvent>"
-reimbursement.bpmn,BPMN-specific,16,"<task id=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" name=""Approve expense report""><incoming>Flow_0rtaeg2</incoming><outgoing>Flow_1rxe59t</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,17,"<task id=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" name=""Transfer money to bank account""><incoming>Flow_1rxe59t</incoming><outgoing>Flow_0yghqs0</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,18,"<task id=""Activity_0q4b4ku"" name=""Send approval notification""><incoming>Flow_0yghqs0</incoming><outgoing>Flow_0aac4lq</outgoing></task>"
-reimbursement.bpmn,BPMN-specific,19,"<endEvent id=""Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6"" name=""Money transferred""><incoming>Flow_0aac4lq</incoming></endEvent>"
-reimbursement.bpmn,BPMN-specific,20,"<sequenceFlow id=""Flow_05t7k6b"" sourceRef=""Id_fa5d9e26-c99d-4b68-8819-8461f4725121"" targetRef=""Activity_05ixu0l"" />"
-reimbursement.bpmn,BPMN-specific,21,"<sequenceFlow id=""Flow_1hyof5d"" sourceRef=""Activity_05ixu0l"" targetRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" />"
-reimbursement.bpmn,BPMN-specific,22,"<sequenceFlow id=""Id_b3f87643-821e-41ad-b2dc-b619f49b2684"" name=""New account required"" sourceRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" targetRef=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" />"
-reimbursement.bpmn,BPMN-specific,23,"<sequenceFlow id=""Id_104f1377-4163-4147-b854-55a5ba0eea20"" name=""Account already existing"" sourceRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" targetRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" />"
-reimbursement.bpmn,BPMN-specific,24,"<sequenceFlow id=""Id_e276783d-44de-4a56-bda3-d51ba6cfd360"" sourceRef=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" targetRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" />"
-reimbursement.bpmn,BPMN-specific,25,"<sequenceFlow id=""Flow_18hsnqo"" sourceRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" targetRef=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" />"
-reimbursement.bpmn,BPMN-specific,26,"<sequenceFlow id=""Flow_1eefdha"" sourceRef=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" targetRef=""Gateway_08rst62"" />"
-reimbursement.bpmn,BPMN-specific,27,"<sequenceFlow id=""Flow_1vr0goi"" name=""Amount &gt;= 1000"" sourceRef=""Gateway_08rst62"" targetRef=""Activity_0v4lv53"" />"
-reimbursement.bpmn,BPMN-specific,28,"<sequenceFlow id=""Flow_1m8lru7"" name=""Amount &lt; 1000"" sourceRef=""Gateway_08rst62"" targetRef=""Activity_1wl94dy"" />"
-reimbursement.bpmn,BPMN-specific,29,"<sequenceFlow id=""Flow_0uilgiq"" sourceRef=""Activity_0v4lv53"" targetRef=""Activity_1mybaex"" />"
-reimbursement.bpmn,BPMN-specific,30,"<sequenceFlow id=""Flow_0unpe9u"" sourceRef=""Activity_1mybaex"" targetRef=""Gateway_1wkso6h"" />"
-reimbursement.bpmn,BPMN-specific,31,"<sequenceFlow id=""Flow_0l1aptn"" sourceRef=""Activity_1wl94dy"" targetRef=""Gateway_1wkso6h"" />"
-reimbursement.bpmn,BPMN-specific,32,"<sequenceFlow id=""Flow_06j4qqo"" sourceRef=""Gateway_1wkso6h"" targetRef=""Activity_08u3u2t"" />"
-reimbursement.bpmn,BPMN-specific,33,"<sequenceFlow id=""Flow_0tmojyu"" sourceRef=""Activity_08u3u2t"" targetRef=""Gateway_098odj7"" />"
-reimbursement.bpmn,BPMN-specific,34,"<sequenceFlow id=""Id_a07af8bb-6cee-477a-9e03-2d1614524715"" name=""Expense report rejected"" sourceRef=""Gateway_098odj7"" targetRef=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" />"
-reimbursement.bpmn,BPMN-specific,35,"<sequenceFlow id=""Flow_0rtaeg2"" name=""Expense report approved"" sourceRef=""Gateway_098odj7"" targetRef=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" />"
-reimbursement.bpmn,BPMN-specific,36,"<sequenceFlow id=""Id_ef9286e2-d9b4-465c-8a9a-74f15051b870"" sourceRef=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" targetRef=""Id_0d6d53c6-db6e-4333-b06e-ba007abba16a"" />"
-reimbursement.bpmn,BPMN-specific,37,"<sequenceFlow id=""Flow_1rxe59t"" sourceRef=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" targetRef=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" />"
-reimbursement.bpmn,BPMN-specific,38,"<sequenceFlow id=""Flow_0yghqs0"" sourceRef=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" targetRef=""Activity_0q4b4ku"" />"
-reimbursement.bpmn,BPMN-specific,39,"<sequenceFlow id=""Flow_0aac4lq"" sourceRef=""Activity_0q4b4ku"" targetRef=""Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6"" />"
-reimbursement.bpmn,Fixed-size,1,"<?xml version=""1.0"" encoding=""UTF-8""?> <definitions xmlns=""http://www.omg.org/spec/BPMN/20100524/MODEL"" id=""_2023012906415""> <collaboration id=""Id_08bae575-8525-468b-925a-c7c9e30aba44"" name=""BPMN""> <participant id=""Id_bb956684-1e2e-4606-a184-528fd626c85b"" name=""Administration Office"" processRef=""Id_9991882f-a923-4c61-bbbb-9daa28e6f121"" /> </collaboration> <process id=""Id_9991882f-a923-4c61-bbbb-9daa28e6f121"" name=""BPMN""> <startEvent id=""Id_fa5d9e26-c99d-4b68-8819-8461f4725121"" name=""Expense report received""> <outgoing>Flow_05t7k6b</outgoing> <messageEventDefinition id=""Id_86ada07f-ec52-4b20-a29a-15ec4e18fbba"" /> </startEvent> <task id=""Activity_05ixu0l"" name=""Notify"
-reimbursement.bpmn,Fixed-size,2,"report received""> <outgoing>Flow_05t7k6b</outgoing> <messageEventDefinition id=""Id_86ada07f-ec52-4b20-a29a-15ec4e18fbba"" /> </startEvent> <task id=""Activity_05ixu0l"" name=""Notify Employee""> <incoming>Flow_05t7k6b</incoming> <outgoing>Flow_1hyof5d</outgoing> </task> <exclusiveGateway id=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" name=""Is a new account required?""> <incoming>Flow_1hyof5d</incoming> <outgoing>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</outgoing> <outgoing>Id_104f1377-4163-4147-b854-55a5ba0eea20</outgoing> </exclusiveGateway> <task id=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" name=""Create Employee Account""> <incoming>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</incoming> <outgoing>Id_e276783d-44de-4a56-bda3-d51ba6cfd360</outgoing>"
-reimbursement.bpmn,Fixed-size,3,"<outgoing>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</outgoing> <outgoing>Id_104f1377-4163-4147-b854-55a5ba0eea20</outgoing> </exclusiveGateway> <task id=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" name=""Create Employee Account""> <incoming>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</incoming> <outgoing>Id_e276783d-44de-4a56-bda3-d51ba6cfd360</outgoing> </task> <exclusiveGateway id=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417""> <incoming>Id_104f1377-4163-4147-b854-55a5ba0eea20</incoming> <incoming>Id_e276783d-44de-4a56-bda3-d51ba6cfd360</incoming> <outgoing>Flow_18hsnqo</outgoing> </exclusiveGateway> <task id=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" name=""Review amount""> <incoming>Flow_18hsnqo</incoming> <outgoing>Flow_1eefdha</outgoing> </task> <exclusiveGateway id=""Gateway_08rst62"" name=""How much is the amount to"
-reimbursement.bpmn,Fixed-size,4,"<outgoing>Flow_1eefdha</outgoing> </task> <exclusiveGateway id=""Gateway_08rst62"" name=""How much is the amount to be reimbursed?""> <incoming>Flow_1eefdha</incoming> <outgoing>Flow_1m8lru7</outgoing> <outgoing>Flow_1vr0goi</outgoing> </exclusiveGateway> <task id=""Activity_0v4lv53"" name=""Reformat and send expense report""> <incoming>Flow_1vr0goi</incoming> <outgoing>Flow_0uilgiq</outgoing> </task> <task id=""Activity_1mybaex"" name=""Assess evaluation report""> <incoming>Flow_0uilgiq</incoming>"
-reimbursement.bpmn,Fixed-size,5,"report""> <incoming>Flow_1vr0goi</incoming> <outgoing>Flow_0uilgiq</outgoing> </task> <task id=""Activity_1mybaex"" name=""Assess evaluation report""> <incoming>Flow_0uilgiq</incoming> <outgoing>Flow_0unpe9u</outgoing> </task> <task id=""Activity_1wl94dy"" name=""Approve expense report without assessment""> <incoming>Flow_1m8lru7</incoming> <outgoing>Flow_0l1aptn</outgoing> </task> <exclusiveGateway id=""Gateway_1wkso6h""> <incoming>Flow_0l1aptn</incoming> <incoming>Flow_0unpe9u</incoming> <outgoing>Flow_06j4qqo</outgoing> </exclusiveGateway> <task id=""Activity_08u3u2t"" name=""Review expense"
-reimbursement.bpmn,Fixed-size,6,"<exclusiveGateway id=""Gateway_1wkso6h""> <incoming>Flow_0l1aptn</incoming> <incoming>Flow_0unpe9u</incoming> <outgoing>Flow_06j4qqo</outgoing> </exclusiveGateway> <task id=""Activity_08u3u2t"" name=""Review expense report""> <incoming>Flow_06j4qqo</incoming> <outgoing>Flow_0tmojyu</outgoing> </task> <exclusiveGateway id=""Gateway_098odj7"" name=""Expense report is OK?""> <incoming>Flow_0tmojyu</incoming> <outgoing>Id_a07af8bb-6cee-477a-9e03-2d1614524715</outgoing> <outgoing>Flow_0rtaeg2</outgoing> </exclusiveGateway> <task id=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" name=""Reject expense report""> <incoming>Id_a07af8bb-6cee-477a-9e03-2d1614524715</incoming> <outgoing>Id_ef9286e2-d9b4-465c-8a9a-74f15051b870</outgoing> </task>"
-reimbursement.bpmn,Fixed-size,7,"<outgoing>Flow_0rtaeg2</outgoing> </exclusiveGateway> <task id=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" name=""Reject expense report""> <incoming>Id_a07af8bb-6cee-477a-9e03-2d1614524715</incoming> <outgoing>Id_ef9286e2-d9b4-465c-8a9a-74f15051b870</outgoing> </task> <endEvent id=""Id_0d6d53c6-db6e-4333-b06e-ba007abba16a"" name=""Reimbursement rejected""> <incoming>Id_ef9286e2-d9b4-465c-8a9a-74f15051b870</incoming> </endEvent> <task id=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" name=""Approve expense report""> <incoming>Flow_0rtaeg2</incoming> <outgoing>Flow_1rxe59t</outgoing> <dataOutputAssociation id=""DataOutputAssociation_0fkggr8""> <targetRef>DataStoreReference_17oxv7e</targetRef> </dataOutputAssociation> </task> <task id=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" name=""Transfer money"
-reimbursement.bpmn,Fixed-size,8,"<outgoing>Flow_1rxe59t</outgoing> <dataOutputAssociation id=""DataOutputAssociation_0fkggr8""> <targetRef>DataStoreReference_17oxv7e</targetRef> </dataOutputAssociation> </task> <task id=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" name=""Transfer money to bank account""> <incoming>Flow_1rxe59t</incoming> <outgoing>Flow_0yghqs0</outgoing> </task> <task id=""Activity_0q4b4ku"" name=""Send approval notification""> <incoming>Flow_0yghqs0</incoming> <outgoing>Flow_0aac4lq</outgoing> </task> <endEvent id=""Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6"" name=""Money transferred""> <incoming>Flow_0aac4lq</incoming> </endEvent> <dataStoreReference id=""DataStoreReference_17oxv7e"""
-reimbursement.bpmn,Fixed-size,9,"<outgoing>Flow_0aac4lq</outgoing> </task> <endEvent id=""Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6"" name=""Money transferred""> <incoming>Flow_0aac4lq</incoming> </endEvent> <dataStoreReference id=""DataStoreReference_17oxv7e"" name=""Expenses DB"" /> <sequenceFlow id=""Flow_05t7k6b"" sourceRef=""Id_fa5d9e26-c99d-4b68-8819-8461f4725121"" targetRef=""Activity_05ixu0l"" /> <sequenceFlow id=""Flow_1hyof5d"" sourceRef=""Activity_05ixu0l"" targetRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" /> <sequenceFlow id=""Id_b3f87643-821e-41ad-b2dc-b619f49b2684"" name=""New account required"" sourceRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" targetRef=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" /> <sequenceFlow"
-reimbursement.bpmn,Fixed-size,10,"/> <sequenceFlow id=""Id_b3f87643-821e-41ad-b2dc-b619f49b2684"" name=""New account required"" sourceRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" targetRef=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" /> <sequenceFlow id=""Id_104f1377-4163-4147-b854-55a5ba0eea20"" name=""Account already existing"" sourceRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" targetRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" /> <sequenceFlow id=""Id_e276783d-44de-4a56-bda3-d51ba6cfd360"" sourceRef=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" targetRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" /> <sequenceFlow id=""Flow_18hsnqo"" sourceRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" targetRef=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" /> <sequenceFlow id=""Flow_1eefdha"" sourceRef=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" targetRef=""Gateway_08rst62"" />"
-reimbursement.bpmn,Fixed-size,11,"<sequenceFlow id=""Flow_18hsnqo"" sourceRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" targetRef=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" /> <sequenceFlow id=""Flow_1eefdha"" sourceRef=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" targetRef=""Gateway_08rst62"" /> <sequenceFlow id=""Flow_1vr0goi"" name=""Amount &gt;= 1000"" sourceRef=""Gateway_08rst62"" targetRef=""Activity_0v4lv53"" /> <sequenceFlow id=""Flow_1m8lru7"" name=""Amount &lt; 1000"" sourceRef=""Gateway_08rst62"" targetRef=""Activity_1wl94dy"" /> <sequenceFlow id=""Flow_0uilgiq"" sourceRef=""Activity_0v4lv53"" targetRef=""Activity_1mybaex"" /> <sequenceFlow"
-reimbursement.bpmn,Fixed-size,12,"1000"" sourceRef=""Gateway_08rst62"" targetRef=""Activity_1wl94dy"" /> <sequenceFlow id=""Flow_0uilgiq"" sourceRef=""Activity_0v4lv53"" targetRef=""Activity_1mybaex"" /> <sequenceFlow id=""Flow_0unpe9u"" sourceRef=""Activity_1mybaex"" targetRef=""Gateway_1wkso6h"" /> <sequenceFlow id=""Flow_0l1aptn"" sourceRef=""Activity_1wl94dy"" targetRef=""Gateway_1wkso6h"" /> <sequenceFlow id=""Flow_06j4qqo"" sourceRef=""Gateway_1wkso6h"" targetRef=""Activity_08u3u2t"" /> <sequenceFlow id=""Flow_0tmojyu"" sourceRef=""Activity_08u3u2t"" targetRef=""Gateway_098odj7"" /> <sequenceFlow id=""Id_a07af8bb-6cee-477a-9e03-2d1614524715"" name=""Expense"
-reimbursement.bpmn,Fixed-size,13,"targetRef=""Activity_08u3u2t"" /> <sequenceFlow id=""Flow_0tmojyu"" sourceRef=""Activity_08u3u2t"" targetRef=""Gateway_098odj7"" /> <sequenceFlow id=""Id_a07af8bb-6cee-477a-9e03-2d1614524715"" name=""Expense report rejected"" sourceRef=""Gateway_098odj7"" targetRef=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" /> <sequenceFlow id=""Flow_0rtaeg2"" name=""Expense report approved"" sourceRef=""Gateway_098odj7"" targetRef=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" /> <sequenceFlow id=""Id_ef9286e2-d9b4-465c-8a9a-74f15051b870"" sourceRef=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" targetRef=""Id_0d6d53c6-db6e-4333-b06e-ba007abba16a"" /> <sequenceFlow id=""Flow_1rxe59t"" sourceRef=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" targetRef=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"""
-reimbursement.bpmn,Fixed-size,14,"/> <sequenceFlow id=""Id_ef9286e2-d9b4-465c-8a9a-74f15051b870"" sourceRef=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" targetRef=""Id_0d6d53c6-db6e-4333-b06e-ba007abba16a"" /> <sequenceFlow id=""Flow_1rxe59t"" sourceRef=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" targetRef=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" /> <sequenceFlow id=""Flow_0yghqs0"" sourceRef=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" targetRef=""Activity_0q4b4ku"" /> <sequenceFlow id=""Flow_0aac4lq"" sourceRef=""Activity_0q4b4ku"" targetRef=""Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6"" /> </process> </definitions>"
-reimbursement.bpmn,Fixed-size,15,</definitions>
-reimbursement.bpmn,Recursive,1,"<?xml version=""1.0"" encoding=""UTF-8""?>
-<definitions xmlns=""http://www.omg.org/spec/BPMN/20100524/MODEL"" id=""_2023012906415"">
-  <collaboration id=""Id_08bae575-8525-468b-925a-c7c9e30aba44"" name=""BPMN"">
-    <participant id=""Id_bb956684-1e2e-4606-a184-528fd626c85b"" name=""Administration Office"" processRef=""Id_9991882f-a923-4c61-bbbb-9daa28e6f121"" />
-  </collaboration>
-  <process id=""Id_9991882f-a923-4c61-bbbb-9daa28e6f121"" name=""BPMN"">
-    <startEvent id=""Id_fa5d9e26-c99d-4b68-8819-8461f4725121"" name=""Expense report received"">
-      <outgoing>Flow_05t7k6b</outgoing>
-      <messageEventDefinition id=""Id_86ada07f-ec52-4b20-a29a-15ec4e18fbba"" />
-    </startEvent>
-    <task id=""Activity_05ixu0l"" name=""Notify Employee"">
-      <incoming>Flow_05t7k6b</incoming>
-      <outgoing>Flow_1hyof5d</outgoing>
-    </task>
-    <exclusiveGateway id=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" name=""Is a new account required?"">
-      <incoming>Flow_1hyof5d</incoming>
-      <outgoing>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</outgoing>
-      <outgoing>Id_104f1377-4163-4147-b854-55a5ba0eea20</outgoing>
-    </exclusiveGateway>
-    <task id=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" name=""Create Employee Account"">
-      <incoming>Id_b3f87643-821e-41ad-b2dc-b619f49b2684</incoming>
-      <outgoing>Id_e276783d-44de-4a56-bda3-d51ba6cfd360</outgoing>
-    </task>
-    <exclusiveGateway id=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"">
-      <incoming>Id_104f1377-4163-4147-b854-55a5ba0eea20</incoming>
-      <incoming>Id_e276783d-44de-4a56-bda3-d51ba6cfd360</incoming>
-      <outgoing>Flow_18hsnqo</outgoing>
-    </exclusiveGateway>
-    <task id=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" name=""Review amount"">
-      <incoming>Flow_18hsnqo</incoming>
-      <outgoing>Flow_1eefdha</outgoing>
-    </task>
-    <exclusiveGateway id=""Gateway_08rst62"" name=""How much is the amount to be reimbursed?"">
-      <incoming>Flow_1eefdha</incoming>
-      <outgoing>Flow_1m8lru7</outgoing>
-      <outgoing>Flow_1vr0goi</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_0v4lv53"" name=""Reformat and send expense report"">
-      <incoming>Flow_1vr0goi</incoming>
-      <outgoing>Flow_0uilgiq</outgoing>
-    </task>
-    <task id=""Activity_1mybaex"" name=""Assess evaluation report"">
-      <incoming>Flow_0uilgiq</incoming>
-      <outgoing>Flow_0unpe9u</outgoing>
-    </task>
-    <task id=""Activity_1wl94dy"" name=""Approve expense report without assessment"">
-      <incoming>Flow_1m8lru7</incoming>
-      <outgoing>Flow_0l1aptn</outgoing>
-    </task>
-    <exclusiveGateway id=""Gateway_1wkso6h"">
-      <incoming>Flow_0l1aptn</incoming>
-      <incoming>Flow_0unpe9u</incoming>
-      <outgoing>Flow_06j4qqo</outgoing>
-    </exclusiveGateway>
-    <task id=""Activity_08u3u2t"" name=""Review expense report"">
-      <incoming>Flow_06j4qqo</incoming>
-      <outgoing>Flow_0tmojyu</outgoing>
-    </task>
-    <exclusiveGateway id=""Gateway_098odj7"" name=""Expense report is OK?"">
-      <incoming>Flow_0tmojyu</incoming>
-      <outgoing>Id_a07af8bb-6cee-477a-9e03-2d1614524715</outgoing>
-      <outgoing>Flow_0rtaeg2</outgoing>
-    </exclusiveGateway>
-    <task id=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" name=""Reject expense report"">
-      <incoming>Id_a07af8bb-6cee-477a-9e03-2d1614524715</incoming>
-      <outgoing>Id_ef9286e2-d9b4-465c-8a9a-74f15051b870</outgoing>
-    </task>
-    <endEvent id=""Id_0d6d53c6-db6e-4333-b06e-ba007abba16a"" name=""Reimbursement rejected"">
-      <incoming>Id_ef9286e2-d9b4-465c-8a9a-74f15051b870</incoming>
-    </endEvent>
-    <task id=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" name=""Approve expense report"">
-      <incoming>Flow_0rtaeg2</incoming>
-      <outgoing>Flow_1rxe59t</outgoing>
-      <dataOutputAssociation id=""DataOutputAssociation_0fkggr8"">
-        <targetRef>DataStoreReference_17oxv7e</targetRef>
-      </dataOutputAssociation>
-    </task>
-    <task id=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" name=""Transfer money to bank account"">
-      <incoming>Flow_1rxe59t</incoming>
-      <outgoing>Flow_0yghqs0</outgoing>
-    </task>
-    <task id=""Activity_0q4b4ku"" name=""Send approval notification"">
-      <incoming>Flow_0yghqs0</incoming>
-      <outgoing>Flow_0aac4lq</outgoing>
-    </task>
-    <endEvent id=""Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6"" name=""Money transferred"">
-      <incoming>Flow_0aac4lq</incoming>
-    </endEvent>"
-reimbursement.bpmn,Recursive,2,"<dataStoreReference id=""DataStoreReference_17oxv7e"" name=""Expenses DB"" />"
-reimbursement.bpmn,Recursive,3,"<sequenceFlow id=""Flow_05t7k6b"" sourceRef=""Id_fa5d9e26-c99d-4b68-8819-8461f4725121"" targetRef=""Activity_05ixu0l"" />
-    <sequenceFlow id=""Flow_1hyof5d"" sourceRef=""Activity_05ixu0l"" targetRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" />
-    <sequenceFlow id=""Id_b3f87643-821e-41ad-b2dc-b619f49b2684"" name=""New account required"" sourceRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" targetRef=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" />
-    <sequenceFlow id=""Id_104f1377-4163-4147-b854-55a5ba0eea20"" name=""Account already existing"" sourceRef=""Id_004d696c-83de-4e53-a2d9-514f6f27ce2c"" targetRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" />
-    <sequenceFlow id=""Id_e276783d-44de-4a56-bda3-d51ba6cfd360"" sourceRef=""Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de"" targetRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" />
-    <sequenceFlow id=""Flow_18hsnqo"" sourceRef=""Id_64e4c2ad-686e-4527-b9b5-7eeb40351417"" targetRef=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" />
-    <sequenceFlow id=""Flow_1eefdha"" sourceRef=""Id_e397f9af-fca3-4aee-b3d8-7426a8876228"" targetRef=""Gateway_08rst62"" />
-    <sequenceFlow id=""Flow_1vr0goi"" name=""Amount &gt;= 1000"" sourceRef=""Gateway_08rst62"" targetRef=""Activity_0v4lv53"" />
-    <sequenceFlow id=""Flow_1m8lru7"" name=""Amount &lt; 1000"" sourceRef=""Gateway_08rst62"" targetRef=""Activity_1wl94dy"" />
-    <sequenceFlow id=""Flow_0uilgiq"" sourceRef=""Activity_0v4lv53"" targetRef=""Activity_1mybaex"" />
-    <sequenceFlow id=""Flow_0unpe9u"" sourceRef=""Activity_1mybaex"" targetRef=""Gateway_1wkso6h"" />
-    <sequenceFlow id=""Flow_0l1aptn"" sourceRef=""Activity_1wl94dy"" targetRef=""Gateway_1wkso6h"" />
-    <sequenceFlow id=""Flow_06j4qqo"" sourceRef=""Gateway_1wkso6h"" targetRef=""Activity_08u3u2t"" />
-    <sequenceFlow id=""Flow_0tmojyu"" sourceRef=""Activity_08u3u2t"" targetRef=""Gateway_098odj7"" />
-    <sequenceFlow id=""Id_a07af8bb-6cee-477a-9e03-2d1614524715"" name=""Expense report rejected"" sourceRef=""Gateway_098odj7"" targetRef=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" />
-    <sequenceFlow id=""Flow_0rtaeg2"" name=""Expense report approved"" sourceRef=""Gateway_098odj7"" targetRef=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" />
-    <sequenceFlow id=""Id_ef9286e2-d9b4-465c-8a9a-74f15051b870"" sourceRef=""Id_baa0ed78-1a85-4033-baec-2177e138f466"" targetRef=""Id_0d6d53c6-db6e-4333-b06e-ba007abba16a"" />
-    <sequenceFlow id=""Flow_1rxe59t"" sourceRef=""Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8"" targetRef=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" />
-    <sequenceFlow id=""Flow_0yghqs0"" sourceRef=""Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a"" targetRef=""Activity_0q4b4ku"" />
-    <sequenceFlow id=""Flow_0aac4lq"" sourceRef=""Activity_0q4b4ku"" targetRef=""Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6"" />
-  </process>
-</definitions>"
+ecommerce.bpmn,BPMN-specific,1,"{'text': ""Process 'Ecommerce System'. Starts with: Start event 'Customer order arrived'. Ends with: End event 'Order Fulfilled'. Contains 15 tasks and 4 gateways."", 'metadata': {'file_name': '', 'node_type': 'process_overview', 'node_id': None}}"
+ecommerce.bpmn,BPMN-specific,2,"{'text': ""In process 'Ecommerce System': Start event 'Customer order arrived'. Followed by: Exclusive gateway (XOR decision) 'Is this a new customer?'."", 'metadata': {'file_name': '', 'node_type': 'startEvent', 'node_id': 'StartEvent_1y45yut', 'node_name': 'Customer order arrived', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,3,"{'text': ""In process 'Ecommerce System': Exclusive gateway (XOR decision) 'Is this a new customer?'. Preceded by: Start event 'Customer order arrived'. Branches: if 'Yes' -> Task 'Create new account'; -> Task 'Recover client history'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_12cpf55', 'node_name': 'Is this a new customer?', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,4,"{'text': ""In process 'Ecommerce System': Task 'Create new account'. Preceded by: Exclusive gateway (XOR decision) 'Is this a new customer?' [condition: Yes]. Followed by: Task 'Store payment method'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0t3x20h', 'node_name': 'Create new account', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,5,"{'text': ""In process 'Ecommerce System': Task 'Store payment method'. Preceded by: Task 'Create new account'. Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0wbkoaw', 'node_name': 'Store payment method', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,6,"{'text': ""In process 'Ecommerce System': Task 'Recover client history'. Preceded by: Exclusive gateway (XOR decision) 'Is this a new customer?'. Followed by: Task 'Check payment method'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0z80v8w', 'node_name': 'Recover client history', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,7,"{'text': ""In process 'Ecommerce System': Task 'Check payment method'. Preceded by: Task 'Recover client history'. Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_14vn9vh', 'node_name': 'Check payment method', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,8,"{'text': ""In process 'Ecommerce System': Exclusive gateway (XOR decision) (unnamed). Preceded by: Task 'Store payment method'; Task 'Check payment method'. Followed by: Task 'Register new order'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_0unq6v1', 'node_name': '', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,9,"{'text': ""In process 'Ecommerce System': Task 'Register new order'. Preceded by: Exclusive gateway (XOR decision) (unnamed). Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_014dn3v', 'node_name': 'Register new order', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,10,"{'text': ""In process 'Ecommerce System': Exclusive gateway (XOR decision) (unnamed). Preceded by: Task 'Register new order'; Exclusive gateway (XOR decision) 'Is the courier available?' [condition: No]. Followed by: Task 'Select courier'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_0wwxa0w', 'node_name': '', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,11,"{'text': ""In process 'Ecommerce System': Task 'Select courier'. Preceded by: Exclusive gateway (XOR decision) (unnamed). Followed by: Task 'Check courier availability'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_06glfsw', 'node_name': 'Select courier', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,12,"{'text': ""In process 'Ecommerce System': Task 'Check courier availability'. Preceded by: Task 'Select courier'. Followed by: Exclusive gateway (XOR decision) 'Is the courier available?'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1sn8s5h', 'node_name': 'Check courier availability', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,13,"{'text': ""In process 'Ecommerce System': Exclusive gateway (XOR decision) 'Is the courier available?'. Preceded by: Task 'Check courier availability'. Branches: if 'No' -> Exclusive gateway (XOR decision) (unnamed); -> Task 'Assign package to courier'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_1rvurt9', 'node_name': 'Is the courier available?', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,14,"{'text': ""In process 'Ecommerce System': Task 'Assign package to courier'. Preceded by: Exclusive gateway (XOR decision) 'Is the courier available?'. Followed by: Task 'Receive courier confirmation'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0e0gavq', 'node_name': 'Assign package to courier', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,15,"{'text': ""In process 'Ecommerce System': Task 'Receive courier confirmation'. Preceded by: Task 'Assign package to courier'. Followed by: Task 'Estimate arrival time'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_124kws5', 'node_name': 'Receive courier confirmation', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,16,"{'text': ""In process 'Ecommerce System': Task 'Estimate arrival time'. Preceded by: Task 'Receive courier confirmation'. Followed by: Task 'Send waiting time to the customer'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1rd1k4w', 'node_name': 'Estimate arrival time', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,17,"{'text': ""In process 'Ecommerce System': Task 'Send waiting time to the customer'. Preceded by: Task 'Estimate arrival time'. Followed by: Task 'Receive notification order retired by the courier'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0hru42u', 'node_name': 'Send waiting time to the customer', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,18,"{'text': ""In process 'Ecommerce System': Task 'Receive notification order retired by the courier'. Preceded by: Task 'Send waiting time to the customer'. Followed by: Task 'Receive notification order retired by the client'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0d7dniy', 'node_name': 'Receive notification order retired by the courier', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,19,"{'text': ""In process 'Ecommerce System': Task 'Receive notification order retired by the client'. Preceded by: Task 'Receive notification order retired by the courier'. Followed by: Task 'Receive customer satisfaction'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_13pfl2x', 'node_name': 'Receive notification order retired by the client', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,20,"{'text': ""In process 'Ecommerce System': Task 'Receive customer satisfaction'. Preceded by: Task 'Receive notification order retired by the client'. Followed by: Task 'Pay courier'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0zk8u1z', 'node_name': 'Receive customer satisfaction', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,21,"{'text': ""In process 'Ecommerce System': Task 'Pay courier'. Preceded by: Task 'Receive customer satisfaction'. Followed by: End event 'Order Fulfilled'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1rr3vas', 'node_name': 'Pay courier', 'lane': ''}}"
+ecommerce.bpmn,BPMN-specific,22,"{'text': ""In process 'Ecommerce System': End event 'Order Fulfilled'. Preceded by: Task 'Pay courier'."", 'metadata': {'file_name': '', 'node_type': 'endEvent', 'node_id': 'Event_14jgpi0', 'node_name': 'Order Fulfilled', 'lane': ''}}"
+food_delivery.bpmn,BPMN-specific,1,"{'text': ""Process 'Food Delivery system'. Starts with: Start event 'customer order'. Ends with: End event 'order completed'. Contains 17 tasks and 6 gateways."", 'metadata': {'file_name': '', 'node_type': 'process_overview', 'node_id': None}}"
+food_delivery.bpmn,BPMN-specific,2,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Start event 'customer order'. Followed by: Exclusive gateway (XOR decision) 'is the customer registered?'."", 'metadata': {'file_name': '', 'node_type': 'startEvent', 'node_id': 'Event_1uwsphs', 'node_name': 'customer order', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,3,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Exclusive gateway (XOR decision) 'is the customer registered?'. Preceded by: Start event 'customer order'. Branches: if 'no' -> Task 'create an account'; if 'yes' -> Task 'recover client info'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_0f3iu05', 'node_name': 'is the customer registered?', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,4,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'create an account'. Preceded by: Exclusive gateway (XOR decision) 'is the customer registered?' [condition: no]. Followed by: Task 'check credit card and the payment'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1uxpywg', 'node_name': 'create an account', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,5,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'recover client info'. Preceded by: Exclusive gateway (XOR decision) 'is the customer registered?' [condition: yes]. Followed by: Task 'check payment'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0zlhwln', 'node_name': 'recover client info', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,6,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'check credit card and the payment'. Preceded by: Task 'create an account'. Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1x5mf5x', 'node_name': 'check credit card and the payment', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,7,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'check payment'. Preceded by: Task 'recover client info'. Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0mt2w5k', 'node_name': 'check payment', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,8,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Exclusive gateway (XOR decision) (unnamed). Preceded by: Task 'check credit card and the payment'; Task 'check payment'. Followed by: Task 'register the order'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_0z24z44', 'node_name': '', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,9,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'register the order'. Preceded by: Exclusive gateway (XOR decision) (unnamed). Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_074nbz9', 'node_name': 'register the order', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,10,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Exclusive gateway (XOR decision) (unnamed). Preceded by: Task 'register the order'; Task 'the rider refused the order'. Followed by: Task 'select rider and create work proposal'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_1lf96zg', 'node_name': '', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,11,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'select rider and create work proposal'. Preceded by: Exclusive gateway (XOR decision) (unnamed). Followed by: Send task 'send work proposal'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_05qnapc', 'node_name': 'select rider and create work proposal', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,12,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Send task 'send work proposal'. Preceded by: Task 'select rider and create work proposal'. Followed by: Exclusive gateway (XOR decision) 'has the order been accepted?'."", 'metadata': {'file_name': '', 'node_type': 'sendTask', 'node_id': 'Activity_1r7emvp', 'node_name': 'send work proposal', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,13,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Exclusive gateway (XOR decision) 'has the order been accepted?'. Preceded by: Send task 'send work proposal'. Branches: if 'no' -> Task 'the rider refused the order'; if 'yes' -> Task 'the rider accepted the order'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_03ncbpd', 'node_name': 'has the order been accepted?', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,14,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'the rider refused the order'. Preceded by: Exclusive gateway (XOR decision) 'has the order been accepted?' [condition: no]. Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1mf8wy9', 'node_name': 'the rider refused the order', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,15,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'the rider accepted the order'. Preceded by: Exclusive gateway (XOR decision) 'has the order been accepted?' [condition: yes]. Followed by: Parallel gateway (AND) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_00fcmsc', 'node_name': 'the rider accepted the order', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,16,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Parallel gateway (AND) (unnamed). Preceded by: Task 'the rider accepted the order'. Branches: -> Task 'send confirmation to rider'; -> Task 'Estimated Arrival Time'."", 'metadata': {'file_name': '', 'node_type': 'parallelGateway', 'node_id': 'Gateway_0yayjl1', 'node_name': '', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,17,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'send confirmation to rider'. Preceded by: Parallel gateway (AND) (unnamed). Followed by: Parallel gateway (AND) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_02rjtb4', 'node_name': 'send confirmation to rider', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,18,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'Estimated Arrival Time'. Preceded by: Parallel gateway (AND) (unnamed). Followed by: Task 'send to customer the waiting time'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1623ajo', 'node_name': 'Estimated Arrival Time', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,19,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'send to customer the waiting time'. Preceded by: Task 'Estimated Arrival Time'. Followed by: Parallel gateway (AND) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1nwzzzm', 'node_name': 'send to customer the waiting time', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,20,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Parallel gateway (AND) (unnamed). Preceded by: Task 'send confirmation to rider'; Task 'send to customer the waiting time'. Followed by: Receive task 'notification order retired'."", 'metadata': {'file_name': '', 'node_type': 'parallelGateway', 'node_id': 'Gateway_0iw6ax3', 'node_name': '', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,21,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Receive task 'notification order retired'. Preceded by: Parallel gateway (AND) (unnamed). Followed by: Send task 'notification order retired to the client'."", 'metadata': {'file_name': '', 'node_type': 'receiveTask', 'node_id': 'Activity_13779o3', 'node_name': 'notification order retired', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,22,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Send task 'notification order retired to the client'. Preceded by: Receive task 'notification order retired'. Followed by: Receive task 'notification order complete'."", 'metadata': {'file_name': '', 'node_type': 'sendTask', 'node_id': 'Activity_1ww6nps', 'node_name': 'notification order retired to the client', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,23,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Receive task 'notification order complete'. Preceded by: Send task 'notification order retired to the client'. Followed by: Receive task 'receive Customer Satisfaction'."", 'metadata': {'file_name': '', 'node_type': 'receiveTask', 'node_id': 'Activity_0gh475d', 'node_name': 'notification order complete', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,24,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Receive task 'receive Customer Satisfaction'. Preceded by: Receive task 'notification order complete'. Followed by: Task 'pay rider'."", 'metadata': {'file_name': '', 'node_type': 'receiveTask', 'node_id': 'Activity_1iwh9bs', 'node_name': 'receive Customer Satisfaction', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,25,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': Task 'pay rider'. Preceded by: Receive task 'receive Customer Satisfaction'. Followed by: End event 'order completed'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1axkrpg', 'node_name': 'pay rider', 'lane': 'Lane_0f7txj4'}}"
+food_delivery.bpmn,BPMN-specific,26,"{'text': ""In process 'Food Delivery system', lane 'Lane_0f7txj4': End event 'order completed'. Preceded by: Task 'pay rider'."", 'metadata': {'file_name': '', 'node_type': 'endEvent', 'node_id': 'Event_1iwqv9w', 'node_name': 'order completed', 'lane': 'Lane_0f7txj4'}}"
+reimbursement.bpmn,BPMN-specific,1,"{'text': ""Process 'Administration Office'. Starts with: Start event 'Expense report received'. Ends with: End event 'Reimbursement rejected', End event 'Money transferred'. Contains 11 tasks and 5 gateways."", 'metadata': {'file_name': '', 'node_type': 'process_overview', 'node_id': None}}"
+reimbursement.bpmn,BPMN-specific,2,"{'text': ""In process 'Administration Office': Start event 'Expense report received'. Followed by: Task 'Notify Employee'."", 'metadata': {'file_name': '', 'node_type': 'startEvent', 'node_id': 'Id_fa5d9e26-c99d-4b68-8819-8461f4725121', 'node_name': 'Expense report received', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,3,"{'text': ""In process 'Administration Office': Task 'Notify Employee'. Preceded by: Start event 'Expense report received'. Followed by: Exclusive gateway (XOR decision) 'Is a new account required?'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_05ixu0l', 'node_name': 'Notify Employee', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,4,"{'text': ""In process 'Administration Office': Exclusive gateway (XOR decision) 'Is a new account required?'. Preceded by: Task 'Notify Employee'. Branches: if 'New account required' -> Task 'Create Employee Account'; if 'Account already existing' -> Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Id_004d696c-83de-4e53-a2d9-514f6f27ce2c', 'node_name': 'Is a new account required?', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,5,"{'text': ""In process 'Administration Office': Task 'Create Employee Account'. Preceded by: Exclusive gateway (XOR decision) 'Is a new account required?' [condition: New account required]. Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de', 'node_name': 'Create Employee Account', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,6,"{'text': ""In process 'Administration Office': Exclusive gateway (XOR decision) (unnamed). Preceded by: Exclusive gateway (XOR decision) 'Is a new account required?' [condition: Account already existing]; Task 'Create Employee Account'. Followed by: Task 'Review amount'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Id_64e4c2ad-686e-4527-b9b5-7eeb40351417', 'node_name': '', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,7,"{'text': ""In process 'Administration Office': Task 'Review amount'. Preceded by: Exclusive gateway (XOR decision) (unnamed). Followed by: Exclusive gateway (XOR decision) 'How much is the amount to be reimbursed?'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Id_e397f9af-fca3-4aee-b3d8-7426a8876228', 'node_name': 'Review amount', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,8,"{'text': ""In process 'Administration Office': Exclusive gateway (XOR decision) 'How much is the amount to be reimbursed?'. Preceded by: Task 'Review amount'. Branches: if 'Amount >= 1000' -> Task 'Reformat and send expense report'; if 'Amount < 1000' -> Task 'Approve expense report without assessment'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_08rst62', 'node_name': 'How much is the amount to be reimbursed?', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,9,"{'text': ""In process 'Administration Office': Task 'Reformat and send expense report'. Preceded by: Exclusive gateway (XOR decision) 'How much is the amount to be reimbursed?' [condition: Amount >= 1000]. Followed by: Task 'Assess evaluation report'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0v4lv53', 'node_name': 'Reformat and send expense report', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,10,"{'text': ""In process 'Administration Office': Task 'Assess evaluation report'. Preceded by: Task 'Reformat and send expense report'. Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1mybaex', 'node_name': 'Assess evaluation report', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,11,"{'text': ""In process 'Administration Office': Task 'Approve expense report without assessment'. Preceded by: Exclusive gateway (XOR decision) 'How much is the amount to be reimbursed?' [condition: Amount < 1000]. Followed by: Exclusive gateway (XOR decision) (unnamed)."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_1wl94dy', 'node_name': 'Approve expense report without assessment', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,12,"{'text': ""In process 'Administration Office': Exclusive gateway (XOR decision) (unnamed). Preceded by: Task 'Assess evaluation report'; Task 'Approve expense report without assessment'. Followed by: Task 'Review expense report'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_1wkso6h', 'node_name': '', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,13,"{'text': ""In process 'Administration Office': Task 'Review expense report'. Preceded by: Exclusive gateway (XOR decision) (unnamed). Followed by: Exclusive gateway (XOR decision) 'Expense report is OK?'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_08u3u2t', 'node_name': 'Review expense report', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,14,"{'text': ""In process 'Administration Office': Exclusive gateway (XOR decision) 'Expense report is OK?'. Preceded by: Task 'Review expense report'. Branches: if 'Expense report rejected' -> Task 'Reject expense report'; if 'Expense report approved' -> Task 'Approve expense report'."", 'metadata': {'file_name': '', 'node_type': 'exclusiveGateway', 'node_id': 'Gateway_098odj7', 'node_name': 'Expense report is OK?', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,15,"{'text': ""In process 'Administration Office': Task 'Reject expense report'. Preceded by: Exclusive gateway (XOR decision) 'Expense report is OK?' [condition: Expense report rejected]. Followed by: End event 'Reimbursement rejected'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Id_baa0ed78-1a85-4033-baec-2177e138f466', 'node_name': 'Reject expense report', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,16,"{'text': ""In process 'Administration Office': End event 'Reimbursement rejected'. Preceded by: Task 'Reject expense report'."", 'metadata': {'file_name': '', 'node_type': 'endEvent', 'node_id': 'Id_0d6d53c6-db6e-4333-b06e-ba007abba16a', 'node_name': 'Reimbursement rejected', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,17,"{'text': ""In process 'Administration Office': Task 'Approve expense report'. Preceded by: Exclusive gateway (XOR decision) 'Expense report is OK?' [condition: Expense report approved]. Followed by: Task 'Transfer money to bank account'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8', 'node_name': 'Approve expense report', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,18,"{'text': ""In process 'Administration Office': Task 'Transfer money to bank account'. Preceded by: Task 'Approve expense report'. Followed by: Task 'Send approval notification'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a', 'node_name': 'Transfer money to bank account', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,19,"{'text': ""In process 'Administration Office': Task 'Send approval notification'. Preceded by: Task 'Transfer money to bank account'. Followed by: End event 'Money transferred'."", 'metadata': {'file_name': '', 'node_type': 'task', 'node_id': 'Activity_0q4b4ku', 'node_name': 'Send approval notification', 'lane': ''}}"
+reimbursement.bpmn,BPMN-specific,20,"{'text': ""In process 'Administration Office': End event 'Money transferred'. Preceded by: Task 'Send approval notification'."", 'metadata': {'file_name': '', 'node_type': 'endEvent', 'node_id': 'Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6', 'node_name': 'Money transferred', 'lane': ''}}"

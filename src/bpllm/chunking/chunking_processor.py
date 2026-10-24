@@ -1,150 +1,124 @@
 import xml.etree.ElementTree as ET
 from typing import List, Dict, Any
-import re
 import os
 import pandas as pd
 
-class BPMNSpecificChunker:
+TASK_TAGS = {'task', 'userTask', 'serviceTask', 'sendTask', 'receiveTask',
+             'scriptTask', 'businessRuleTask', 'manualTask'}
+GATEWAY_TAGS = {'exclusiveGateway', 'inclusiveGateway', 'parallelGateway',
+                'eventBasedGateway', 'complexGateway'}
+EVENT_TAGS = {'startEvent', 'endEvent', 'intermediateCatchEvent', 'intermediateThrowEvent'}
+NODE_TAGS = TASK_TAGS | GATEWAY_TAGS | EVENT_TAGS
+
+LABELS = {
+    'task': 'Task', 'userTask': 'User task', 'serviceTask': 'Service task',
+    'sendTask': 'Send task', 'receiveTask': 'Receive task', 'scriptTask': 'Script task',
+    'businessRuleTask': 'Business rule task', 'manualTask': 'Manual task',
+    'exclusiveGateway': 'Exclusive gateway (XOR decision)',
+    'inclusiveGateway': 'Inclusive gateway (OR)',
+    'parallelGateway': 'Parallel gateway (AND)',
+    'eventBasedGateway': 'Event-based gateway',
+    'complexGateway': 'Complex gateway',
+    'startEvent': 'Start event', 'endEvent': 'End event',
+    'intermediateCatchEvent': 'Intermediate catch event',
+    'intermediateThrowEvent': 'Intermediate throw event',
+}
+
+
+def _strip(tag: str) -> str:
+    return tag.split('}')[-1]
+
+
+class EnrichedBPMNChunker:
     """
-    Chunker dành riêng cho tệp BPMN (XML format).
-    Phân tách theo ngữ nghĩa của từng thẻ (Flow Objects & Connecting Objects)
-    và loại bỏ các thông tin đồ họa (BPMN Diagram elements).
+    Mỗi chunk = 1 node (task/gateway/event), viết bằng ngôn ngữ tự nhiên:
+    - ID được thay bằng tên node (tra từ sequenceFlow)
+    - Gắn ngữ cảnh: tên quy trình, lane, bước trước/sau, nhãn nhánh (Yes/No)
+    - Thêm 1 chunk tổng quan cho cả quy trình
+    Trả về List[Dict] gồm 'text' (đem đi embed) và 'metadata'.
     """
-    def __init__(self):
-        # Các thẻ BPMN ngữ nghĩa phổ biến cần tách chunk
-        self.semantic_tags = {
-            'task', 'userTask', 'serviceTask', 'sendTask', 'receiveTask', 
-            'scriptTask', 'businessRuleTask', 'manualTask',
-            'exclusiveGateway', 'inclusiveGateway', 'parallelGateway', 
-            'eventBasedGateway', 'complexGateway',
-            'startEvent', 'endEvent', 'intermediateCatchEvent', 'intermediateThrowEvent',
-            'sequenceFlow'
-        }
 
-    def chunk(self, xml_content: str) -> List[str]:
-        chunks = []
-        try:
-            root = ET.fromstring(xml_content)
-        except ET.ParseError as e:
-            raise ValueError(f"Lỗi định dạng XML/BPMN: {e}")
+    def chunk(self, xml_content: str, file_name: str = "") -> List[Dict[str, Any]]:
+        root = ET.fromstring(xml_content)
 
-        # Lấy namespace nếu có
-        namespace = ""
-        if root.tag.startswith("{"):
-            namespace = root.tag.split("}")[0] + "}"
+        # 1. Gom tất cả node và flow
+        nodes: Dict[str, ET.Element] = {}
+        flows: List[Dict[str, str]] = []
+        lane_of: Dict[str, str] = {}
+        process_name = ""
 
-        # Duyệt qua các phần tử trong XML
-        for elem in root.iter():
-            # Lấy tên thẻ không kèm namespace
-            tag_name = elem.tag.replace(namespace, "")
-            
-            # Chỉ bóc tách các thẻ nằm trong danh sách ngữ nghĩa
-            if tag_name in self.semantic_tags:
-                chunk_str = self._element_to_clean_string(elem, namespace)
-                if chunk_str:
-                    chunks.append(chunk_str)
+        for el in root.iter():
+            tag = _strip(el.tag)
+            if tag in NODE_TAGS:
+                nodes[el.get('id')] = el
+            elif tag == 'sequenceFlow':
+                flows.append({'id': el.get('id'), 'name': el.get('name', ''),
+                              'src': el.get('sourceRef'), 'tgt': el.get('targetRef')})
+            elif tag == 'participant':
+                process_name = el.get('name') or process_name
+            elif tag == 'lane':
+                lane_name = el.get('name') or el.get('id')
+                for ref in el.iter():
+                    if _strip(ref.tag) == 'flowNodeRef' and ref.text:
+                        lane_of[ref.text.strip()] = lane_name
 
-        return chunks
+        def label(node_id: str) -> str:
+            el = nodes.get(node_id)
+            if el is None:
+                return node_id
+            name = el.get('name')
+            kind = LABELS.get(_strip(el.tag), _strip(el.tag))
+            return f"{kind} '{name}'" if name else f"{kind} (unnamed)"
 
-    def _element_to_clean_string(self, elem: ET.Element, namespace: str) -> str:
-        """
-        Chuyển đổi ElementTree node thành chuỗi XML sạch (loại bỏ thông tin thừa).
-        """
-        clean_elem = ET.Element(elem.tag.replace(namespace, ""))
-        
-        # Sao chép các thuộc tính quan trọng (id, name, sourceRef, targetRef, ...)
-        for k, v in elem.attrib.items():
-            attr_name = k.replace(namespace, "")
-            clean_elem.attrib[attr_name] = v
+        incoming: Dict[str, List[Dict]] = {k: [] for k in nodes}
+        outgoing: Dict[str, List[Dict]] = {k: [] for k in nodes}
+        for f in flows:
+            if f['src'] in outgoing:
+                outgoing[f['src']].append(f)
+            if f['tgt'] in incoming:
+                incoming[f['tgt']].append(f)
 
-        # Sao chép các thẻ con ngữ nghĩa (incoming, outgoing)
-        for child in elem:
-            child_tag = child.tag.replace(namespace, "")
-            if child_tag in ['incoming', 'outgoing']:
-                sub_elem = ET.SubElement(clean_elem, child_tag)
-                sub_elem.text = child.text
+        # 2. Chunk tổng quan quy trình
+        results: List[Dict[str, Any]] = []
+        starts = [label(i) for i, e in nodes.items() if _strip(e.tag) == 'startEvent']
+        ends = [label(i) for i, e in nodes.items() if _strip(e.tag) == 'endEvent']
+        n_tasks = sum(1 for e in nodes.values() if _strip(e.tag) in TASK_TAGS)
+        n_gw = sum(1 for e in nodes.values() if _strip(e.tag) in GATEWAY_TAGS)
+        overview = (f"Process '{process_name or file_name}'. "
+                    f"Starts with: {', '.join(starts) or 'n/a'}. "
+                    f"Ends with: {', '.join(ends) or 'n/a'}. "
+                    f"Contains {n_tasks} tasks and {n_gw} gateways.")
+        results.append({'text': overview,
+                        'metadata': {'file_name': file_name, 'node_type': 'process_overview',
+                                     'node_id': None}})
 
-        # Format lại dạng chuỗi XML
-        raw_xml = ET.tostring(clean_elem, encoding='unicode')
-        # Loại bỏ các khoảng trắng thừa
-        clean_xml = re.sub(r'>\s+<', '><', raw_xml).strip()
-        return clean_xml
+        # 3. Chunk cho từng node
+        for node_id, el in nodes.items():
+            kind = _strip(el.tag)
+            parts = [f"In process '{process_name or file_name}'"]
+            if node_id in lane_of:
+                parts[0] += f", lane '{lane_of[node_id]}'"
+            parts[0] += f": {label(node_id)}."
 
-
-class FixedSizeChunker:
-    """
-    Chunker kích thước cố định (dùng làm phương pháp đối chứng).
-    """
-    def __init__(self, chunk_size: int = 128, chunk_overlap: int = 10):
-        self.chunk_size = chunk_size
-        self.chunk_overlap = chunk_overlap
-
-    def chunk(self, text: str) -> List[str]:
-        words = text.split()
-        if not words:
-            return []
-        
-        chunks = []
-        i = 0
-        step = max(1, self.chunk_size - self.chunk_overlap)
-        
-        while i < len(words):
-            chunk_words = words[i:i + self.chunk_size]
-            chunks.append(" ".join(chunk_words))
-            i += step
-            
-        return chunks
-
-
-class RecursiveChunker:
-    """
-    Chunker phân cấp đệ quy dựa trên ký tự phân tách (dùng làm phương pháp đối chứng).
-    """
-    def __init__(self, chunk_size: int = 128, separators: List[str] = None):
-        self.chunk_size = chunk_size
-        self.separators = separators or ["\n\n", "\n", " ", ""]
-
-    def chunk(self, text: str) -> List[str]:
-        return self._split_text(text, self.separators)
-
-    def _split_text(self, text: str, separators: List[str]) -> List[str]:
-        final_chunks = []
-        if not text:
-            return final_chunks
-
-        # Lấy separator hiện tại
-        separator = separators[-1]
-        new_separators = []
-        for i, _s in enumerate(separators):
-            if _s == "":
-                separator = ""
-                break
-            if re.search(re.escape(_s), text):
-                separator = _s
-                new_separators = separators[i + 1:]
-                break
-
-        # Tách text theo separator
-        splits = text.split(separator) if separator != "" else list(text)
-
-        # Gom nhóm các phần tách nhỏ sao cho không vượt quá chunk_size (tính theo từ/ký tự)
-        good_splits = []
-        for s in splits:
-            if len(s.split()) <= self.chunk_size:
-                good_splits.append(s)
-            else:
-                if good_splits:
-                    final_chunks.append(separator.join(good_splits))
-                    good_splits = []
-                if new_separators:
-                    final_chunks.extend(self._split_text(s, new_separators))
+            if incoming[node_id]:
+                prev = '; '.join(label(f['src']) + (f" [condition: {f['name']}]" if f['name'] else '')
+                                 for f in incoming[node_id])
+                parts.append(f"Preceded by: {prev}.")
+            if outgoing[node_id]:
+                if kind in GATEWAY_TAGS and len(outgoing[node_id]) > 1:
+                    nxt = '; '.join((f"if '{f['name']}' -> " if f['name'] else "-> ") + label(f['tgt'])
+                                    for f in outgoing[node_id])
+                    parts.append(f"Branches: {nxt}.")
                 else:
-                    final_chunks.append(s)
-        
-        if good_splits:
-            final_chunks.append(separator.join(good_splits))
+                    nxt = '; '.join(label(f['tgt']) for f in outgoing[node_id])
+                    parts.append(f"Followed by: {nxt}.")
 
-        return [c.strip() for c in final_chunks if c.strip()]
+            results.append({
+                'text': ' '.join(parts),
+                'metadata': {'file_name': file_name, 'node_type': kind, 'node_id': node_id,
+                             'node_name': el.get('name', ''), 'lane': lane_of.get(node_id, '')},
+            })
+        return results
     
 if __name__ == "__main__":
     inputs = "./data/raw"  
@@ -162,9 +136,7 @@ if __name__ == "__main__":
         print(f"Không tìm thấy file BPMN/XML nào trong thư mục: {inputs}")
     else:
         # 3. Khởi tạo các bộ chunker
-        bpmn_chunker = BPMNSpecificChunker()
-        fixed_chunker = FixedSizeChunker(chunk_size=32, chunk_overlap=10)     # Thông số đề xuất cho BPMN
-        recursive_chunker = RecursiveChunker(chunk_size=32)                    # Thông số đề xuất cho BPMN[cite: 39]
+        bpmn_chunker = EnrichedBPMNChunker()
 
         all_results = []
 
@@ -183,7 +155,7 @@ if __name__ == "__main__":
                 print(f"Lỗi khi đọc file {name}: {e}")
                 continue
 
-            # --- A. Áp dụng BPMN-Specific Chunking ---
+            # --- Áp dụng BPMN-Specific Chunking ---
             try:
                 bpmn_chunks = bpmn_chunker.chunk(xml_content)
                 print(f"[1] BPMN-Specific Chunker: Tạo ra {len(bpmn_chunks)} chunks.")
@@ -196,28 +168,6 @@ if __name__ == "__main__":
                     })
             except Exception as e:
                 print(f"Lỗi BPMN-Specific Chunking trên file {name}: {e}")
-
-            # --- B. Áp dụng Fixed-Size Chunking (Đối chứng) ---
-            fixed_chunks = fixed_chunker.chunk(xml_content)
-            print(f"[2] Fixed-Size Chunker:     Tạo ra {len(fixed_chunks)} chunks.")
-            for idx, chunk in enumerate(fixed_chunks, 1):
-                all_results.append({
-                    "file_name": name,
-                    "strategy": "Fixed-size",
-                    "chunk_id": idx,
-                    "content": chunk
-                })
-
-            # --- C. Áp dụng Recursive Chunking (Đối chứng) ---
-            recursive_chunks = recursive_chunker.chunk(xml_content)
-            print(f"[3] Recursive Chunker:      Tạo ra {len(recursive_chunks)} chunks.")
-            for idx, chunk in enumerate(recursive_chunks, 1):
-                all_results.append({
-                    "file_name": name,
-                    "strategy": "Recursive",
-                    "chunk_id": idx,
-                    "content": chunk
-                })
 
         # 5. Lưu kết quả ra file CSV để kiểm tra hoặc nạp vào Vector DB
         if all_results:
