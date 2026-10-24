@@ -1,0 +1,39 @@
+{
+  "process_name": "Reimbursement",
+  "start_events": [
+    "Expense report received from employee"
+  ],
+  "end_events": [
+    "Process complete"
+  ],
+  "activities": [
+    "Notify employee",
+    "Create account for employee",
+    "Clerk reviews amount",
+    "Submit to manager",
+    "Approve promptly",
+    "Manager reviews and decides",
+    "Reimburse employee"
+  ],
+  "gateways": [
+    "Account exists?",
+    "Reformulation needed?",
+    "Amount below threshold?"
+  ],
+  "sequence_flows": [
+    {"from": "Expense report received from employee", "to": "Notify employee"},
+    {"from": "Notify employee", "to": "Account exists?"},
+    {"from": "Account exists?", "to": "Create account for employee"},
+    {"from": "Account exists?", "to": "Clerk reviews amount"},
+    {"from": "Create account for employee", "to": "Clerk reviews amount"},
+    {"from": "Clerk reviews amount", "to": "Reformulation needed?"},
+    {"from": "Reformulation needed?", "to": "Clerk reviews amount"},
+    {"from": "Reformulation needed?", "to": "Submit to manager"},
+    {"from": "Submit to manager", "to": "Amount below threshold?"},
+    {"from": "Amount below threshold?", "to": "Approve promptly"},
+    {"from": "Amount below threshold?", "to": "Manager reviews and decides"},
+    {"from": "Approve promptly", "to": "Reimburse employee"},
+    {"from": "Manager reviews and decides", "to": "Reimburse employee"},
+    {"from": "Reimburse employee", "to": "Process complete"}
+  ]
+}

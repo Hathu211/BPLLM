@@ -1,0 +1,238 @@
+{
+  "process_name": "Food Delivery",
+  "source_files": [
+    "food_delivery.xml",
+    "food_delivery_dfg.txt"
+  ],
+  "start_events": [
+    "User order received",
+    "Customer Order Arrived"
+  ],
+  "end_events": [
+    "Process complete",
+    "Order Completed"
+  ],
+  "activities": [
+    "Verify customer status in customer DB",
+    "Create account for customer",
+    "Check specified payment methods",
+    "Assign order to accepting rider",
+    "Communicate estimated waiting time to customer",
+    "Rider collects order",
+    "Send notification to client",
+    "Client confirms receipt",
+    "Unlock rider's payment",
+    "Recover Client Info",
+    "Create an account",
+    "Check Payment",
+    "Check CC and Payment",
+    "Register the order",
+    "Select rider and create work proposal",
+    "Send work proposal",
+    "The rider accepted the order",
+    "The rider rejected the order",
+    "Estimated Arrival Time",
+    "Send confirmation to rider",
+    "Send to customer the waiting time",
+    "Send order collected notification",
+    "Receive receipt confirmation from client",
+    "Pay Rider",
+    "Receive Customer Satisfaction"
+  ],
+  "gateways": [
+    "Existing client?",
+    "Account path",
+    "Order acceptance",
+    "Parallel post-acceptance work",
+    "Wait for both parallel branches"
+  ],
+  "sequence_flows": [
+    {
+      "from": "User order received",
+      "to": "Verify customer status in customer DB",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Verify customer status in customer DB",
+      "to": "Existing client?",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Existing client?",
+      "to": "Create account for customer",
+      "name": "No",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Existing client?",
+      "to": "Check specified payment methods",
+      "name": "Yes",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Create account for customer",
+      "to": "Check specified payment methods",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Check specified payment methods",
+      "to": "Assign order to accepting rider",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Assign order to accepting rider",
+      "to": "Communicate estimated waiting time to customer",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Communicate estimated waiting time to customer",
+      "to": "Rider collects order",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Rider collects order",
+      "to": "Send notification to client",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Send notification to client",
+      "to": "Client confirms receipt",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Client confirms receipt",
+      "to": "Unlock rider's payment",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Unlock rider's payment",
+      "to": "Process complete",
+      "source_file": "food_delivery.xml"
+    },
+    {
+      "from": "Customer Order Arrived",
+      "to": "Account path",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Account path",
+      "to": "Recover Client Info",
+      "name": "Recover client info",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Account path",
+      "to": "Create an account",
+      "name": "Create account",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Recover Client Info",
+      "to": "Check Payment",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Create an account",
+      "to": "Check CC and Payment",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Check Payment",
+      "to": "Register the order",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Check CC and Payment",
+      "to": "Register the order",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Register the order",
+      "to": "Select rider and create work proposal",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Select rider and create work proposal",
+      "to": "Send work proposal",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Send work proposal",
+      "to": "Order acceptance",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Order acceptance",
+      "to": "The rider accepted the order",
+      "name": "Accepted",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Order acceptance",
+      "to": "The rider rejected the order",
+      "name": "Rejected",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "The rider rejected the order",
+      "to": "Select rider and create work proposal",
+      "name": "Retry with another rider",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "The rider accepted the order",
+      "to": "Parallel post-acceptance work",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Parallel post-acceptance work",
+      "to": "Estimated Arrival Time",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Parallel post-acceptance work",
+      "to": "Send confirmation to rider",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Estimated Arrival Time",
+      "to": "Wait for both parallel branches",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Send confirmation to rider",
+      "to": "Wait for both parallel branches",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Wait for both parallel branches",
+      "to": "Send to customer the waiting time",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Send to customer the waiting time",
+      "to": "Send order collected notification",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Send order collected notification",
+      "to": "Receive receipt confirmation from client",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Receive receipt confirmation from client",
+      "to": "Pay Rider",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Pay Rider",
+      "to": "Receive Customer Satisfaction",
+      "source_file": "food_delivery_dfg.txt"
+    },
+    {
+      "from": "Receive Customer Satisfaction",
+      "to": "Order Completed",
+      "source_file": "food_delivery_dfg.txt"
+    }
+  ]
+}

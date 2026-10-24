@@ -1,0 +1,47 @@
+{
+  "process_name": "E-commerce",
+  "start_events": [
+    "New order received via e-commerce platform"
+  ],
+  "end_events": [
+    "Process complete"
+  ],
+  "activities": [
+    "Verify customer's account status",
+    "Generate account",
+    "Store payment methods",
+    "Record new order",
+    "Verify courier availability",
+    "Select optimal courier",
+    "Assign package to courier",
+    "Courier confirms assignment",
+    "Calculate and communicate delivery date",
+    "Courier retrieves package",
+    "Send confirmation to customer",
+    "Customer confirms order receipt",
+    "Fill and return satisfaction questionnaire",
+    "Pay courier"
+  ],
+  "gateways": [
+    "Account exists?"
+  ],
+  "sequence_flows": [
+    {"from": "New order received via e-commerce platform", "to": "Verify customer's account status"},
+    {"from": "Verify customer's account status", "to": "Account exists?"},
+    {"from": "Account exists?", "to": "Generate account"},
+    {"from": "Account exists?", "to": "Store payment methods"},
+    {"from": "Generate account", "to": "Store payment methods"},
+    {"from": "Store payment methods", "to": "Record new order"},
+    {"from": "Record new order", "to": "Verify courier availability"},
+    {"from": "Verify courier availability", "to": "Select optimal courier"},
+    {"from": "Select optimal courier", "to": "Assign package to courier"},
+    {"from": "Assign package to courier", "to": "Courier confirms assignment"},
+    {"from": "Courier confirms assignment", "to": "Calculate and communicate delivery date"},
+    {"from": "Calculate and communicate delivery date", "to": "Courier retrieves package"},
+    {"from": "Courier retrieves package", "to": "Send confirmation to customer"},
+    {"from": "Send confirmation to customer", "to": "Customer confirms order receipt"},
+    {"from": "Customer confirms order receipt", "to": "Fill and return satisfaction questionnaire"},
+    {"from": "Fill and return satisfaction questionnaire", "to": "Pay courier"},
+    {"from": "Pay courier", "to": "Process complete"}
+  ]
+}

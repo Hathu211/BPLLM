@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: bpllm
+Version: 0.1.0
+Summary: BPLLM Framework Implementation
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: numpy<2.0.0,>=1.24.0
+Requires-Dist: langchain<0.3.0,>=0.1.0
+Requires-Dist: langchain-community<0.3.0,>=0.0.20
+Requires-Dist: qdrant-client<1.10.0,>=1.7.0
+Requires-Dist: sentence-transformers<3.0.0,>=2.2.2
+Requires-Dist: pydantic<3.0.0,>=2.0.0
+Requires-Dist: pyyaml>=6.0
+
+# BPLLM
