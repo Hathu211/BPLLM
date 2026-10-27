@@ -1,0 +1,20 @@
+The Food Delivery process defines the following activities, one per line:
+Estimated Arrival Time
+check credit card and the payment
+check payment
+create an account
+customer order
+notification order complete
+notification order retired
+notification order retired to the client
+order completed
+pay rider
+receive Customer Satisfaction
+recover client info
+register the order
+select rider and create work proposal
+send confirmation to rider
+send to customer the waiting time
+send work proposal
+the rider accepted the order
+the rider refused the order
