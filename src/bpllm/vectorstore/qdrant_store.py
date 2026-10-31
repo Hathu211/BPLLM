@@ -110,16 +110,32 @@ class QdrantVectorStore:
               )
           ]
       )
-
-    search_result = self.client.search(
-        collection_name=self.collection_name,
-        query_vector=query_vector,
-        query_filter=query_filter,
-        limit=top_k,
-    )
-
+    if hasattr(self.client, "query_point"): 
+        respone = self.client.query.points(
+            collection_name = self.collection_name,
+            query_vector=query_vector,
+            query_filter=query_filter,
+            limit=top_k,
+        )
+        hits = response.points
+    elif hasattr(self.client, "query_point"): 
+        response = self.client.query_point(
+            collection_name=self.collection_name,
+            query_vector=query_vector,
+            query_filter=query_filter,
+            limit=top_k,
+        )
+        hits = getattr(response, "points", response)
+    else:
+      # API cũ (< 1.10.0)
+        hits = self.client.search(
+            collection_name=self.collection_name,
+            query_vector=query_vector,
+            query_filter=query_filter,
+            limit=top_k,
+        )
     results = []
-    for hit in search_result:
+    for hit in hits:
       results.append({
           "score": hit.score,
           "content": hit.payload.get("chunk_content", ""),
