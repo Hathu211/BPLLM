@@ -78,9 +78,9 @@ class QdrantVectorStore:
     if (
         isinstance(query_vector, list)
         and len(query_vector) > 0
-        and isinstance(query_vector, list)
+        and isinstance(query_vector[0], list)
     ):
-      query_vector = query_vector
+      query_vector = query_vector[0]
 
     query_filter = None
     if process_filter and process_filter not in [
@@ -111,15 +111,15 @@ class QdrantVectorStore:
           ]
       )
 
-    search_result = self.client.search(
+    search_result = self.client.query_points(
         collection_name=self.collection_name,
-        query_vector=query_vector,
+        query=query_vector,
         query_filter=query_filter,
         limit=top_k,
     )
 
     results = []
-    for hit in search_result:
+    for hit in search_result.points:
       results.append({
           "score": hit.score,
           "content": hit.payload.get("chunk_content", ""),
