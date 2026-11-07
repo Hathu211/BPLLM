@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   qdrant:
-    image: qdrant/qdrant:latest
+    image: qdrant/qdrant:v1.10.1
     container_name: bpllm-qdrant
     ports:
       - "6333:6333" # Cổng HTTP REST API (Xem Web Dashboard)
