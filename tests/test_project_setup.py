@@ -1,9 +1,11 @@
 """Giữ cho các lỗi của Phase 0 không quay lại."""
+import tomllib
+
 import yaml
 
 from bpllm.config import PROJECT_ROOT
 
-SUBPACKAGES = ["chunking", "embeddings", "evaluation", "llm", "rag", "vectorstore"]
+SUBPACKAGES = ["chunking", "embeddings", "evaluation", "llm", "parsing", "rag", "vectorstore"]
 
 
 def test_every_package_has_init():
@@ -35,6 +37,12 @@ def test_gitignore_covers_qdrant_data():
   lines = (PROJECT_ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
   assert "data/qdrant_storage/" in lines
   assert "data/qdrant_local/" in lines
+
+
+def test_pytest_testpaths_exist():
+  config = tomllib.loads((PROJECT_ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+  for path in config["tool"]["pytest"]["ini_options"]["testpaths"]:
+    assert (PROJECT_ROOT / path).is_dir(), path
 
 
 def test_raw_data_file_names():

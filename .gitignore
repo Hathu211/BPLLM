@@ -33,3 +33,7 @@ data/qdrant_local/
 .DS_Store
 
 !data/processed/bpmn_chunks_summary.csv
+
+# Test Phase 1: chỉ giữ trên máy người phát triển, không đẩy lên git
+tests/test_parsing.py
+tests/test_phase1_pipeline.py

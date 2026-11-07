@@ -27,25 +27,35 @@ Cấu hình có sẵn giá trị mặc định chạy được ngay. Chỉ cần
 docker compose -f docker_compose.yml up -d
 ```
 
-**2. Tạo index.** Lần đầu chạy sẽ tải model embedding nên cần có mạng.
+**2. Chuẩn hóa quy trình (Phase 1).** Đọc `data/raw/original/*.bpmn`, bỏ phần đồ họa, sinh graph và biểu diễn natural text vào `data/processed/<process>/`, rồi sinh `data/ground_truth/<process>.json` từ graph. Mỗi lệnh trả exit code 1 nếu có quy trình không hợp lệ.
+
+```bash
+python scripts/prepare_processes.py
+```
+
+```bash
+python scripts/generate_ground_truth.py
+```
+
+**3. Tạo index.** Lần đầu chạy sẽ tải model embedding nên cần có mạng.
 
 ```bash
 python scripts/build_vector_store.py
 ```
 
-**3. Chạy test.** Bước này không cần Docker và không cần tải model.
+**4. Chạy test.** Bước này không cần Docker và không cần tải model.
 
 ```bash
 pytest
 ```
 
-**4. Mở giao diện**
+**5. Mở giao diện**
 
 ```bash
 streamlit run app/streamlit_app.py
 ```
 
-Dữ liệu Qdrant nằm trong `data/qdrant_storage/` và không được commit. Nếu thư mục này trống, chạy lại bước 2.
+Dữ liệu Qdrant nằm trong `data/qdrant_storage/` và không được commit. Nếu thư mục này trống, chạy lại bước 3.
 
 ## Nhóm cài đặt tùy chọn
 
@@ -70,10 +80,13 @@ Dữ liệu huấn luyện nằm ở `data/dataset/supervised_finetune_data.json
 | Đường dẫn | Nội dung |
 | :--- | :--- |
 | `src/bpllm/` | Package chính; `config.py` là nơi duy nhất đọc cấu hình |
-| `scripts/` | Tạo index, kiểm tra môi trường, chuẩn bị dữ liệu fine-tune |
+| `src/bpllm/parsing/` | Đọc BPMN thành graph, bỏ phần đồ họa, sinh natural text (DFG) |
+| `scripts/` | Chuẩn hóa quy trình, sinh ground truth, tạo index, kiểm tra môi trường, chuẩn bị dữ liệu fine-tune |
 | `app/` | Giao diện Streamlit |
-| `data/raw/` | File BPMN và mô tả quy trình gốc |
-| `data/ground_truth/` | Dữ liệu quy trình dùng để tạo index |
+| `data/raw/` | File BPMN đã bỏ đồ họa dùng làm mốc đối chiếu, và file natural text của bài báo cho Food Delivery |
+| `data/raw/original/` | File BPMN gốc còn phần đồ họa, đầu vào của Phase 1 |
+| `data/processed/<process>/` | Do `prepare_processes.py` sinh ra, không sửa tay: `graph.json`, BPMN đã bỏ đồ họa, file natural text |
+| `data/ground_truth/` | Do `generate_ground_truth.py` sinh từ graph, không sửa tay; dùng để tạo index và dữ liệu fine-tune |
 | `tests/` | Test pytest |
 | `docs/` | Quy trình làm việc của nhóm |
 
