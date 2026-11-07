@@ -1,15 +1,12 @@
-import os
-import sys
 import pandas as pd
 import streamlit as st
-from qdrant_client import QdrantClient
 
-# 1. PYTHONPATH Setup
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
+from bpllm.config import get_settings
+from bpllm.embeddings.embedder import ProcessEmbedder
+from bpllm.vectorstore.qdrant_store import QdrantVectorStore
 
-from src.bpllm.embeddings.embedder import ProcessEmbedder
-from src.bpllm.vectorstore.qdrant_store import QdrantVectorStore
+# 1. Settings
+settings = get_settings()
 
 # 2. Page Config
 st.set_page_config(
@@ -23,10 +20,8 @@ st.set_page_config(
 # 3. Cache Components
 @st.cache_resource
 def init_bpllm_components():
-  embedder = ProcessEmbedder("sentence-transformers/all-MiniLM-L6-v2")
-  vector_store = QdrantVectorStore(
-      host="localhost", grpc_port=6334, collection_name="bpllm_processes"
-  )
+  embedder = ProcessEmbedder()
+  vector_store = QdrantVectorStore()
   return embedder, vector_store
 
 
@@ -86,8 +81,8 @@ if view_mode == "End-User View":
     with st.chat_message("assistant"):
       if not qdrant_ready:
         st.error(
-            "❌ Cannot connect to Qdrant DB (Port 6334). Run 'docker-compose up"
-            " -d'."
+            f"❌ Cannot connect to Qdrant DB (Port {settings.qdrant_grpc_port})."
+            " Run 'docker compose -f docker_compose.yml up -d'."
         )
       else:
         with st.spinner("Retrieving top chunks..."):
@@ -186,10 +181,14 @@ else:
       st.dataframe(pd.DataFrame(table_data), use_container_width=True)
 
   with tab2:
-    st.subheader("Qdrant Vector Store Infrastructure (gRPC Port 6334)")
+    st.subheader(
+        "Qdrant Vector Store Infrastructure"
+        f" (gRPC Port {settings.qdrant_grpc_port})"
+    )
     if qdrant_ready:
-      client = QdrantClient(host="localhost", grpc_port=6334, prefer_grpc=True)
-      coll_info = client.get_collection("bpllm_processes")
+      coll_info = vector_store.client.get_collection(
+          vector_store.collection_name
+      )
 
       col1, col2, col3, col4 = st.columns(4)
       col1.metric("Indexed Vectors", coll_info.points_count)
@@ -197,6 +196,8 @@ else:
       col3.metric(
           "Distance Metric", str(coll_info.config.params.vectors.distance)
       )
-      col4.metric("gRPC Connection", "Connected (6334)")
+      col4.metric(
+          "gRPC Connection", f"Connected ({settings.qdrant_grpc_port})"
+      )
     else:
-      st.error(f"❌ gRPC Connection Failed: {qdrant_error}")
+      st.error(f"gRPC Connection Failed: {qdrant_error}")

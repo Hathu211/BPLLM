@@ -16,6 +16,10 @@ data/processed/*
 *.pth
 *.onnx
 checkpoints/
+data/qdrant_storage/
+data/qdrant_local/
+*.egg-info/
+.pytest_cache/
 
 # Environment Variables
 .env

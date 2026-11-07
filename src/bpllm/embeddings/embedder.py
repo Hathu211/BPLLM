@@ -1,15 +1,15 @@
-from typing import List, Union
+from typing import List, Optional, Union
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
+from bpllm.config import get_settings
 
 class ProcessEmbedder:
   """Class to encode Process Model Chunks into 384-dimensional Vector Embeddings."""
 
 # create 
-  def __init__(
-      self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
-  ):
+  def __init__(self, model_name: Optional[str] = None):
+    model_name = model_name or get_settings().embedding_model
     print(f" Loading embedding model: '{model_name}'...")
     self.model_name = model_name
     self.model = SentenceTransformer(model_name)

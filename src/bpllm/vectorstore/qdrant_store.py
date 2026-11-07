@@ -3,22 +3,32 @@ from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from qdrant_client.http.models import Distance, PointStruct, VectorParams
 
+from bpllm.config import get_settings
+
 
 class QdrantVectorStore:
-  """Manager class for interacting with Qdrant Vector DB via gRPC port 6334."""
+  """Manager class for interacting with Qdrant Vector DB."""
 
   def __init__(
       self,
-      host: str = "localhost",
-      grpc_port: int = 6334,
-      prefer_grpc: bool = True,
-      collection_name: str = "bpllm_processes",
+      host: Optional[str] = None,
+      grpc_port: Optional[int] = None,
+      prefer_grpc: Optional[bool] = None,
+      collection_name: Optional[str] = None,
   ):
-    self.collection_name = collection_name
+    settings = get_settings()
+    host = settings.qdrant_host if host is None else host
+    grpc_port = settings.qdrant_grpc_port if grpc_port is None else grpc_port
+    if prefer_grpc is None:
+      prefer_grpc = settings.qdrant_prefer_grpc
+    self.collection_name = collection_name or settings.qdrant_collection
     print(f"Connecting to Qdrant DB at {host} (gRPC Port: {grpc_port})...")
 
     self.client = QdrantClient(
-        host=host, grpc_port=grpc_port, prefer_grpc=prefer_grpc
+        host=host,
+        port=settings.qdrant_http_port,
+        grpc_port=grpc_port,
+        prefer_grpc=prefer_grpc,
     )
     print("Qdrant gRPC connection established successfully!")
 

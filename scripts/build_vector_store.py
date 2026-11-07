@@ -1,13 +1,9 @@
 import json
 import os
-import sys
 
-# Append project base directory to sys.path
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
-
-from src.bpllm.embeddings.embedder import ProcessEmbedder
-from src.bpllm.vectorstore.qdrant_store import QdrantVectorStore
+from bpllm.config import PROJECT_ROOT
+from bpllm.embeddings.embedder import ProcessEmbedder
+from bpllm.vectorstore.qdrant_store import QdrantVectorStore
 
 
 def normalize_process_name(raw_name: str) -> str:
@@ -28,7 +24,7 @@ def normalize_process_name(raw_name: str) -> str:
 
 def load_all_process_chunks():
   """Load ground truth files and prepare chunks with standardized metadata."""
-  gt_dir = os.path.join(BASE_DIR, "data", "ground_truth")
+  gt_dir = os.path.join(PROJECT_ROOT, "data", "ground_truth")
   chunks = []
   metadatas = []
 
@@ -99,20 +95,13 @@ def main():
     )
     return
 
-  # Step 2: Encode 384-dim vectors using all-MiniLM-L6-v2
-  embedder = ProcessEmbedder(
-      model_name="sentence-transformers/all-MiniLM-L6-v2"
-  )
+  # Step 2: Encode vectors using the model configured in EMBEDDING_MODEL
+  embedder = ProcessEmbedder()
   embeddings = embedder.encode(chunks)
 
-  # Step 3: Initialize Qdrant Store via gRPC Port 6334
-  vector_store = QdrantVectorStore(
-      host="localhost",
-      grpc_port=6334,
-      prefer_grpc=True,
-      collection_name="bpllm_processes",
-  )
-  vector_store.init_collection(vector_size=384, recreate=True)
+  # Step 3: Initialize Qdrant Store using the QDRANT_* settings
+  vector_store = QdrantVectorStore()
+  vector_store.init_collection(vector_size=embedder.vector_size, recreate=True)
 
   # Step 4: Upsert vectors and metadata payloads into Qdrant
   vector_store.upsert_chunks(chunks, embeddings, metadatas)
