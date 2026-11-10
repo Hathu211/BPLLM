@@ -4,6 +4,7 @@ import tomllib
 import yaml
 
 from bpllm.config import PROJECT_ROOT
+from bpllm.parsing import PROCESS_NAMES
 
 SUBPACKAGES = ["chunking", "embeddings", "evaluation", "llm", "parsing", "rag", "vectorstore"]
 
@@ -50,3 +51,10 @@ def test_raw_data_file_names():
   assert (raw / "food_delivery_dfg_activities.txt").is_file()
   assert (raw / "food_delivery_dfg_flows.txt").is_file()
   assert not [p.name for p in raw.iterdir() if "(1)" in p.name]
+
+
+def test_streamlit_filter_offers_every_process_name():
+  # Ô chọn quy trình trên Streamlit phải có đủ tên chuẩn dùng trong metadata chunk
+  app = (PROJECT_ROOT / "app" / "streamlit_app.py").read_text(encoding="utf-8")
+  for name in PROCESS_NAMES.values():
+    assert f'"{name}"' in app, name

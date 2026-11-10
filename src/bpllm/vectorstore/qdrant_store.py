@@ -1,13 +1,31 @@
-from typing import Any, Dict, List, Optional
+"""Lưu và tìm chunk quy trình trong Qdrant (cosine, gRPC)."""
+import uuid
+from typing import Any, Dict, List, Optional, Sequence
+
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from qdrant_client.http.models import Distance, PointStruct, VectorParams
 
 from bpllm.config import get_settings
 
+# Khóa payload dùng để lọc theo quy trình (giá trị: food_delivery, ecommerce, reimbursement)
+PROCESS_KEY = "process_id"
+CONTENT_KEY = "chunk_content"
+DEFAULT_TOP_K = 10
+
+# Giá trị nghĩa là "không lọc" (giữ để tương thích với Streamlit cũ)
+_NO_FILTER = {"", "all", "all process model", "all processes", "tất cả quy trình"}
+
+
+def point_id(metadata: Dict[str, Any], fallback: int) -> str:
+  """Id ổn định giữa các lần build: cùng process + node thì cùng id."""
+  pid, nid = metadata.get(PROCESS_KEY), metadata.get("node_id")
+  key = f"{pid}:{nid}" if pid and nid else f"chunk:{fallback}"
+  return str(uuid.uuid5(uuid.NAMESPACE_URL, f"bpllm/{key}"))
+
 
 class QdrantVectorStore:
-  """Manager class for interacting with Qdrant Vector DB."""
+  """Quản lý collection chứa chunk BPMN trong Qdrant."""
 
   def __init__(
       self,
@@ -22,7 +40,7 @@ class QdrantVectorStore:
     if prefer_grpc is None:
       prefer_grpc = settings.qdrant_prefer_grpc
     self.collection_name = collection_name or settings.qdrant_collection
-    print(f"Connecting to Qdrant DB at {host} (gRPC Port: {grpc_port})...")
+    print(f"Connecting to Qdrant at {host} (gRPC port {grpc_port})...")
 
     self.client = QdrantClient(
         host=host,
@@ -30,127 +48,82 @@ class QdrantVectorStore:
         grpc_port=grpc_port,
         prefer_grpc=prefer_grpc,
     )
-    print("Qdrant gRPC connection established successfully!")
 
-  def init_collection(
-      self, vector_size: int = 384, recreate: bool = True
-  ) -> None:
-    """Initialize or recreate a collection with Cosine Distance metric."""
-    collections = [c.name for c in self.client.get_collections().collections]
-
-    if self.collection_name in collections and not recreate:
+  def init_collection(self, vector_size: int = 384, recreate: bool = True) -> None:
+    """Tạo collection cosine; recreate=True thì xóa collection cũ trước."""
+    exists = self.client.collection_exists(self.collection_name)
+    if exists and not recreate:
       print(f"Collection '{self.collection_name}' already exists.")
       return
+    if exists:
+      self.client.delete_collection(self.collection_name)
 
-    self.client.recreate_collection(
+    self.client.create_collection(
         collection_name=self.collection_name,
-        vectors_config=VectorParams(
-            size=vector_size, distance=Distance.COSINE
-        ),
+        vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE),
     )
-    print(
-        f" Successfully initialized collection '{self.collection_name}'"
-        f" (Vector Size: {vector_size}, Metric: Cosine)!"
+    # Index cho trường lọc để filter theo quy trình nhanh và chính xác
+    self.client.create_payload_index(
+        collection_name=self.collection_name,
+        field_name=PROCESS_KEY,
+        field_schema=models.PayloadSchemaType.KEYWORD,
     )
+    print(f"Created collection '{self.collection_name}' (size {vector_size}, cosine).")
 
   def upsert_chunks(
       self,
-      chunks: List[str],
-      embeddings: List[List[float]],
-      metadatas: Optional[List[Dict[str, Any]]] = None,
+      chunks: Sequence[str],
+      embeddings: Sequence[Sequence[float]],
+      metadatas: Optional[Sequence[Dict[str, Any]]] = None,
   ) -> None:
-    """Upsert Process Chunks and their embeddings into Qdrant Index."""
+    """Lưu chunk + vector + metadata vào collection."""
     if len(chunks) != len(embeddings):
       raise ValueError("Number of chunks and embeddings must be equal!")
+    if metadatas is not None and len(metadatas) != len(chunks):
+      raise ValueError("Number of chunks and metadatas must be equal!")
 
     points = []
     for idx, (chunk, emb) in enumerate(zip(chunks, embeddings)):
-      payload = {"chunk_content": chunk}
-      if metadatas and idx < len(metadatas):
-        payload.update(metadatas[idx])
+      meta = dict(metadatas[idx]) if metadatas else {}
+      payload = {CONTENT_KEY: chunk, **meta}
+      points.append(PointStruct(id=point_id(meta, idx), vector=list(emb), payload=payload))
 
-      points.append(PointStruct(id=idx + 1, vector=emb, payload=payload))
+    self.client.upsert(collection_name=self.collection_name, points=points, wait=True)
+    print(f"Stored {len(points)} points in '{self.collection_name}'.")
 
-    self.client.upsert(collection_name=self.collection_name, points=points)
-    print(
-        f"Successfully stored {len(points)} points/vectors into Qdrant"
-        " Index!"
-    )
+  @staticmethod
+  def build_filter(process_filter: Optional[str]) -> Optional[models.Filter]:
+    """process_filter là process_id (vd 'food_delivery'); None/'All...' = không lọc."""
+    if process_filter is None or process_filter.strip().lower() in _NO_FILTER:
+      return None
+    return models.Filter(must=[
+        models.FieldCondition(key=PROCESS_KEY,
+                              match=models.MatchValue(value=process_filter.strip()))
+    ])
 
   def search_top_k(
       self,
-      query_vector: List[float],
-      top_k: int = 10,
+      query_vector: Sequence[float],
+      top_k: int = DEFAULT_TOP_K,
       process_filter: Optional[str] = None,
   ) -> List[Dict[str, Any]]:
-    """Retrieve top-K most similar chunks using Cosine Similarity with robust process filtering."""
-    # Safety Check: Unwrap 2D list [[...]] to 1D list [...]
-    if (
-        isinstance(query_vector, list)
-        and len(query_vector) > 0
-        and isinstance(query_vector, list)
-    ):
-      query_vector = query_vector
+    """Top-k chunk gần nhất theo cosine, có thể lọc theo một quy trình."""
+    vector = list(query_vector)
+    if vector and isinstance(vector[0], (list, tuple)):
+      vector = list(vector[0])  # chấp nhận [[...]] từ encode() trả về batch
 
-    query_filter = None
-    if process_filter and process_filter not in [
-        "Tất cả quy trình",
-        "All Processes",
-        "",
-        None,
-    ]:
-      # Tạo danh sách tất cả các dạng viết của tên quy trình
-      clean_filter = process_filter.strip()
-      possible_matches = [
-          clean_filter,  # "Food Delivery"
-          clean_filter.lower(),  # "food delivery"
-          clean_filter.lower().replace(" ", "_"),  # "food_delivery"
-          clean_filter.lower().replace("-", "_"),  # "food_delivery"
-          clean_filter.replace("_", " ").title(),  # "Food Delivery"
-          f"{clean_filter.lower().replace(' ', '_')}_gt",  # "food_delivery_gt"
-      ]
-
-      query_filter = models.Filter(
-          must=[
-              models.FieldCondition(
-                  key="process",
-                  match=models.MatchAny(
-                      any=list(set(possible_matches))
-                  ),  # Match bất kỳ dạng nào
-              )
-          ]
-      )
-    if hasattr(self.client, "query_point"): 
-        respone = self.client.query.points(
-            collection_name = self.collection_name,
-            query_vector=query_vector,
-            query_filter=query_filter,
-            limit=top_k,
-        )
-        hits = response.points
-    elif hasattr(self.client, "query_point"): 
-        response = self.client.query_point(
-            collection_name=self.collection_name,
-            query_vector=query_vector,
-            query_filter=query_filter,
-            limit=top_k,
-        )
-        hits = getattr(response, "points", response)
-    else:
-      # API cũ (< 1.10.0)
-        hits = self.client.search(
-            collection_name=self.collection_name,
-            query_vector=query_vector,
-            query_filter=query_filter,
-            limit=top_k,
-        )
-    results = []
-    for hit in hits:
-      results.append({
-          "score": hit.score,
-          "content": hit.payload.get("chunk_content", ""),
-          "metadata": {
-              k: v for k, v in hit.payload.items() if k != "chunk_content"
-          },
-      })
-    return results
+    response = self.client.query_points(
+        collection_name=self.collection_name,
+        query=vector,
+        query_filter=self.build_filter(process_filter),
+        limit=top_k,
+        with_payload=True,
+    )
+    return [
+        {
+            "score": hit.score,
+            "content": hit.payload.get(CONTENT_KEY, ""),
+            "metadata": {k: v for k, v in hit.payload.items() if k != CONTENT_KEY},
+        }
+        for hit in response.points
+    ]

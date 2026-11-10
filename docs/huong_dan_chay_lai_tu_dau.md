@@ -65,7 +65,8 @@ docker image rm qdrant/qdrant:v1.10.1
 | `src\bpllm.egg-info\` | `pip install -e .` (bước 4) |
 | `__pycache__\`, `.pytest_cache\` | Python và pytest tự tạo |
 | `data\qdrant_storage\` | Docker (bước 5) và `build_vector_store.py` (bước 9.1) |
-| `data\processed\*` (graph, file DFG, BPMN đã làm sạch, report, `bpmn_chunks_summary.csv`) | `prepare_processes.py` (bước 6) và `chunking_processor` (bước 9.2) |
+| `data\processed\*` (graph, file DFG, BPMN đã làm sạch, report, `bpmn_chunks.jsonl
+`) | `prepare_processes.py` (bước 6) và `chunking_processor` (bước 9.2) |
 | `data\ground_truth\*.json` | `generate_ground_truth.py` (bước 6) |
 | `data\dataset\supervised_finetune_data.json` | `prepare_dataset.py` (bước 9.3) |
 
@@ -203,15 +204,17 @@ Phải có 19 file:
 pytest
 ```
 
-Tất cả test phải **pass**. Test không cần Docker và không cần tải model.
+Tất cả test phải **pass**. Test không cần Docker và không cần tải model. Lệnh này chạy các test: chunking, embedder, qdrant, config và project setup.
 
-Riêng Phase 1:
+**Kiểm tra Phase 1** (không cần pytest):
 
 ```powershell
-pytest tests/test_parsing.py tests/test_phase1_pipeline.py -q
+python scripts/generate_ground_truth.py --check
 ```
 
-Kết quả đúng: `111 passed`.
+Phải in `[OK ]` cho cả 3 quy trình.
+
+> 2 file test Phase 1 (`tests/test_parsing.py`, `tests/test_phase1_pipeline.py`) không có trên git: chúng nằm trong `.gitignore`. Nếu máy bạn còn 2 file này, có thể tự chạy thêm `pytest tests/test_parsing.py tests/test_phase1_pipeline.py -q`. Kết quả đúng là `111 passed`.
 
 ---
 
@@ -232,7 +235,7 @@ Get-ChildItem data\processed, data\ground_truth -Recurse -File | ForEach-Object 
 **Kết quả mong đợi:** mọi file của Phase 1 đều là `GIONG`. Như vậy chuẩn hóa là **tất định**: cùng đầu vào thì luôn ra cùng một kết quả.
 
 - Nếu có dòng `KHAC`, xem chi tiết bằng `git diff --no-index "$backup\<đường_dẫn>" "<đường_dẫn>"`.
-- `bpmn_chunks_summary.csv` chỉ xuất hiện sau bước 9.2, nên ở bước này nó không có trong danh sách. Đây là điều bình thường.
+- `bpmn_chunks.jsonl' chỉ xuất hiện sau bước 9.2, nên ở bước này nó không có trong danh sách. Đây là điều bình thường.
 
 ---
 
@@ -246,7 +249,7 @@ python scripts/build_vector_store.py
 
 Kết thúc bằng `VECTOR STORE INDEXING COMPLETED SUCCESSFULLY!`. Trên dashboard http://localhost:6333/dashboard sẽ thấy collection `bpllm_processes`.
 
-### 9.2. Sinh lại `bpmn_chunks_summary.csv`
+### 9.2. Sinh lại `bpmn_chunks_jsonl`
 
 ```powershell
 python -m bpllm.chunking.chunking_processor
@@ -292,7 +295,7 @@ streamlit run app/streamlit_app.py
 - [ ] Bước 4: `sys.executable` trỏ vào `venv\Scripts\python.exe`
 - [ ] Bước 5: `check_env.py` báo sẵn sàng 100%
 - [ ] Bước 6: 3 quy trình `[OK ]`, `--check` OK, có đủ 19 file
-- [ ] Bước 7: `pytest` pass hết (Phase 1: 111 passed)
+- [ ] Bước 7: `pytest` pass hết, `generate_ground_truth.py --check` in OK cả 3 quy trình
 - [ ] Bước 8: mọi file Phase 1 đều `GIONG` với bản sao lưu
 - [ ] (Tùy chọn) Bước 9: vector store, file chunk, dataset và Streamlit đều chạy được
 
