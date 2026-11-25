@@ -1,183 +1,214 @@
-import xml.etree.ElementTree as ET
-from typing import List, Dict, Any
-import os
-import pandas as pd
+"""BPMN-specific chunking theo bài báo BPLLM (Fig. 3).
 
-TASK_TAGS = {'task', 'userTask', 'serviceTask', 'sendTask', 'receiveTask',
-             'scriptTask', 'businessRuleTask', 'manualTask'}
-GATEWAY_TAGS = {'exclusiveGateway', 'inclusiveGateway', 'parallelGateway',
-                'eventBasedGateway', 'complexGateway'}
-EVENT_TAGS = {'startEvent', 'endEvent', 'intermediateCatchEvent', 'intermediateThrowEvent'}
+Mỗi chunk là nguyên văn XML của một phần tử BPMN (task, gateway, event), giữ cả
+các tag con như <incoming>/<outgoing>. Phần đồ họa đã được bỏ ở Phase 1
+(data/processed/<process>/<process>.bpmn).
+
+<sequenceFlow> KHÔNG thành chunk riêng: flow A -> B đọc được nhờ id Flow_x nằm
+trong <outgoing> của A và <incoming> của B. Chunk sequenceFlow chỉ chứa id nên
+chiếm chỗ trong top-10 mà không giúp gì.
+
+Chế độ enrich (cải tiến, không có trong bài báo): vẫn là XML của node, nhưng mỗi
+<incoming>/<outgoing> được gắn tên node ở đầu bên kia và nhãn điều kiện lấy từ
+<sequenceFlow>, ví dụ <outgoing target="register the order" condition="yes">Flow_1</outgoing>.
+
+Chạy: python -m bpllm.chunking.chunking_processor            (bài báo)
+      python -m bpllm.chunking.chunking_processor --enrich   (cải tiến)
+"""
+from __future__ import annotations
+
+import copy
+import json
+import re
+import textwrap
+import xml.etree.ElementTree as ET
+from pathlib import Path
+from typing import Dict, Iterable, List, Optional
+
+from bpllm.config import PROJECT_ROOT
+from bpllm.parsing import PROCESS_NAMES
+
+BPMN_NS = "http://www.omg.org/spec/BPMN/20100524/MODEL"
+
+TASK_TAGS = {
+    "task", "userTask", "serviceTask", "sendTask", "receiveTask",
+    "scriptTask", "businessRuleTask", "manualTask", "callActivity", "subProcess",
+}
+GATEWAY_TAGS = {
+    "exclusiveGateway", "inclusiveGateway", "parallelGateway",
+    "eventBasedGateway", "complexGateway",
+}
+EVENT_TAGS = {
+    "startEvent", "endEvent", "intermediateCatchEvent",
+    "intermediateThrowEvent", "boundaryEvent",
+}
 NODE_TAGS = TASK_TAGS | GATEWAY_TAGS | EVENT_TAGS
 
-LABELS = {
-    'task': 'Task', 'userTask': 'User task', 'serviceTask': 'Service task',
-    'sendTask': 'Send task', 'receiveTask': 'Receive task', 'scriptTask': 'Script task',
-    'businessRuleTask': 'Business rule task', 'manualTask': 'Manual task',
-    'exclusiveGateway': 'Exclusive gateway (XOR decision)',
-    'inclusiveGateway': 'Inclusive gateway (OR)',
-    'parallelGateway': 'Parallel gateway (AND)',
-    'eventBasedGateway': 'Event-based gateway',
-    'complexGateway': 'Complex gateway',
-    'startEvent': 'Start event', 'endEvent': 'End event',
-    'intermediateCatchEvent': 'Intermediate catch event',
-    'intermediateThrowEvent': 'Intermediate throw event',
-}
+PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+CHUNKS_FILE = PROCESSED_DIR / "bpmn_chunks.jsonl"
+ENRICHED_CHUNKS_FILE = PROCESSED_DIR / "bpmn_chunks_enriched.jsonl"
+
+# Xuất XML với namespace mặc định để không sinh tiền tố "ns0:"
+ET.register_namespace("", BPMN_NS)
+_XMLNS_ATTR = re.compile(r'\s+xmlns(:\w+)?="[^"]*"')
 
 
-def _strip(tag: str) -> str:
-    return tag.split('}')[-1]
+def _local(tag: str) -> str:
+  return tag.split("}")[-1]
 
 
-class EnrichedBPMNChunker:
-    """
-    Mỗi chunk = 1 node (task/gateway/event), viết bằng ngôn ngữ tự nhiên:
-    - ID được thay bằng tên node (tra từ sequenceFlow)
-    - Gắn ngữ cảnh: tên quy trình, lane, bước trước/sau, nhãn nhánh (Yes/No)
-    - Thêm 1 chunk tổng quan cho cả quy trình
-    Trả về List[Dict] gồm 'text' (đem đi embed) và 'metadata'.
-    """
+def _node_kind(tag: str) -> str:
+  if tag in TASK_TAGS:
+    return "activity"
+  if tag in GATEWAY_TAGS:
+    return "gateway"
+  return "event"
 
-    def chunk(self, xml_content: str, file_name: str = "") -> List[Dict[str, Any]]:
-        root = ET.fromstring(xml_content)
 
-        # 1. Gom tất cả node và flow
-        nodes: Dict[str, ET.Element] = {}
-        flows: List[Dict[str, str]] = []
-        lane_of: Dict[str, str] = {}
-        process_name = ""
+def element_xml(el: ET.Element) -> str:
+  """Nguyên văn XML của một phần tử: bỏ khai báo xmlns, chuẩn hóa thụt lề."""
+  tail, el.tail = el.tail, None
+  try:
+    text = ET.tostring(el, encoding="unicode")
+  finally:
+    el.tail = tail
+  text = _XMLNS_ATTR.sub("", text, count=1)
+  first, _, rest = text.partition("\n")
+  if not rest:
+    return first.strip()
+  # Các dòng con giữ thụt lề tương đối, thẻ đóng về sát lề
+  return first.strip() + "\n" + textwrap.dedent(rest).strip("\n")
 
-        for el in root.iter():
-            tag = _strip(el.tag)
-            if tag in NODE_TAGS:
-                nodes[el.get('id')] = el
-            elif tag == 'sequenceFlow':
-                flows.append({'id': el.get('id'), 'name': el.get('name', ''),
-                              'src': el.get('sourceRef'), 'tgt': el.get('targetRef')})
-            elif tag == 'participant':
-                process_name = el.get('name') or process_name
-            elif tag == 'lane':
-                lane_name = el.get('name') or el.get('id')
-                for ref in el.iter():
-                    if _strip(ref.tag) == 'flowNodeRef' and ref.text:
-                        lane_of[ref.text.strip()] = lane_name
 
-        def label(node_id: str) -> str:
-            el = nodes.get(node_id)
-            if el is None:
-                return node_id
-            name = el.get('name')
-            kind = LABELS.get(_strip(el.tag), _strip(el.tag))
-            return f"{kind} '{name}'" if name else f"{kind} (unnamed)"
+def _enrich(el: ET.Element, nodes: Dict[str, ET.Element],
+            flows: Dict[str, ET.Element]) -> ET.Element:
+  """Bản sao của node, mỗi <incoming>/<outgoing> được gắn thông tin của <sequenceFlow>.
 
-        incoming: Dict[str, List[Dict]] = {k: [] for k in nodes}
-        outgoing: Dict[str, List[Dict]] = {k: [] for k in nodes}
-        for f in flows:
-            if f['src'] in outgoing:
-                outgoing[f['src']].append(f)
-            if f['tgt'] in incoming:
-                incoming[f['tgt']].append(f)
+  <outgoing target="tên node đích">   (id nếu node đích không có tên)
+  <incoming source="tên node nguồn">  (id nếu node nguồn không có tên)
+  condition="..." nếu flow có nhãn nhánh (yes/no...).
+  Cố ý chỉ thêm 1-2 thuộc tính: bản đầy đủ (thêm *Ref, *Type) làm chunk dài quá
+  256 token của MiniLM và làm id gateway xuất hiện ở chunk hàng xóm.
+  """
+  el = copy.deepcopy(el)
+  for child in el:
+    kind = _local(child.tag)
+    flow = flows.get((child.text or "").strip())
+    if kind not in ("incoming", "outgoing") or flow is None:
+      continue
+    side = "target" if kind == "outgoing" else "source"
+    other_id = flow.get(f"{side}Ref") or ""
+    other = nodes.get(other_id)
+    name = (other.get("name") or "").strip() if other is not None else ""
+    child.set(side, name or other_id)
+    if (flow.get("name") or "").strip():
+      child.set("condition", flow.get("name").strip())
+  return el
 
-        # 2. Chunk tổng quan quy trình
-        results: List[Dict[str, Any]] = []
-        starts = [label(i) for i, e in nodes.items() if _strip(e.tag) == 'startEvent']
-        ends = [label(i) for i, e in nodes.items() if _strip(e.tag) == 'endEvent']
-        n_tasks = sum(1 for e in nodes.values() if _strip(e.tag) in TASK_TAGS)
-        n_gw = sum(1 for e in nodes.values() if _strip(e.tag) in GATEWAY_TAGS)
-        overview = (f"Process '{process_name or file_name}'. "
-                    f"Starts with: {', '.join(starts) or 'n/a'}. "
-                    f"Ends with: {', '.join(ends) or 'n/a'}. "
-                    f"Contains {n_tasks} tasks and {n_gw} gateways.")
-        results.append({'text': overview,
-                        'metadata': {'file_name': file_name, 'node_type': 'process_overview',
-                                     'node_id': None}})
 
-        # 3. Chunk cho từng node
-        for node_id, el in nodes.items():
-            kind = _strip(el.tag)
-            parts = [f"In process '{process_name or file_name}'"]
-            if node_id in lane_of:
-                parts[0] += f", lane '{lane_of[node_id]}'"
-            parts[0] += f": {label(node_id)}."
+class BPMNSpecificChunker:
+  """Cắt một file BPMN thành các chunk XML, mỗi chunk một node.
 
-            if incoming[node_id]:
-                prev = '; '.join(label(f['src']) + (f" [condition: {f['name']}]" if f['name'] else '')
-                                 for f in incoming[node_id])
-                parts.append(f"Preceded by: {prev}.")
-            if outgoing[node_id]:
-                if kind in GATEWAY_TAGS and len(outgoing[node_id]) > 1:
-                    nxt = '; '.join((f"if '{f['name']}' -> " if f['name'] else "-> ") + label(f['tgt'])
-                                    for f in outgoing[node_id])
-                    parts.append(f"Branches: {nxt}.")
-                else:
-                    nxt = '; '.join(label(f['tgt']) for f in outgoing[node_id])
-                    parts.append(f"Followed by: {nxt}.")
+  enrich=False: đúng Fig. 3 bài báo (baseline).
+  enrich=True : gộp thông tin <sequenceFlow> vào <incoming>/<outgoing> của node (cải tiến).
+  """
 
-            results.append({
-                'text': ' '.join(parts),
-                'metadata': {'file_name': file_name, 'node_type': kind, 'node_id': node_id,
-                             'node_name': el.get('name', ''), 'lane': lane_of.get(node_id, '')},
-            })
-        return results
-    
+  def __init__(self, enrich: bool = False):
+    self.enrich = enrich
+
+  def chunk(self, xml_content: str, process_id: str,
+            process_name: Optional[str] = None) -> List[Dict]:
+    """Trả về list {'text', 'metadata'}; 'text' là đoạn XML đem đi embed."""
+    root = ET.fromstring(xml_content)
+    process_name = process_name or PROCESS_NAMES.get(
+        process_id, process_id.replace("_", " ").title())
+    nodes = {el.get("id"): el for el in root.iter() if _local(el.tag) in NODE_TAGS}
+    flows = {el.get("id"): el for el in root.iter() if _local(el.tag) == "sequenceFlow"}
+
+    chunks: List[Dict] = []
+    for el in root.iter():
+      tag = _local(el.tag)
+      if tag not in NODE_TAGS:
+        continue
+      source = _enrich(el, nodes, flows) if self.enrich else el
+      chunks.append({
+          "text": element_xml(source),
+          "metadata": {
+              "process_id": process_id,
+              "process_name": process_name,
+              "node_id": el.get("id"),
+              "node_type": tag,
+              "node_kind": _node_kind(tag),
+              "node_name": (el.get("name") or "").strip(),
+              "chunk_index": len(chunks),
+              "chunking": "bpmn_enriched" if self.enrich else "bpmn_specific",
+          },
+      })
+    return chunks
+
+
+def process_dirs(processed_dir: Path = PROCESSED_DIR) -> List[Path]:
+  """Các thư mục data/processed/<process>/ có file <process>.bpmn."""
+  if not processed_dir.is_dir():
+    return []
+  return sorted(d for d in processed_dir.iterdir()
+                if d.is_dir() and (d / f"{d.name}.bpmn").is_file())
+
+
+def chunk_process_dir(process_dir: Path,
+                      chunker: Optional[BPMNSpecificChunker] = None) -> List[Dict]:
+  """Chunk file BPMN đã làm sạch của một quy trình."""
+  chunker = chunker or BPMNSpecificChunker()
+  process_id = process_dir.name
+  process_name = None
+  graph_file = process_dir / "graph.json"
+  if graph_file.is_file():
+    process_name = json.loads(graph_file.read_text(encoding="utf-8")).get("process_name")
+  xml = (process_dir / f"{process_id}.bpmn").read_text(encoding="utf-8")
+  return chunker.chunk(xml, process_id, process_name)
+
+
+def chunk_all(processed_dir: Path = PROCESSED_DIR,
+              process_ids: Optional[Iterable[str]] = None,
+              enrich: bool = False) -> List[Dict]:
+  """Chunk mọi quy trình, hoặc chỉ các process_ids được chọn."""
+  wanted = set(process_ids) if process_ids else None
+  chunker = BPMNSpecificChunker(enrich=enrich)
+  chunks: List[Dict] = []
+  for d in process_dirs(processed_dir):
+    if wanted is None or d.name in wanted:
+      chunks.extend(chunk_process_dir(d, chunker))
+  return chunks
+
+
+def write_jsonl(chunks: List[Dict], path: Path = CHUNKS_FILE) -> Path:
+  path.parent.mkdir(parents=True, exist_ok=True)
+  with path.open("w", encoding="utf-8") as f:
+    for c in chunks:
+      f.write(json.dumps(c, ensure_ascii=False) + "\n")
+  return path
+
+
+def main() -> None:
+  import argparse
+  parser = argparse.ArgumentParser(description="BPMN-specific chunking")
+  parser.add_argument("--enrich", action="store_true",
+                      help="gộp thông tin sequenceFlow vào <incoming>/<outgoing>")
+  args = parser.parse_args()
+  chunks = chunk_all(enrich=args.enrich)
+  if not chunks:
+    print(f"Không tìm thấy quy trình nào trong {PROCESSED_DIR}. Chạy scripts/prepare_processes.py trước.")
+    return
+  counts: Dict[str, int] = {}
+  for c in chunks:
+    pid = c["metadata"]["process_id"]
+    counts[pid] = counts.get(pid, 0) + 1
+  for pid, n in counts.items():
+    print(f"{pid}: {n} chunk")
+  out = write_jsonl(chunks, ENRICHED_CHUNKS_FILE if args.enrich else CHUNKS_FILE)
+  print(f"Đã ghi {len(chunks)} chunk vào {out}")
+  print("\nVí dụ chunk đầu tiên:\n" + chunks[0]["text"])
+
+
 if __name__ == "__main__":
-    inputs = "./data/raw"  
-    output_dir = "./data/processed"
-    os.makedirs(output_dir, exist_ok=True)
-    
-    # 2. Lấy danh sách các file .bpmn và .xml trong thư mục
-    valid_extensions = ('.bpmn', '.xml')
-    bpmn_files = [
-        f for f in os.listdir(inputs) 
-        if f.endswith(valid_extensions) and os.path.isfile(os.path.join(inputs, f))
-    ]
-    
-    if not bpmn_files:
-        print(f"Không tìm thấy file BPMN/XML nào trong thư mục: {inputs}")
-    else:
-        # 3. Khởi tạo các bộ chunker
-        bpmn_chunker = EnrichedBPMNChunker()
-
-        all_results = []
-
-        # 4. Duyệt qua từng file và thực hiện chunking
-        for name in bpmn_files:
-            full_path = os.path.join(inputs, name) 
-            print(f"\n==========================================")
-            print(f"Đang xử lý file: {full_path}")
-            print(f"==========================================")
-            
-            # Đọc nội dung file BPMN
-            try:
-                with open(full_path, 'r', encoding='utf-8') as f:
-                    xml_content = f.read()
-            except Exception as e:
-                print(f"Lỗi khi đọc file {name}: {e}")
-                continue
-
-            # --- Áp dụng BPMN-Specific Chunking ---
-            try:
-                bpmn_chunks = bpmn_chunker.chunk(xml_content)
-                print(f"[1] BPMN-Specific Chunker: Tạo ra {len(bpmn_chunks)} chunks.")
-                for idx, chunk in enumerate(bpmn_chunks, 1):
-                    all_results.append({
-                        "file_name": name,
-                        "strategy": "BPMN-specific",
-                        "chunk_id": idx,
-                        "content": chunk
-                    })
-            except Exception as e:
-                print(f"Lỗi BPMN-Specific Chunking trên file {name}: {e}")
-
-        # 5. Lưu kết quả ra file CSV để kiểm tra hoặc nạp vào Vector DB
-        if all_results:
-            df = pd.DataFrame(all_results)
-            output_csv = os.path.join(output_dir, "bpmn_chunks_summary.csv")
-            df.to_csv(output_csv, index=False, encoding='utf-8-sig')
-            print(f"\n---> Đã xuất toàn bộ kết quả chunking ra file: {output_csv}")
-            
-            # In thử 3 chunk mẫu của phương pháp BPMN-Specific
-            print("\n--- MẪU KẾT QUẢ (BPMN-Specific) ---")
-            sample_df = df[df["strategy"] == "BPMN-specific"].head(3)
-            for _, row in sample_df.iterrows():
-                print(f"\n[File: {row['file_name']} | Chunk {row['chunk_id']}]:\n{row['content']}")
+  main()

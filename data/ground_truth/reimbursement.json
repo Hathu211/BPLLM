@@ -1,39 +1,199 @@
 {
+  "process_id": "reimbursement",
   "process_name": "Reimbursement",
+  "source_files": [
+    "reimbursement.bpmn"
+  ],
   "start_events": [
-    "Expense report received from employee"
+    "Expense report received"
   ],
   "end_events": [
-    "Process complete"
+    "Reimbursement rejected",
+    "Money transferred"
   ],
   "activities": [
-    "Notify employee",
-    "Create account for employee",
-    "Clerk reviews amount",
-    "Submit to manager",
-    "Approve promptly",
-    "Manager reviews and decides",
-    "Reimburse employee"
+    "Reformat and send expense report",
+    "Review amount",
+    "Assess evaluation report",
+    "Approve expense report without assessment",
+    "Reject expense report",
+    "Transfer money to bank account",
+    "Approve expense report",
+    "Send approval notification",
+    "Notify Employee",
+    "Create Employee Account",
+    "Review expense report"
+  ],
+  "dfg_activities": [
+    "Expense report received",
+    "Reformat and send expense report",
+    "Review amount",
+    "Assess evaluation report",
+    "Approve expense report without assessment",
+    "Reject expense report",
+    "Reimbursement rejected",
+    "Transfer money to bank account",
+    "Approve expense report",
+    "Send approval notification",
+    "Money transferred",
+    "Notify Employee",
+    "Create Employee Account",
+    "Review expense report"
   ],
   "gateways": [
-    "Account exists?",
-    "Reformulation needed?",
-    "Amount below threshold?"
+    "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+    "How much is the amount to be reimbursed?",
+    "Is a new account required?",
+    "Gateway_1wkso6h",
+    "Expense report is OK?"
+  ],
+  "gateway_details": [
+    {
+      "id": "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+      "name": "",
+      "reference": "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+      "lookup": "id",
+      "type": "exclusiveGateway",
+      "incoming": 2,
+      "outgoing": 1
+    },
+    {
+      "id": "Gateway_08rst62",
+      "name": "How much is the amount to be reimbursed?",
+      "reference": "How much is the amount to be reimbursed?",
+      "lookup": "name",
+      "type": "exclusiveGateway",
+      "incoming": 1,
+      "outgoing": 2
+    },
+    {
+      "id": "Id_004d696c-83de-4e53-a2d9-514f6f27ce2c",
+      "name": "Is a new account required?",
+      "reference": "Is a new account required?",
+      "lookup": "name",
+      "type": "exclusiveGateway",
+      "incoming": 1,
+      "outgoing": 2
+    },
+    {
+      "id": "Gateway_1wkso6h",
+      "name": "",
+      "reference": "Gateway_1wkso6h",
+      "lookup": "id",
+      "type": "exclusiveGateway",
+      "incoming": 2,
+      "outgoing": 1
+    },
+    {
+      "id": "Gateway_098odj7",
+      "name": "Expense report is OK?",
+      "reference": "Expense report is OK?",
+      "lookup": "name",
+      "type": "exclusiveGateway",
+      "incoming": 1,
+      "outgoing": 2
+    }
   ],
   "sequence_flows": [
-    {"from": "Expense report received from employee", "to": "Notify employee"},
-    {"from": "Notify employee", "to": "Account exists?"},
-    {"from": "Account exists?", "to": "Create account for employee"},
-    {"from": "Account exists?", "to": "Clerk reviews amount"},
-    {"from": "Create account for employee", "to": "Clerk reviews amount"},
-    {"from": "Clerk reviews amount", "to": "Reformulation needed?"},
-    {"from": "Reformulation needed?", "to": "Clerk reviews amount"},
-    {"from": "Reformulation needed?", "to": "Submit to manager"},
-    {"from": "Submit to manager", "to": "Amount below threshold?"},
-    {"from": "Amount below threshold?", "to": "Approve promptly"},
-    {"from": "Amount below threshold?", "to": "Manager reviews and decides"},
-    {"from": "Approve promptly", "to": "Reimburse employee"},
-    {"from": "Manager reviews and decides", "to": "Reimburse employee"},
-    {"from": "Reimburse employee", "to": "Process complete"}
+    {
+      "from": "Expense report received",
+      "to": "Notify Employee",
+      "condition": ""
+    },
+    {
+      "from": "Is a new account required?",
+      "to": "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+      "condition": "Account already existing"
+    },
+    {
+      "from": "Create Employee Account",
+      "to": "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+      "condition": ""
+    },
+    {
+      "from": "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+      "to": "Review amount",
+      "condition": ""
+    },
+    {
+      "from": "How much is the amount to be reimbursed?",
+      "to": "Reformat and send expense report",
+      "condition": "Amount >= 1000"
+    },
+    {
+      "from": "Reformat and send expense report",
+      "to": "Assess evaluation report",
+      "condition": ""
+    },
+    {
+      "from": "Review amount",
+      "to": "How much is the amount to be reimbursed?",
+      "condition": ""
+    },
+    {
+      "from": "How much is the amount to be reimbursed?",
+      "to": "Approve expense report without assessment",
+      "condition": "Amount < 1000"
+    },
+    {
+      "from": "Assess evaluation report",
+      "to": "Gateway_1wkso6h",
+      "condition": ""
+    },
+    {
+      "from": "Approve expense report without assessment",
+      "to": "Gateway_1wkso6h",
+      "condition": ""
+    },
+    {
+      "from": "Expense report is OK?",
+      "to": "Reject expense report",
+      "condition": "Expense report rejected"
+    },
+    {
+      "from": "Expense report is OK?",
+      "to": "Approve expense report",
+      "condition": "Expense report approved"
+    },
+    {
+      "from": "Reject expense report",
+      "to": "Reimbursement rejected",
+      "condition": ""
+    },
+    {
+      "from": "Approve expense report",
+      "to": "Transfer money to bank account",
+      "condition": ""
+    },
+    {
+      "from": "Transfer money to bank account",
+      "to": "Send approval notification",
+      "condition": ""
+    },
+    {
+      "from": "Send approval notification",
+      "to": "Money transferred",
+      "condition": ""
+    },
+    {
+      "from": "Notify Employee",
+      "to": "Is a new account required?",
+      "condition": ""
+    },
+    {
+      "from": "Is a new account required?",
+      "to": "Create Employee Account",
+      "condition": "New account required"
+    },
+    {
+      "from": "Gateway_1wkso6h",
+      "to": "Review expense report",
+      "condition": ""
+    },
+    {
+      "from": "Review expense report",
+      "to": "Expense report is OK?",
+      "condition": ""
+    }
   ]
 }

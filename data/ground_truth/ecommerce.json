@@ -1,47 +1,205 @@
 {
+  "process_id": "ecommerce",
   "process_name": "E-commerce",
+  "source_files": [
+    "ecommerce.bpmn"
+  ],
   "start_events": [
-    "New order received via e-commerce platform"
+    "Customer order arrived"
   ],
   "end_events": [
-    "Process complete"
+    "Order Fulfilled"
   ],
   "activities": [
-    "Verify customer's account status",
-    "Generate account",
-    "Store payment methods",
-    "Record new order",
-    "Verify courier availability",
-    "Select optimal courier",
+    "Create new account",
+    "Store payment method",
+    "Recover client history",
+    "Check payment method",
+    "Register new order",
+    "Select courier",
+    "Check courier availability",
     "Assign package to courier",
-    "Courier confirms assignment",
-    "Calculate and communicate delivery date",
-    "Courier retrieves package",
-    "Send confirmation to customer",
-    "Customer confirms order receipt",
-    "Fill and return satisfaction questionnaire",
+    "Receive courier confirmation",
+    "Estimate arrival time",
+    "Send waiting time to the customer",
+    "Receive notification order retired by the courier",
+    "Receive notification order retired by the client",
+    "Receive customer satisfaction",
     "Pay courier"
   ],
+  "dfg_activities": [
+    "Customer order arrived",
+    "Create new account",
+    "Store payment method",
+    "Recover client history",
+    "Check payment method",
+    "Register new order",
+    "Select courier",
+    "Check courier availability",
+    "Assign package to courier",
+    "Receive courier confirmation",
+    "Estimate arrival time",
+    "Send waiting time to the customer",
+    "Receive notification order retired by the courier",
+    "Receive notification order retired by the client",
+    "Receive customer satisfaction",
+    "Pay courier",
+    "Order Fulfilled"
+  ],
   "gateways": [
-    "Account exists?"
+    "Is this a new customer?",
+    "Gateway_0unq6v1",
+    "Gateway_0wwxa0w",
+    "Is the courier available?"
+  ],
+  "gateway_details": [
+    {
+      "id": "Gateway_12cpf55",
+      "name": "Is this a new customer?",
+      "reference": "Is this a new customer?",
+      "lookup": "name",
+      "type": "exclusiveGateway",
+      "incoming": 1,
+      "outgoing": 2
+    },
+    {
+      "id": "Gateway_0unq6v1",
+      "name": "",
+      "reference": "Gateway_0unq6v1",
+      "lookup": "id",
+      "type": "exclusiveGateway",
+      "incoming": 2,
+      "outgoing": 1
+    },
+    {
+      "id": "Gateway_0wwxa0w",
+      "name": "",
+      "reference": "Gateway_0wwxa0w",
+      "lookup": "id",
+      "type": "exclusiveGateway",
+      "incoming": 2,
+      "outgoing": 1
+    },
+    {
+      "id": "Gateway_1rvurt9",
+      "name": "Is the courier available?",
+      "reference": "Is the courier available?",
+      "lookup": "name",
+      "type": "exclusiveGateway",
+      "incoming": 1,
+      "outgoing": 2
+    }
   ],
   "sequence_flows": [
-    {"from": "New order received via e-commerce platform", "to": "Verify customer's account status"},
-    {"from": "Verify customer's account status", "to": "Account exists?"},
-    {"from": "Account exists?", "to": "Generate account"},
-    {"from": "Account exists?", "to": "Store payment methods"},
-    {"from": "Generate account", "to": "Store payment methods"},
-    {"from": "Store payment methods", "to": "Record new order"},
-    {"from": "Record new order", "to": "Verify courier availability"},
-    {"from": "Verify courier availability", "to": "Select optimal courier"},
-    {"from": "Select optimal courier", "to": "Assign package to courier"},
-    {"from": "Assign package to courier", "to": "Courier confirms assignment"},
-    {"from": "Courier confirms assignment", "to": "Calculate and communicate delivery date"},
-    {"from": "Calculate and communicate delivery date", "to": "Courier retrieves package"},
-    {"from": "Courier retrieves package", "to": "Send confirmation to customer"},
-    {"from": "Send confirmation to customer", "to": "Customer confirms order receipt"},
-    {"from": "Customer confirms order receipt", "to": "Fill and return satisfaction questionnaire"},
-    {"from": "Fill and return satisfaction questionnaire", "to": "Pay courier"},
-    {"from": "Pay courier", "to": "Process complete"}
+    {
+      "from": "Customer order arrived",
+      "to": "Is this a new customer?",
+      "condition": ""
+    },
+    {
+      "from": "Is this a new customer?",
+      "to": "Create new account",
+      "condition": "Yes"
+    },
+    {
+      "from": "Is this a new customer?",
+      "to": "Recover client history",
+      "condition": ""
+    },
+    {
+      "from": "Create new account",
+      "to": "Store payment method",
+      "condition": ""
+    },
+    {
+      "from": "Store payment method",
+      "to": "Gateway_0unq6v1",
+      "condition": ""
+    },
+    {
+      "from": "Recover client history",
+      "to": "Check payment method",
+      "condition": ""
+    },
+    {
+      "from": "Check payment method",
+      "to": "Gateway_0unq6v1",
+      "condition": ""
+    },
+    {
+      "from": "Gateway_0unq6v1",
+      "to": "Register new order",
+      "condition": ""
+    },
+    {
+      "from": "Register new order",
+      "to": "Gateway_0wwxa0w",
+      "condition": ""
+    },
+    {
+      "from": "Is the courier available?",
+      "to": "Gateway_0wwxa0w",
+      "condition": "No"
+    },
+    {
+      "from": "Gateway_0wwxa0w",
+      "to": "Select courier",
+      "condition": ""
+    },
+    {
+      "from": "Select courier",
+      "to": "Check courier availability",
+      "condition": ""
+    },
+    {
+      "from": "Check courier availability",
+      "to": "Is the courier available?",
+      "condition": ""
+    },
+    {
+      "from": "Is the courier available?",
+      "to": "Assign package to courier",
+      "condition": ""
+    },
+    {
+      "from": "Assign package to courier",
+      "to": "Receive courier confirmation",
+      "condition": ""
+    },
+    {
+      "from": "Receive courier confirmation",
+      "to": "Estimate arrival time",
+      "condition": ""
+    },
+    {
+      "from": "Estimate arrival time",
+      "to": "Send waiting time to the customer",
+      "condition": ""
+    },
+    {
+      "from": "Send waiting time to the customer",
+      "to": "Receive notification order retired by the courier",
+      "condition": ""
+    },
+    {
+      "from": "Receive notification order retired by the courier",
+      "to": "Receive notification order retired by the client",
+      "condition": ""
+    },
+    {
+      "from": "Receive notification order retired by the client",
+      "to": "Receive customer satisfaction",
+      "condition": ""
+    },
+    {
+      "from": "Receive customer satisfaction",
+      "to": "Pay courier",
+      "condition": ""
+    },
+    {
+      "from": "Pay courier",
+      "to": "Order Fulfilled",
+      "condition": ""
+    }
   ]
 }

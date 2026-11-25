@@ -1,238 +1,254 @@
 {
+  "process_id": "food_delivery",
   "process_name": "Food Delivery",
   "source_files": [
-    "food_delivery.xml",
-    "food_delivery_dfg.txt"
+    "food_delivery.bpmn"
   ],
   "start_events": [
-    "User order received",
-    "Customer Order Arrived"
+    "customer order"
   ],
   "end_events": [
-    "Process complete",
-    "Order Completed"
+    "order completed"
   ],
   "activities": [
-    "Verify customer status in customer DB",
-    "Create account for customer",
-    "Check specified payment methods",
-    "Assign order to accepting rider",
-    "Communicate estimated waiting time to customer",
-    "Rider collects order",
-    "Send notification to client",
-    "Client confirms receipt",
-    "Unlock rider's payment",
-    "Recover Client Info",
-    "Create an account",
-    "Check Payment",
-    "Check CC and Payment",
-    "Register the order",
-    "Select rider and create work proposal",
-    "Send work proposal",
-    "The rider accepted the order",
-    "The rider rejected the order",
+    "the rider refused the order",
+    "pay rider",
+    "notification order complete",
+    "create an account",
+    "recover client info",
+    "check payment",
+    "check credit card and the payment",
+    "register the order",
+    "select rider and create work proposal",
+    "send work proposal",
+    "the rider accepted the order",
+    "send confirmation to rider",
     "Estimated Arrival Time",
-    "Send confirmation to rider",
-    "Send to customer the waiting time",
-    "Send order collected notification",
-    "Receive receipt confirmation from client",
-    "Pay Rider",
-    "Receive Customer Satisfaction"
+    "send to customer the waiting time",
+    "notification order retired",
+    "notification order retired to the client",
+    "receive Customer Satisfaction"
+  ],
+  "dfg_activities": [
+    "the rider refused the order",
+    "order completed",
+    "pay rider",
+    "notification order complete",
+    "customer order",
+    "create an account",
+    "recover client info",
+    "check payment",
+    "check credit card and the payment",
+    "register the order",
+    "select rider and create work proposal",
+    "send work proposal",
+    "the rider accepted the order",
+    "send confirmation to rider",
+    "Estimated Arrival Time",
+    "send to customer the waiting time",
+    "notification order retired",
+    "notification order retired to the client",
+    "receive Customer Satisfaction"
   ],
   "gateways": [
-    "Existing client?",
-    "Account path",
-    "Order acceptance",
-    "Parallel post-acceptance work",
-    "Wait for both parallel branches"
+    "is the customer registered?",
+    "Gateway_0z24z44",
+    "Gateway_1lf96zg",
+    "has the order been accepted?",
+    "Gateway_0yayjl1",
+    "Gateway_0iw6ax3"
+  ],
+  "gateway_details": [
+    {
+      "id": "Gateway_0f3iu05",
+      "name": "is the customer registered?",
+      "reference": "is the customer registered?",
+      "lookup": "name",
+      "type": "exclusiveGateway",
+      "incoming": 1,
+      "outgoing": 2
+    },
+    {
+      "id": "Gateway_0z24z44",
+      "name": "",
+      "reference": "Gateway_0z24z44",
+      "lookup": "id",
+      "type": "exclusiveGateway",
+      "incoming": 2,
+      "outgoing": 1
+    },
+    {
+      "id": "Gateway_1lf96zg",
+      "name": "",
+      "reference": "Gateway_1lf96zg",
+      "lookup": "id",
+      "type": "exclusiveGateway",
+      "incoming": 2,
+      "outgoing": 1
+    },
+    {
+      "id": "Gateway_03ncbpd",
+      "name": "has the order been accepted?",
+      "reference": "has the order been accepted?",
+      "lookup": "name",
+      "type": "exclusiveGateway",
+      "incoming": 1,
+      "outgoing": 2
+    },
+    {
+      "id": "Gateway_0yayjl1",
+      "name": "",
+      "reference": "Gateway_0yayjl1",
+      "lookup": "id",
+      "type": "parallelGateway",
+      "incoming": 1,
+      "outgoing": 2
+    },
+    {
+      "id": "Gateway_0iw6ax3",
+      "name": "",
+      "reference": "Gateway_0iw6ax3",
+      "lookup": "id",
+      "type": "parallelGateway",
+      "incoming": 2,
+      "outgoing": 1
+    }
   ],
   "sequence_flows": [
     {
-      "from": "User order received",
-      "to": "Verify customer status in customer DB",
-      "source_file": "food_delivery.xml"
+      "from": "Gateway_0iw6ax3",
+      "to": "notification order retired",
+      "condition": ""
     },
     {
-      "from": "Verify customer status in customer DB",
-      "to": "Existing client?",
-      "source_file": "food_delivery.xml"
+      "from": "send to customer the waiting time",
+      "to": "Gateway_0iw6ax3",
+      "condition": ""
     },
     {
-      "from": "Existing client?",
-      "to": "Create account for customer",
-      "name": "No",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Existing client?",
-      "to": "Check specified payment methods",
-      "name": "Yes",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Create account for customer",
-      "to": "Check specified payment methods",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Check specified payment methods",
-      "to": "Assign order to accepting rider",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Assign order to accepting rider",
-      "to": "Communicate estimated waiting time to customer",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Communicate estimated waiting time to customer",
-      "to": "Rider collects order",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Rider collects order",
-      "to": "Send notification to client",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Send notification to client",
-      "to": "Client confirms receipt",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Client confirms receipt",
-      "to": "Unlock rider's payment",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Unlock rider's payment",
-      "to": "Process complete",
-      "source_file": "food_delivery.xml"
-    },
-    {
-      "from": "Customer Order Arrived",
-      "to": "Account path",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Account path",
-      "to": "Recover Client Info",
-      "name": "Recover client info",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Account path",
-      "to": "Create an account",
-      "name": "Create account",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Recover Client Info",
-      "to": "Check Payment",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Create an account",
-      "to": "Check CC and Payment",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Check Payment",
-      "to": "Register the order",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Check CC and Payment",
-      "to": "Register the order",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Register the order",
-      "to": "Select rider and create work proposal",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Select rider and create work proposal",
-      "to": "Send work proposal",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Send work proposal",
-      "to": "Order acceptance",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Order acceptance",
-      "to": "The rider accepted the order",
-      "name": "Accepted",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Order acceptance",
-      "to": "The rider rejected the order",
-      "name": "Rejected",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "The rider rejected the order",
-      "to": "Select rider and create work proposal",
-      "name": "Retry with another rider",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "The rider accepted the order",
-      "to": "Parallel post-acceptance work",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Parallel post-acceptance work",
-      "to": "Estimated Arrival Time",
-      "source_file": "food_delivery_dfg.txt"
-    },
-    {
-      "from": "Parallel post-acceptance work",
-      "to": "Send confirmation to rider",
-      "source_file": "food_delivery_dfg.txt"
+      "from": "send confirmation to rider",
+      "to": "Gateway_0iw6ax3",
+      "condition": ""
     },
     {
       "from": "Estimated Arrival Time",
-      "to": "Wait for both parallel branches",
-      "source_file": "food_delivery_dfg.txt"
+      "to": "send to customer the waiting time",
+      "condition": ""
     },
     {
-      "from": "Send confirmation to rider",
-      "to": "Wait for both parallel branches",
-      "source_file": "food_delivery_dfg.txt"
+      "from": "Gateway_0yayjl1",
+      "to": "Estimated Arrival Time",
+      "condition": ""
     },
     {
-      "from": "Wait for both parallel branches",
-      "to": "Send to customer the waiting time",
-      "source_file": "food_delivery_dfg.txt"
+      "from": "Gateway_0yayjl1",
+      "to": "send confirmation to rider",
+      "condition": ""
     },
     {
-      "from": "Send to customer the waiting time",
-      "to": "Send order collected notification",
-      "source_file": "food_delivery_dfg.txt"
+      "from": "the rider accepted the order",
+      "to": "Gateway_0yayjl1",
+      "condition": ""
     },
     {
-      "from": "Send order collected notification",
-      "to": "Receive receipt confirmation from client",
-      "source_file": "food_delivery_dfg.txt"
+      "from": "the rider refused the order",
+      "to": "Gateway_1lf96zg",
+      "condition": ""
     },
     {
-      "from": "Receive receipt confirmation from client",
-      "to": "Pay Rider",
-      "source_file": "food_delivery_dfg.txt"
+      "from": "has the order been accepted?",
+      "to": "the rider refused the order",
+      "condition": "no"
     },
     {
-      "from": "Pay Rider",
-      "to": "Receive Customer Satisfaction",
-      "source_file": "food_delivery_dfg.txt"
+      "from": "has the order been accepted?",
+      "to": "the rider accepted the order",
+      "condition": "yes"
     },
     {
-      "from": "Receive Customer Satisfaction",
-      "to": "Order Completed",
-      "source_file": "food_delivery_dfg.txt"
+      "from": "Gateway_1lf96zg",
+      "to": "select rider and create work proposal",
+      "condition": ""
+    },
+    {
+      "from": "select rider and create work proposal",
+      "to": "send work proposal",
+      "condition": ""
+    },
+    {
+      "from": "send work proposal",
+      "to": "has the order been accepted?",
+      "condition": ""
+    },
+    {
+      "from": "notification order complete",
+      "to": "receive Customer Satisfaction",
+      "condition": ""
+    },
+    {
+      "from": "receive Customer Satisfaction",
+      "to": "pay rider",
+      "condition": ""
+    },
+    {
+      "from": "pay rider",
+      "to": "order completed",
+      "condition": ""
+    },
+    {
+      "from": "notification order retired",
+      "to": "notification order retired to the client",
+      "condition": ""
+    },
+    {
+      "from": "notification order retired to the client",
+      "to": "notification order complete",
+      "condition": ""
+    },
+    {
+      "from": "customer order",
+      "to": "is the customer registered?",
+      "condition": ""
+    },
+    {
+      "from": "is the customer registered?",
+      "to": "create an account",
+      "condition": "no"
+    },
+    {
+      "from": "is the customer registered?",
+      "to": "recover client info",
+      "condition": "yes"
+    },
+    {
+      "from": "recover client info",
+      "to": "check payment",
+      "condition": ""
+    },
+    {
+      "from": "create an account",
+      "to": "check credit card and the payment",
+      "condition": ""
+    },
+    {
+      "from": "check credit card and the payment",
+      "to": "Gateway_0z24z44",
+      "condition": ""
+    },
+    {
+      "from": "check payment",
+      "to": "Gateway_0z24z44",
+      "condition": ""
+    },
+    {
+      "from": "Gateway_0z24z44",
+      "to": "register the order",
+      "condition": ""
+    },
+    {
+      "from": "register the order",
+      "to": "Gateway_1lf96zg",
+      "condition": ""
     }
   ]
 }

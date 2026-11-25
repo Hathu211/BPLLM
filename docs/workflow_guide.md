@@ -1,118 +1,90 @@
-﻿
+﻿# Quy trình làm việc
 
-## 1. Kiến trúc Repository & Môi trường
-### 1.1. Mô hình Branch
-**main** : Nhánh mặc định, không làm việc trên nhánh này.
+## 1. Mô hình branch
 
-**develop** : Nhánh tích hợp. Mọi tính năng làm xong sẽ gộp vào đây.
+- **`main`**: nhánh ổn định, không làm việc trực tiếp trên nhánh này.
+- **`develop`**: nhánh tích hợp, mọi tính năng làm xong được gộp vào đây.
+- **`feat_<tên-chức-năng>`**: nhánh làm việc hằng ngày của từng người.
 
-**feature/<tên-chức-năng/cập-nhật>** : Nhánh làm việc hàng ngày của từng dev.
+## 2. Làm việc hằng ngày
 
-## 2. Daily Code Workflow
-**Bước 1**: Cập nhật code mới nhất & Tạo nhánh
-```Bash
+**Bước 1: Cập nhật code và tạo nhánh**
+
+```bash
 git checkout develop
 git pull origin develop
-git checkout -b feature/feature-name
+git checkout -b feat_ten_chuc_nang
 ```
 
-**Bước 2**: Code & Áp dụng Rule
+**Bước 2: Viết code và test.** Cấu hình mới (host, cổng, tên model...) đưa vào `src/bpllm/config.py` và `.env.example`, không ghi cứng trong code.
 
+**Bước 3: Kiểm tra lại từ đầu**
 
-**Bước 3**: Kiểm thử nghiêm ngặt với Docker
+Trước khi commit, kiểm tra dự án vẫn chạy được theo đúng các bước trong README:
 
-Trước khi commit, bắt buộc phải test xem DB có build lại từ đầu được không:
-
-```Bash
-docker-compose down -v  # -v cực kỳ quan trọng để xóa sạch volume cũ
-docker-compose up -d    # Khởi tạo lại DB từ các file 01 -> 99
-
-**Bước 4**: Commit & Push
 ```bash
-# Chỉ add các file liên quan tới task 
-# KHÔNG dùng git add .
-
-git commit -m "feat(procedure): ...."
-# Với 2 bước trên recommend làm bằng thao tác VSCode, không viết terminal.
+docker compose -f docker_compose.yml up -d
+python scripts/build_vector_store.py
+pytest
+streamlit run app/streamlit_app.py
 ```
 
-## 4. Quy trình chung: 
-**Bước 1**: Dev push code + tự tạo PR + tự request Copilot AI → AI gợi ý sửa (xem xét, nếu đúng và hợp lý thì sửa).
+`build_vector_store.py` tạo lại collection mỗi lần chạy, nên không cần xóa dữ liệu Qdrant cũ trước.
 
-**Bước 2**: Tester vào PR + check lỗi và comment trực tiếp vào phần code đó (chỉ comment lỗi + cách sửa).
+**Bước 4: Commit và push**
 
-**Bước 3**: Dev vào PR check lại sau kiểm thử: đúng thì sửa, sai thì comment (không sửa theo, chờ PM check final). 
+Chỉ add các file liên quan đến task, không dùng `git add .`. Message viết theo [hướng dẫn commit](commit_guide.md).
 
-```markdown
-Đánh dấu `resolve` với lỗi hợp lý, đã sửa lỗi. 
-Những lỗi có vấn đề tuyệt đối không sửa theo và không bấm `resolve`.
+```bash
+git commit -m "feat: mô tả ngắn gọn"
+git push origin feat_ten_chuc_nang
 ```
 
-**Bước 4**: Check final.
+## 3. Quy trình chung
 
-## 5. Quy trình PR
-### 5.1. Update branch
-Để tránh conflict, hãy kéo code mới nhất từ develop về nhánh của bạn:
+1. **Dev** push code, tạo PR và yêu cầu Copilot review. Xem xét gợi ý của AI, đúng và hợp lý thì sửa.
+2. **Tester** vào PR, kiểm tra và comment trực tiếp vào phần code có lỗi (chỉ ghi lỗi và cách sửa).
+3. **Dev** xem lại comment: đúng thì sửa và bấm `resolve`; chưa đồng ý thì comment lại, không sửa, không bấm `resolve`, chờ PM kiểm tra.
+4. **PM** kiểm tra lần cuối.
 
-```Bash
-git checkout feature/tao-hoa-don
+## 4. Quy trình PR
+
+### 4.1. Cập nhật nhánh
+
+Để tránh conflict, gộp code mới nhất từ `develop` vào nhánh của bạn bằng merge:
+
+```bash
+git checkout feat_ten_chuc_nang
 git merge develop
-# (Lưu ý: Dùng merge).
 ```
 
-### 5.2. Review
+### 4.2. Reviewer kiểm tra kỹ thuật
 
-Quy trình review gồm **2 bước**:
+Reviewer kéo nhánh về và chạy các lệnh ở Bước 3.
 
-#### Bước 1: Reviewer kiểm tra kỹ thuật
+- **Chạy tốt:** comment xác nhận đã test thành công, bấm Approve, không merge.
+- **Có lỗi:** bấm Request Changes, ghi rõ lỗi và yêu cầu dev sửa.
 
-Người review PR trên GitHub/GitLab bắt buộc kéo nhánh đó về và chạy:
+### 4.3. Trưởng nhóm duyệt cuối
 
-```Bash
-docker-compose down -v
-docker-compose up --build
-```
-Xanh (Chạy tốt):
-```text
-Comment xác nhận đã test thành công.
-Bấm Approve (KHÔNG merge).
-```
-Đỏ (Lỗi SQL / build fail):
-```text
-Bấm Request Changes.
-Ghi rõ lỗi và yêu cầu dev sửa.
-```
-#### Bước 2: Leader duyệt cuối
+Sau khi reviewer approve, trưởng nhóm kiểm tra nội dung thay đổi, conflict và logic tổng thể. Nếu ổn thì bấm Approve và merge PR vào `develop`.
 
-Sau khi PR đã được reviewer approve:
+**Chỉ trưởng nhóm được merge.**
 
-```text
-Trưởng nhóm kiểm tra lại:
-- Nội dung thay đổi
-- Conflict
-- Logic tổng thể
+## 5. Điều kiện hoàn thành task
 
-Nếu ổn:
-- Bấm Approve
-- Merge PR vào develop
-```
+- Dev đã tạo PR đúng template.
+- Dev đã gọi Copilot review, tự kiểm tra và sửa lỗi nếu phù hợp.
+- Tester đã review code, kéo về chạy thử và kiểm tra lần 2.
+- Dev và Tester đã viết đủ report.
 
-**Chỉ trưởng nhóm được phép merge.**
+## 6. Phát hành
 
-## 6. General checklist for Dev and Tester
-Task được tính là (tạm thời) hoàn thành khi:
+Khi `develop` đã đủ tính năng và chạy ổn định:
 
-- Dev đã tạo PR đúng Template.
-- Dev đã gọi Copilot review code & tự check, tự sửa lỗi (nếu phù hợp).
-- Tester đã review code, pull về chạy thử & check lại lần 2.
-- Dev & Tester đã viết đủ report.
-
-## 7. Final
-Khi develop đã tích hợp đủ tính năng và chạy Docker trơn tru:
-
-```Bash
-git checkout master
-git pull origin master
+```bash
+git checkout main
+git pull origin main
 git merge develop
-git push origin master
+git push origin main
 ```

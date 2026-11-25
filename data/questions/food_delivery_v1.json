@@ -2,7 +2,7 @@
   {
     "id": 1,
     "type": "Structural",
-    "question": "Có hoạt động nào có tên là 'Customer Order Arrived' trong quy trình không?",
+    "question": "Có hoạt động nào có tên là 'customer order' trong quy trình không?",
     "answer": "Yes"
   },
   {
@@ -26,7 +26,7 @@
   {
     "id": 5,
     "type": "Structural",
-    "question": "Có hoạt động nào có tên là 'Check CC and Payment' trong quy trình không?",
+    "question": "Có hoạt động nào có tên là 'check credit card and the payment' trong quy trình không?",
     "answer": "Yes"
   },
   {
@@ -182,7 +182,7 @@
   {
     "id": 31,
     "type": "Structural",
-    "question": "Có hoạt động 'Customer Order Arrived' là một phần của quy trình E-commerce thay vì Food Delivery phải không?",
+    "question": "Có hoạt động 'customer order' là một phần của quy trình E-commerce thay vì Food Delivery phải không?",
     "answer": "No"
   },
   {
@@ -302,7 +302,7 @@
   {
     "id": 51,
     "type": "Behavioral",
-    "question": "Quy trình có bắt đầu từ 'Customer Order Arrived' không?",
+    "question": "Quy trình có bắt đầu từ 'customer order' không?",
     "answer": "Yes"
   },
   {
@@ -356,7 +356,7 @@
   {
     "id": 60,
     "type": "Behavioral",
-    "question": "Có luồng trình tự đầu ra nào từ 'Check CC and Payment' đến 'Register the order' không?",
+    "question": "Có luồng trình tự đầu ra nào từ 'check credit card and the payment' đến 'Register the order' không?",
     "answer": "Yes"
   },
   {
@@ -452,7 +452,7 @@
   {
     "id": 76,
     "type": "Behavioral",
-    "question": "Hoạt động 'Check CC and Payment' có đi trước 'Create an account' không?",
+    "question": "Hoạt động 'check credit card and the payment' có đi trước 'Create an account' không?",
     "answer": "No"
   },
   {
@@ -530,7 +530,7 @@
   {
     "id": 89,
     "type": "Behavioral",
-    "question": "Nếu khách hàng đã đăng ký, quy trình có thực hiện 'Check CC and Payment' thay vì 'Check Payment' không?",
+    "question": "Nếu khách hàng đã đăng ký, quy trình có thực hiện 'check credit card and the payment' thay vì 'Check Payment' không?",
     "answer": "No"
   },
   {
@@ -584,7 +584,7 @@
   {
     "id": 98,
     "type": "Behavioral",
-    "question": "Có nhánh song song nào bắt đầu ngay sau 'Customer Order Arrived' cho phép rider chấp nhận đơn hàng ngay lập tức không?",
+    "question": "Có nhánh song song nào bắt đầu ngay sau 'customer order' cho phép rider chấp nhận đơn hàng ngay lập tức không?",
     "answer": "No"
   },
   {
