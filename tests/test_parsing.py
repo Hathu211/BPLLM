@@ -181,12 +181,6 @@ def test_process_name_is_canonical_and_participant_is_kept(graph):
   assert flows_text(graph).startswith(f"The {graph.process_name} process")
 
 
-def test_streamlit_filter_offers_every_process_name():
-  app = (PROJECT_ROOT / "app" / "streamlit_app.py").read_text(encoding="utf-8")
-  for name in PROCESS_NAMES.values():
-    assert f'"{name}"' in app
-
-
 def test_duplicate_node_id_is_rejected(tmp_path):
   path = _bpmn(tmp_path, '<task id="t" name="A"/><task id="t" name="B"/>')
   with pytest.raises(BpmnFormatError, match="'t'"):

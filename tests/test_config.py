@@ -1,15 +1,11 @@
+import re
+
 import pytest
 
-from bpllm.config import Settings
+from bpllm.config import PROJECT_ROOT, Settings
 
-ENV_VARS = [
-    "QDRANT_HOST",
-    "QDRANT_HTTP_PORT",
-    "QDRANT_GRPC_PORT",
-    "QDRANT_PREFER_GRPC",
-    "QDRANT_COLLECTION",
-    "EMBEDDING_MODEL",
-]
+ENV_VARS = re.findall(r"^([A-Z_]+)=", (PROJECT_ROOT / ".env.example").read_text(encoding="utf-8"),
+                      re.MULTILINE)
 
 
 @pytest.fixture
@@ -19,47 +15,55 @@ def clean_env(monkeypatch):
   return monkeypatch
 
 
+def test_env_example_lists_every_setting():
+  assert len(ENV_VARS) == len(Settings.__dataclass_fields__)
+
+
 def test_defaults(clean_env):
-  settings = Settings.from_env()
-  assert settings.qdrant_host == "localhost"
-  assert settings.qdrant_http_port == 6333
-  assert settings.qdrant_grpc_port == 6334
-  assert settings.qdrant_prefer_grpc is True
-  assert settings.qdrant_collection == "bpllm_processes"
-  assert settings.embedding_model == "sentence-transformers/all-MiniLM-L6-v2"
+  s = Settings.from_env()
+  assert (s.qdrant_host, s.qdrant_http_port, s.qdrant_grpc_port) == ("localhost", 6343, 6344)
+  assert s.collection("specific") == "bpllm2_specific"
+  assert s.collection("enriched") == "bpllm2_enriched"
+  assert s.embedding_model == "sentence-transformers/all-MiniLM-L6-v2"
+  assert s.top_k == 10
+  assert s.app_chunking == "enriched"
+  assert s.llm_quant == "int4"
 
 
 def test_env_overrides_defaults(clean_env):
-  clean_env.setenv("QDRANT_HOST", "qdrant.internal")
-  clean_env.setenv("QDRANT_GRPC_PORT", "7334")
-  clean_env.setenv("QDRANT_PREFER_GRPC", "false")
-  clean_env.setenv("QDRANT_COLLECTION", "other")
-  clean_env.setenv("EMBEDDING_MODEL", "some/model")
-
-  settings = Settings.from_env()
-
-  assert settings.qdrant_host == "qdrant.internal"
-  assert settings.qdrant_grpc_port == 7334
-  assert settings.qdrant_prefer_grpc is False
-  assert settings.qdrant_collection == "other"
-  assert settings.embedding_model == "some/model"
+  clean_env.setenv("QDRANT_GRPC_PORT", "7344")
+  clean_env.setenv("QDRANT_COLLECTION_ENRICHED", "other_enriched")
+  clean_env.setenv("APP_CHUNKING", "specific")
+  clean_env.setenv("LLM_QUANT", "int8")
+  clean_env.setenv("LLM_BASE_URL", "https://x.trycloudflare.com/v1")
+  s = Settings.from_env()
+  assert s.qdrant_grpc_port == 7344
+  assert s.collection("enriched") == "other_enriched"
+  assert s.app_chunking == "specific"
+  assert s.llm_quant == "int8"
+  assert s.llm_base_url == "https://x.trycloudflare.com/v1"
 
 
 def test_blank_value_uses_default(clean_env):
   clean_env.setenv("QDRANT_HOST", "   ")
-  clean_env.setenv("QDRANT_GRPC_PORT", "")
-  settings = Settings.from_env()
-  assert settings.qdrant_host == "localhost"
-  assert settings.qdrant_grpc_port == 6334
+  assert Settings.from_env().qdrant_host == "localhost"
 
 
-def test_invalid_port_names_the_variable(clean_env):
-  clean_env.setenv("QDRANT_GRPC_PORT", "abc")
-  with pytest.raises(ValueError, match="QDRANT_GRPC_PORT"):
+@pytest.mark.parametrize("name, value", [("QDRANT_GRPC_PORT", "abc"), ("QDRANT_PREFER_GRPC", "maybe"),
+                                         ("APP_CHUNKING", "fixed"), ("LLM_QUANT", "int2")])
+def test_invalid_value_names_the_variable(clean_env, name, value):
+  clean_env.setenv(name, value)
+  with pytest.raises(ValueError, match=name):
     Settings.from_env()
 
 
-def test_invalid_bool_names_the_variable(clean_env):
-  clean_env.setenv("QDRANT_PREFER_GRPC", "maybe")
-  with pytest.raises(ValueError, match="QDRANT_PREFER_GRPC"):
+def test_two_chunkings_cannot_share_a_collection(clean_env):
+  clean_env.setenv("QDRANT_COLLECTION_SPECIFIC", "same")
+  clean_env.setenv("QDRANT_COLLECTION_ENRICHED", "same")
+  with pytest.raises(ValueError, match="khác nhau"):
     Settings.from_env()
+
+
+def test_unknown_chunking_is_rejected(clean_env):
+  with pytest.raises(ValueError):
+    Settings.from_env().collection("fixed")

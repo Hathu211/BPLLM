@@ -128,8 +128,8 @@ def test_enrich_uses_id_when_other_end_has_no_name():
 def test_enrich_keeps_one_chunk_per_node_and_marks_mode():
   plain, rich = chunks_by_id(), enriched_by_id()
   assert set(plain) == set(rich)
-  assert {c["metadata"]["chunking"] for c in plain.values()} == {"bpmn_specific"}
-  assert {c["metadata"]["chunking"] for c in rich.values()} == {"bpmn_enriched"}
+  assert {c["metadata"]["chunking"] for c in plain.values()} == {"specific"}
+  assert {c["metadata"]["chunking"] for c in rich.values()} == {"enriched"}
 
 
 def test_enrich_does_not_change_the_parsed_tree():

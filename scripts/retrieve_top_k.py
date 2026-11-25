@@ -1,81 +1,87 @@
-"""Lấy top-10 chunk cho từng câu hỏi benchmark, xuất JSONL để chạy LLM trên Colab.
+"""Phase 4: lấy top-k chunk cho từng câu hỏi của mỗi thực nghiệm, xuất JSONL cho notebook Kaggle.
 
-Chạy (Qdrant phải đang bật và đã chạy build_vector_store.py):
-  python scripts/retrieve_top_k.py
-  python scripts/retrieve_top_k.py --process food_delivery --top-k 10 --clean-query
-  python scripts/retrieve_top_k.py --no-filter        (tìm trên mọi quy trình, như Bảng 4 bài báo)
-  python scripts/retrieve_top_k.py --collection bpllm_processes_enriched --out data/rag_inputs/food_delivery_top10_enriched.jsonl
+Mỗi thực nghiệm (bpllm.experiments.EXPERIMENTS) x mỗi kiểu chunk ra một file
+data/rag_inputs/<thực nghiệm>_<chunk>_top10.jsonl, ví dụ fd_ft_enriched_top10.jsonl.
+Kho truy xuất gồm đúng các quy trình của nhóm model (Food Delivery; FD + E-commerce; FD + Reimbursement).
 
-Mỗi dòng output: id, question, expected, process_id, top_k, instruction, input, contexts.
-'instruction' + 'input' là prompt gửi LLM; 'expected' để oracle chấm điểm.
+Mỗi dòng: id, question, expected, experiment, chunking, collection, processes, top_k,
+prompt (nguyên văn gửi LLM), contexts (chunk kèm điểm, để phân tích và trích dẫn).
+
+Chạy (Qdrant đang bật, đã chạy build_vector_store.py):
+  python scripts/retrieve_top_k.py                           (mọi thực nghiệm, cả hai kiểu chunk)
+  python scripts/retrieve_top_k.py --experiment fd_ft --chunking enriched
 """
 import argparse
+import csv
 import json
-from pathlib import Path
+import sys
 
-import pandas as pd
-
-from bpllm.config import PROJECT_ROOT
+from bpllm.config import CHUNKINGS, get_settings
 from bpllm.embeddings.embedder import ProcessEmbedder
-from bpllm.rag.retriever import INSTRUCTION, Retriever, build_input
-from bpllm.vectorstore.qdrant_store import DEFAULT_TOP_K, QdrantVectorStore
+from bpllm.experiments import EXPERIMENTS, rag_input_path
+from bpllm.rag.prompts import build_prompt
+from bpllm.rag.retriever import Retriever
+from bpllm.vectorstore.qdrant_store import QdrantVectorStore
 
-DEFAULT_QUESTIONS = PROJECT_ROOT / "data" / "questions" / "3_questions_answers_refined.csv"
-DEFAULT_OUT_DIR = PROJECT_ROOT / "data" / "rag_inputs"
+
+def read_questions(path):
+  with open(path, encoding="utf-8-sig", newline="") as f:
+    rows = list(csv.DictReader(f))
+  return [(r["question"].strip(), r["answer"].strip().lower()) for r in rows]
 
 
-def main() -> None:
-  parser = argparse.ArgumentParser(description=__doc__,
-                                   formatter_class=argparse.RawDescriptionHelpFormatter)
-  parser.add_argument("--questions", type=Path, default=DEFAULT_QUESTIONS)
-  parser.add_argument("--process", default="food_delivery",
-                      help="process_id dùng để lọc (mặc định food_delivery)")
-  parser.add_argument("--no-filter", action="store_true", help="không lọc theo quy trình")
-  parser.add_argument("--top-k", type=int, default=DEFAULT_TOP_K)
-  parser.add_argument("--clean-query", action="store_true",
-                      help="bỏ câu lệnh lặp lại trước khi embed câu hỏi")
-  parser.add_argument("--collection", default=None,
-                      help="tên collection Qdrant; mặc định lấy QDRANT_COLLECTION")
-  parser.add_argument("--out", type=Path, default=None)
-  args = parser.parse_args()
+def run(experiment, chunking, embedder, top_k) -> int:
+  collection = get_settings().collection(chunking)
+  store = QdrantVectorStore(collection)
+  actual = store.chunking()
+  if actual != chunking:
+    print(f"[LỖI] collection '{collection}' chứa chunk '{actual}', cần '{chunking}'. "
+          "Chạy lại scripts/build_vector_store.py.")
+    return 1
+  questions = read_questions(experiment.questions_path)
+  if len(questions) != experiment.expected_count:
+    print(f"[LỖI] {experiment.questions_file}: {len(questions)} câu, mong đợi {experiment.expected_count}")
+    return 1
 
-  process_filter = None if args.no_filter else args.process
-  tag = "all" if args.no_filter else args.process
-  out = args.out or DEFAULT_OUT_DIR / f"{tag}_top{args.top_k}.jsonl"
-
-  df = pd.read_csv(args.questions)
-  q_col = "question" if "question" in df.columns else df.columns[0]
-  a_col = "answer" if "answer" in df.columns else df.columns[-1]
-
-  retriever = Retriever(ProcessEmbedder(), QdrantVectorStore(collection_name=args.collection),
-                        top_k=args.top_k, clean=args.clean_query)
-
+  retriever = Retriever(embedder, store, top_k=top_k)
+  out = rag_input_path(experiment.name, chunking, top_k)
   out.parent.mkdir(parents=True, exist_ok=True)
-  with out.open("w", encoding="utf-8") as f:
-    for i, row in enumerate(df.itertuples(index=False), 1):
-      question = str(getattr(row, q_col)).strip()
-      results = retriever.retrieve(question, process_id=process_filter)
+  with out.open("w", encoding="utf-8", newline="\n") as f:
+    for i, (question, expected) in enumerate(questions, 1):
+      results = retriever.retrieve(question, process_filter=list(experiment.processes))
       record = {
-          "id": i,
-          "question": question,
-          "expected": str(getattr(row, a_col)).strip().lower(),
-          "process_id": process_filter,
-          "top_k": args.top_k,
-          "instruction": INSTRUCTION,
-          "input": build_input(question, results, args.process),
-          "contexts": [
-              {"rank": r, "score": round(hit["score"], 4),
-               "process_id": hit["metadata"].get("process_id"),
-               "node_id": hit["metadata"].get("node_id"),
-               "node_name": hit["metadata"].get("node_name"),
-               "text": hit["content"]}
-              for r, hit in enumerate(results, 1)
-          ],
+          "id": i, "question": question, "expected": expected,
+          "experiment": experiment.name, "chunking": chunking, "collection": collection,
+          "processes": list(experiment.processes), "top_k": top_k,
+          "prompt": build_prompt(question, [r["content"] for r in results], "yesno"),
+          "contexts": [{"rank": r, "score": round(hit["score"], 4),
+                        "process_id": hit["metadata"].get("process_id"),
+                        "node_id": hit["metadata"].get("node_id"),
+                        "node_name": hit["metadata"].get("node_name"),
+                        "text": hit["content"]}
+                       for r, hit in enumerate(results, 1)],
       }
       f.write(json.dumps(record, ensure_ascii=False) + "\n")
+  print(f"[OK ] {out.name}: {len(questions)} câu, kho {list(experiment.processes)}, "
+        f"collection {collection}")
+  return 0
 
-  print(f"Đã ghi {len(df)} câu hỏi (top-{args.top_k}, filter={process_filter}) vào {out}")
+
+def main() -> int:
+  parser = argparse.ArgumentParser(description=__doc__.splitlines()[0],
+                                   formatter_class=argparse.RawDescriptionHelpFormatter)
+  parser.add_argument("--experiment", choices=[*EXPERIMENTS, "all"], default="all")
+  parser.add_argument("--chunking", choices=[*CHUNKINGS, "both"], default="both")
+  parser.add_argument("--top-k", type=int, default=None)
+  args = parser.parse_args()
+
+  top_k = args.top_k or get_settings().top_k
+  experiments = EXPERIMENTS.values() if args.experiment == "all" else [EXPERIMENTS[args.experiment]]
+  chunkings = CHUNKINGS if args.chunking == "both" else (args.chunking,)
+  embedder = ProcessEmbedder()
+  return max(run(e, c, embedder, top_k) for e in experiments for c in chunkings)
 
 
 if __name__ == "__main__":
-  main()
+  sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+  sys.exit(main())

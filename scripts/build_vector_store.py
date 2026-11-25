@@ -1,64 +1,59 @@
-"""Chunk BPMN đã làm sạch (BPMN-specific, mỗi node một chunk) rồi nạp vào Qdrant.
+"""Phase 3: chunk BPMN đã làm sạch rồi nạp vào Qdrant, mỗi kiểu chunk một collection cố định.
 
-Chạy:  python scripts/build_vector_store.py
-       python scripts/build_vector_store.py --process food_delivery   (chỉ 1 quy trình)
-       python scripts/build_vector_store.py --enrich --collection bpllm_processes_enriched
-Collection được tạo lại mỗi lần chạy. Dùng --collection khác nhau để giữ cả hai
-index (bài báo và enrichment) cùng lúc khi chạy ablation.
+  specific -> QDRANT_COLLECTION_SPECIFIC (mặc định bpllm2_specific), như bài báo
+  enriched -> QDRANT_COLLECTION_ENRICHED (mặc định bpllm2_enriched), phần mở rộng
+
+Cả 3 quy trình nằm chung một collection; khi truy xuất thì lọc theo process_id.
+Tên collection suy ra từ kiểu chunk, nên không thể nạp nhầm loại chunk vào collection.
+
+Chạy:  python scripts/build_vector_store.py                       (cả hai collection)
+       python scripts/build_vector_store.py --chunking enriched   (chỉ một)
+Collection được tạo lại mỗi lần chạy.
 """
 import argparse
+import sys
 
-from bpllm.chunking.chunking_processor import (CHUNKS_FILE, ENRICHED_CHUNKS_FILE,
-                                              chunk_all, write_jsonl)
+from bpllm.chunking.chunking_processor import (CHUNKS_FILE, ENRICHED_CHUNKS_FILE, chunk_all,
+                                               write_jsonl)
+from bpllm.config import CHUNKINGS, get_settings
 from bpllm.embeddings.embedder import ProcessEmbedder
 from bpllm.vectorstore.qdrant_store import QdrantVectorStore
-from bpllm.config import get_settings
 
 
-def main() -> None:
-  parser = argparse.ArgumentParser(description=__doc__)
-  parser.add_argument("--process", action="append", dest="processes",
-                      help="process_id cần nạp (lặp lại được); mặc định nạp tất cả")
-  parser.add_argument("--enrich", action="store_true",
-                      help="chunk enrichment (cải tiến) thay vì chunk như bài báo")
-  parser.add_argument("--collection", default=None,
-                      help="tên collection Qdrant; mặc định lấy QDRANT_COLLECTION")
-  args = parser.parse_args()
-
-  collection = args.collection or get_settings().qdrant_collection 
-  if args.enrich != collection.endswitch("_enriched"): 
-    parser.error(f"--enrich={args.enrich} không khớp collection '{collection}'")
-
-  print("=" * 70)
-  print(f" BUILD VECTOR STORE ({'enriched' if args.enrich else 'BPMN-specific'} chunking)")
-  print("=" * 70)
-
-  chunks = chunk_all(process_ids=args.processes, enrich=args.enrich)
+def build(chunking: str, embedder: ProcessEmbedder) -> int:
+  enrich = chunking == "enriched"
+  chunks = chunk_all(enrich=enrich)
   if not chunks:
-    print("Không có chunk nào. Kiểm tra data/processed/<process>/<process>.bpmn.")
-    return
-  chunks_file = ENRICHED_CHUNKS_FILE if args.enrich else CHUNKS_FILE
-  write_jsonl(chunks, chunks_file)
+    print("Không có chunk nào. Chạy scripts/prepare_processes.py trước.")
+    return 1
+  write_jsonl(chunks, ENRICHED_CHUNKS_FILE if enrich else CHUNKS_FILE)
   counts = {}
   for c in chunks:
-    pid = c["metadata"]["process_id"]
-    counts[pid] = counts.get(pid, 0) + 1
-  print(f"Chunks: {len(chunks)} {counts} -> {chunks_file}")
+    counts[c["metadata"]["process_id"]] = counts.get(c["metadata"]["process_id"], 0) + 1
 
+  collection = get_settings().collection(chunking)
   texts = [c["text"] for c in chunks]
-  metadatas = [c["metadata"] for c in chunks]
-
-  embedder = ProcessEmbedder()
-  embeddings = embedder.encode(texts)
-
-  store = QdrantVectorStore(collection_name=args.collection)
+  store = QdrantVectorStore(collection)
   store.init_collection(vector_size=embedder.vector_size, recreate=True)
-  store.upsert_chunks(texts, embeddings, metadatas)
+  store.upsert_chunks(texts, embedder.encode(texts), [c["metadata"] for c in chunks])
 
-  print("=" * 70)
-  print(" DONE")
-  print("=" * 70)
+  stored, kind = store.count(), store.chunking()
+  if stored != len(chunks) or kind != chunking:
+    print(f"[LỖI] {collection}: có {stored} điểm kiểu '{kind}', mong đợi {len(chunks)} kiểu '{chunking}'")
+    return 1
+  print(f"[OK ] {collection}: {stored} chunk '{chunking}' {counts}")
+  return 0
+
+
+def main() -> int:
+  parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+  parser.add_argument("--chunking", choices=[*CHUNKINGS, "both"], default="both")
+  args = parser.parse_args()
+  embedder = ProcessEmbedder()
+  chunkings = CHUNKINGS if args.chunking == "both" else (args.chunking,)
+  return max(build(c, embedder) for c in chunkings)
 
 
 if __name__ == "__main__":
-  main()
+  sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+  sys.exit(main())

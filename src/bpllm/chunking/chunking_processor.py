@@ -1,3 +1,20 @@
+"""BPMN-specific chunking theo bài báo BPLLM (Fig. 3).
+
+Mỗi chunk là nguyên văn XML của một phần tử BPMN (task, gateway, event), giữ cả
+các tag con như <incoming>/<outgoing>. Phần đồ họa đã được bỏ ở Phase 1
+(data/processed/<process>/<process>.bpmn).
+
+<sequenceFlow> KHÔNG thành chunk riêng: flow A -> B đọc được nhờ id Flow_x nằm
+trong <outgoing> của A và <incoming> của B. Chunk sequenceFlow chỉ chứa id nên
+chiếm chỗ trong top-10 mà không giúp gì.
+
+Chế độ enrich (cải tiến, không có trong bài báo): vẫn là XML của node, nhưng mỗi
+<incoming>/<outgoing> được gắn tên node ở đầu bên kia và nhãn điều kiện lấy từ
+<sequenceFlow>, ví dụ <outgoing target="register the order" condition="yes">Flow_1</outgoing>.
+
+Chạy: python -m bpllm.chunking.chunking_processor            (bài báo)
+      python -m bpllm.chunking.chunking_processor --enrich   (cải tiến)
+"""
 from __future__ import annotations
 
 import copy
@@ -8,7 +25,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional
 
-from bpllm.config import PROJECT_ROOT
+from bpllm.config import PROCESSED_DIR
 from bpllm.parsing import PROCESS_NAMES
 
 BPMN_NS = "http://www.omg.org/spec/BPMN/20100524/MODEL"
@@ -27,10 +44,10 @@ EVENT_TAGS = {
 }
 NODE_TAGS = TASK_TAGS | GATEWAY_TAGS | EVENT_TAGS
 
-PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
 CHUNKS_FILE = PROCESSED_DIR / "bpmn_chunks.jsonl"
 ENRICHED_CHUNKS_FILE = PROCESSED_DIR / "bpmn_chunks_enriched.jsonl"
 
+# Xuất XML với namespace mặc định để không sinh tiền tố "ns0:"
 ET.register_namespace("", BPMN_NS)
 _XMLNS_ATTR = re.compile(r'\s+xmlns(:\w+)?="[^"]*"')
 
@@ -123,7 +140,7 @@ class BPMNSpecificChunker:
               "node_kind": _node_kind(tag),
               "node_name": (el.get("name") or "").strip(),
               "chunk_index": len(chunks),
-              "chunking": "bpmn_enriched" if self.enrich else "bpmn_specific",
+              "chunking": "enriched" if self.enrich else "specific",
           },
       })
     return chunks
