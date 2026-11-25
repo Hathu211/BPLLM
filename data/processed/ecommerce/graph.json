@@ -1,0 +1,318 @@
+{
+  "process_id": "ecommerce",
+  "process_name": "E-commerce",
+  "source_file": "ecommerce.bpmn",
+  "participant": "Ecommerce System",
+  "counts": {
+    "activities": 15,
+    "exclusive_gateways": 4,
+    "parallel_gateways": 0,
+    "start_events": 1,
+    "end_events": 1,
+    "sequence_flows": 22
+  },
+  "nodes": [
+    {
+      "id": "StartEvent_1y45yut",
+      "type": "startEvent",
+      "kind": "event",
+      "name": "Customer order arrived",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_12cpf55",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "Is this a new customer?",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0t3x20h",
+      "type": "task",
+      "kind": "activity",
+      "name": "Create new account",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0wbkoaw",
+      "type": "task",
+      "kind": "activity",
+      "name": "Store payment method",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0z80v8w",
+      "type": "task",
+      "kind": "activity",
+      "name": "Recover client history",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_14vn9vh",
+      "type": "task",
+      "kind": "activity",
+      "name": "Check payment method",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_0unq6v1",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_014dn3v",
+      "type": "task",
+      "kind": "activity",
+      "name": "Register new order",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_0wwxa0w",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_06glfsw",
+      "type": "task",
+      "kind": "activity",
+      "name": "Select courier",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1sn8s5h",
+      "type": "task",
+      "kind": "activity",
+      "name": "Check courier availability",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_1rvurt9",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "Is the courier available?",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0e0gavq",
+      "type": "task",
+      "kind": "activity",
+      "name": "Assign package to courier",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_124kws5",
+      "type": "task",
+      "kind": "activity",
+      "name": "Receive courier confirmation",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1rd1k4w",
+      "type": "task",
+      "kind": "activity",
+      "name": "Estimate arrival time",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0hru42u",
+      "type": "task",
+      "kind": "activity",
+      "name": "Send waiting time to the customer",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0d7dniy",
+      "type": "task",
+      "kind": "activity",
+      "name": "Receive notification order retired by the courier",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_13pfl2x",
+      "type": "task",
+      "kind": "activity",
+      "name": "Receive notification order retired by the client",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0zk8u1z",
+      "type": "task",
+      "kind": "activity",
+      "name": "Receive customer satisfaction",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1rr3vas",
+      "type": "task",
+      "kind": "activity",
+      "name": "Pay courier",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Event_14jgpi0",
+      "type": "endEvent",
+      "kind": "event",
+      "name": "Order Fulfilled",
+      "lane": "",
+      "attached_to": ""
+    }
+  ],
+  "flows": [
+    {
+      "id": "Flow_04xrks0",
+      "source": "StartEvent_1y45yut",
+      "target": "Gateway_12cpf55",
+      "name": ""
+    },
+    {
+      "id": "Flow_0fwrf3j",
+      "source": "Gateway_12cpf55",
+      "target": "Activity_0t3x20h",
+      "name": "Yes"
+    },
+    {
+      "id": "Flow_06i63c5",
+      "source": "Gateway_12cpf55",
+      "target": "Activity_0z80v8w",
+      "name": ""
+    },
+    {
+      "id": "Flow_145je0t",
+      "source": "Activity_0t3x20h",
+      "target": "Activity_0wbkoaw",
+      "name": ""
+    },
+    {
+      "id": "Flow_14pfywp",
+      "source": "Activity_0wbkoaw",
+      "target": "Gateway_0unq6v1",
+      "name": ""
+    },
+    {
+      "id": "Flow_1jvddc3",
+      "source": "Activity_0z80v8w",
+      "target": "Activity_14vn9vh",
+      "name": ""
+    },
+    {
+      "id": "Flow_0995wbv",
+      "source": "Activity_14vn9vh",
+      "target": "Gateway_0unq6v1",
+      "name": ""
+    },
+    {
+      "id": "Flow_0a3m79l",
+      "source": "Gateway_0unq6v1",
+      "target": "Activity_014dn3v",
+      "name": ""
+    },
+    {
+      "id": "Flow_12py4o4",
+      "source": "Activity_014dn3v",
+      "target": "Gateway_0wwxa0w",
+      "name": ""
+    },
+    {
+      "id": "Flow_17cnjcu",
+      "source": "Gateway_1rvurt9",
+      "target": "Gateway_0wwxa0w",
+      "name": "No"
+    },
+    {
+      "id": "Flow_1ckcie7",
+      "source": "Gateway_0wwxa0w",
+      "target": "Activity_06glfsw",
+      "name": ""
+    },
+    {
+      "id": "Flow_1ru60yl",
+      "source": "Activity_06glfsw",
+      "target": "Activity_1sn8s5h",
+      "name": ""
+    },
+    {
+      "id": "Flow_1tc2kvv",
+      "source": "Activity_1sn8s5h",
+      "target": "Gateway_1rvurt9",
+      "name": ""
+    },
+    {
+      "id": "Flow_10icutz",
+      "source": "Gateway_1rvurt9",
+      "target": "Activity_0e0gavq",
+      "name": ""
+    },
+    {
+      "id": "Flow_1gmeelo",
+      "source": "Activity_0e0gavq",
+      "target": "Activity_124kws5",
+      "name": ""
+    },
+    {
+      "id": "Flow_14e8pbb",
+      "source": "Activity_124kws5",
+      "target": "Activity_1rd1k4w",
+      "name": ""
+    },
+    {
+      "id": "Flow_1wxf9m3",
+      "source": "Activity_1rd1k4w",
+      "target": "Activity_0hru42u",
+      "name": ""
+    },
+    {
+      "id": "Flow_104fczi",
+      "source": "Activity_0hru42u",
+      "target": "Activity_0d7dniy",
+      "name": ""
+    },
+    {
+      "id": "Flow_1cjy3mj",
+      "source": "Activity_0d7dniy",
+      "target": "Activity_13pfl2x",
+      "name": ""
+    },
+    {
+      "id": "Flow_14l1rwc",
+      "source": "Activity_13pfl2x",
+      "target": "Activity_0zk8u1z",
+      "name": ""
+    },
+    {
+      "id": "Flow_1gkmlc7",
+      "source": "Activity_0zk8u1z",
+      "target": "Activity_1rr3vas",
+      "name": ""
+    },
+    {
+      "id": "Flow_0vj9lnh",
+      "source": "Activity_1rr3vas",
+      "target": "Event_14jgpi0",
+      "name": ""
+    }
+  ]
+}

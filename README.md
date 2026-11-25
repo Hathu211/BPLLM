@@ -1,98 +1,74 @@
-# BPLLM
+# BPLLM 2
 
-Trợ lý hỏi đáp về quy trình nghiệp vụ, trả lời dựa trên mô hình BPMN. Dự án dùng Qdrant làm vector database, sentence-transformers để tạo embedding và Streamlit làm giao diện.
+Trợ lý hỏi đáp về quy trình nghiệp vụ, trả lời dựa trên mô hình BPMN. Tái lập framework BPLLM
+(Bernardi, Casciani, Cimitile, Marrella, *Conversing with business process-aware large language
+models: the BPLLM framework*, JIIS 2024) với cấu hình tốt nhất của bài báo, cộng thêm phần mở rộng
+**chunk enriched**.
 
-## Yêu cầu
+```
+BPMN gốc ─► làm sạch ─► graph.json ─► chunk (specific | enriched) ─► MiniLM ─► Qdrant
+                                                                              │ top-10
+câu hỏi ─────────────────────────────────────────────────────────────────────►┤
+                                                                              ▼
+              Llama 3.1 8B fine-tune của tác giả (Kaggle) ◄── prompt Hình 4 ◄─┘
+                       │
+                       ├─► oracle (yes/no, accuracy)         notebook thực nghiệm
+                       └─► Streamlit (yes/no, bước tiếp theo, trích dẫn nguồn)
+```
 
-- Python 3.10 đến 3.12
-- Docker Desktop
+**Hướng dẫn chạy từ đầu đến cuối: [docs/huong_dan_chay.md](docs/huong_dan_chay.md).**
+So sánh với bài báo: [docs/so_sanh_bai_bao.md](docs/so_sanh_bai_bao.md).
 
-## Cài đặt
-
-Chạy một lần ở thư mục gốc của repo (lệnh dành cho PowerShell trên Windows):
+## Chạy nhanh (PowerShell, ở thư mục `C:\BPLLM`)
 
 ```powershell
-python -m venv venv
-venv\Scripts\Activate.ps1
+py -3.11 -m venv venv_bpllm2
+venv_bpllm2\Scripts\Activate.ps1
 pip install -e ".[dev]"
-```
-
-Cấu hình có sẵn giá trị mặc định chạy được ngay. Chỉ cần tạo `.env` khi muốn đổi host, cổng, tên collection hoặc model: sao chép `.env.example` thành `.env` rồi sửa.
-
-## Chạy dự án
-
-**1. Bật Qdrant**
-
-```bash
+Copy-Item .env.example .env
 docker compose -f docker_compose.yml up -d
-```
-
-**2. Chuẩn hóa quy trình (Phase 1).** Đọc `data/raw/original/*.bpmn`, bỏ phần đồ họa, sinh graph và biểu diễn natural text vào `data/processed/<process>/`, rồi sinh `data/ground_truth/<process>.json` từ graph. Mỗi lệnh trả exit code 1 nếu có quy trình không hợp lệ.
-
-```bash
 python scripts/prepare_processes.py
-```
-
-```bash
 python scripts/generate_ground_truth.py
-```
-
-**3. Tạo index.** Lần đầu chạy sẽ tải model embedding nên cần có mạng.
-
-```bash
 python scripts/build_vector_store.py
-```
-
-**4. Chạy test.** Bước này không cần Docker và không cần tải model.
-
-```bash
+python scripts/retrieve_top_k.py
 pytest
-```
-
-**5. Mở giao diện**
-
-```bash
 streamlit run app/streamlit_app.py
 ```
 
-Dữ liệu Qdrant nằm trong `data/qdrant_storage/` và không được commit. Nếu thư mục này trống, chạy lại bước 3.
+Phần chạy LLM nằm trên Kaggle (GPU miễn phí): `notebooks/bpllm_experiment_kaggle.ipynb` cho thực
+nghiệm, `notebooks/bpllm_server_kaggle.ipynb` làm server cho Streamlit.
 
-## Nhóm cài đặt tùy chọn
+## 6 model của bài báo
 
-| Nhóm | Lệnh | Dùng cho |
-| :--- | :--- | :--- |
-| `dev` | `pip install -e ".[dev]"` | Chạy test |
-| `llm` | `pip install -e ".[llm]"` | Gọi LLM qua OpenAI API |
-| `finetune` | Xem mục bên dưới | Fine-tune trên Google Colab, không cài trên máy local |
+| Nhóm | Quy trình | int4 | int8 |
+| :--- | :--- | :--- | :--- |
+| `food_delivery` | Food Delivery | `angeloc1/llama3dot1FoodDel4v05` | `angeloc1/llama3dot1FoodDel8v02` |
+| `similar` | Food Delivery + E-commerce | `angeloc1/llama3dot1SimilarProcesses4` | `angeloc1/llama3dot1SimilarProcesses8` |
+| `different` | Food Delivery + Reimbursement | `angeloc1/llama3dot1DifferentProcesses4` | `angeloc1/llama3dot1DifferentProcesses8` |
 
-## Fine-tune trên Google Colab
-
-Fine-tune chạy trên GPU của Colab nên máy local không cần các thư viện này. Trên Colab chỉ cài đúng nhóm thư viện fine-tune, không cài cả project, vì project còn kéo theo Streamlit, LangChain, Qdrant và ghim `numpy<2`:
-
-```bash
-!pip install "peft>=0.11.0,<0.12.0" "trl>=0.9.0,<0.10.0" "bitsandbytes>=0.43.0,<0.44.0" "accelerate>=0.33.0,<0.34.0"
-```
-
-Dữ liệu huấn luyện nằm ở `data/dataset/supervised_finetune_data.json`. Lưu checkpoint lên Google Drive hoặc nơi lưu trữ model, không commit vào repo.
+Cả 6 là model Llama 3.1 8B Instruct đã merge, trọng số F16 (16,1 GB). "int4/int8" là cách tác
+giả fine-tune (PEFT), không phải định dạng trọng số. Streamlit gọi model theo quy trình:
+Food Delivery → `food_delivery`, E-commerce → `similar`, Reimbursement → `different`.
 
 ## Cấu trúc thư mục
 
 | Đường dẫn | Nội dung |
 | :--- | :--- |
-| `src/bpllm/` | Package chính; `config.py` là nơi duy nhất đọc cấu hình |
-| `src/bpllm/parsing/` | Đọc BPMN thành graph, bỏ phần đồ họa, sinh natural text (DFG) |
-| `scripts/` | Chuẩn hóa quy trình, sinh ground truth, tạo index, kiểm tra môi trường, chuẩn bị dữ liệu fine-tune |
-| `app/` | Giao diện Streamlit |
-| `data/raw/` | File BPMN đã bỏ đồ họa dùng làm mốc đối chiếu, và file natural text của bài báo cho Food Delivery |
-| `data/raw/original/` | File BPMN gốc còn phần đồ họa, đầu vào của Phase 1 |
-| `data/processed/<process>/` | Do `prepare_processes.py` sinh ra, không sửa tay: `graph.json`, BPMN đã bỏ đồ họa, file natural text |
-| `data/ground_truth/` | Do `generate_ground_truth.py` sinh từ graph, không sửa tay; dùng để tạo index và dữ liệu fine-tune |
-| `tests/` | Test pytest |
-| `docs/` | Quy trình làm việc của nhóm |
-
-Khi gặp lỗi môi trường, chạy `python scripts/check_env.py` để kiểm tra thư viện, kết nối Qdrant và model embedding.
-
-## Tài liệu
-
-- [Quy trình làm việc](docs/workflow_guide.md)
-- [Hướng dẫn viết commit](docs/commit_guide.md)
+| `src/bpllm/config.py` | Nơi duy nhất đọc cấu hình (`.env`) |
+| `src/bpllm/experiments.py` | 6 model, 4 thực nghiệm, tên file input/output |
+| `src/bpllm/parsing/` | Làm sạch BPMN, parse thành graph, sinh DFG text, ground truth |
+| `src/bpllm/chunking/` | Chunk `specific` (Hình 3 bài báo) và `enriched` (mở rộng) |
+| `src/bpllm/embeddings/`, `vectorstore/` | MiniLM, Qdrant (cosine, gRPC, lọc theo quy trình) |
+| `src/bpllm/rag/` | Prompt, truy xuất, loại câu hỏi, tra graph, trích dẫn, luồng trả lời |
+| `src/bpllm/llm/` | Client gọi server chuẩn OpenAI trên Kaggle |
+| `src/bpllm/evaluation/` | Oracle yes/no |
+| `scripts/` | Các bước của pipeline, xem hướng dẫn chạy |
+| `app/` | Streamlit |
+| `notebooks/` | 2 notebook Kaggle |
+| `data/raw/original/` | BPMN gốc (đầu vào) |
+| `data/raw/` | BPMN đã làm sạch dùng làm mốc đối chiếu, DFG text của bài báo |
+| `data/questions/` | Bộ câu hỏi 3, 4, 5, 6 của bài báo |
+| `data/processed/`, `data/ground_truth/` | Sinh tự động ở Phase 1, không sửa tay |
+| `data/rag_inputs/` | File top-10 cho notebook thực nghiệm (sinh ở Phase 4) |
+| `data/results/` | Câu trả lời tải về từ Kaggle và bảng tổng hợp |
+| `tests/` | pytest, không cần Docker hay mạng |

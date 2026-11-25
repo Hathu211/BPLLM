@@ -46,6 +46,9 @@ class Settings:
   qdrant_prefer_grpc: bool
   qdrant_collection: str
   embedding_model: str
+  llm_base_url: str
+  llm_api_key: str
+  llm_model: str
 
   @classmethod
   def from_env(cls) -> "Settings":
@@ -58,6 +61,9 @@ class Settings:
         embedding_model=_env_str(
             "EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2"
         ),
+        llm_base_url=_env_str("LLM_BASE_URL", "http://localhost:11434/v1"),
+        llm_api_key=_env_str("LLM_API_KEY", "not-needed"),
+        llm_model=_env_str("LLM_MODEL", "llama3.1:8b"),
     )
 
 

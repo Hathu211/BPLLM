@@ -1,0 +1,18 @@
+The E-commerce process defines the following activities, one per line:
+Assign package to courier
+Check courier availability
+Check payment method
+Create new account
+Customer order arrived
+Estimate arrival time
+Order Fulfilled
+Pay courier
+Receive courier confirmation
+Receive customer satisfaction
+Receive notification order retired by the client
+Receive notification order retired by the courier
+Recover client history
+Register new order
+Select courier
+Send waiting time to the customer
+Store payment method

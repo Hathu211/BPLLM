@@ -1,39 +1,31 @@
-# Python Bytecode & Environments
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-
-# Data & Models Cache (Tránh push weights/data lớn)
-data/processed/*
-!data/processed/.gitkeep
-*.bin
-*.safetensors
-*.pth
-*.onnx
-checkpoints/
-data/qdrant_storage/
-data/qdrant_local/
 *.egg-info/
 .pytest_cache/
 
-# Environment Variables
+# Môi trường ảo
+venv_bpllm2/
+venv/
+.venv/
+
+# Bí mật
 .env
 
-# Jupyter Outputs
+# Dữ liệu Qdrant (tạo lại bằng scripts/build_vector_store.py)
+data/qdrant_storage/
+
+# Model và checkpoint
+*.bin
+*.safetensors
+*.pth
+checkpoints/
+
+# Jupyter
 .ipynb_checkpoints/
 
-# IDE & OS
+# IDE / OS
 .vscode/
 .idea/
 .DS_Store
-
-!data/processed/bpmn_chunks_summary.csv
-
-# Test Phase 1: chỉ giữ trên máy người phát triển, không đẩy lên git
-tests/test_parsing.py
-tests/test_phase1_pipeline.py
+Thumbs.db

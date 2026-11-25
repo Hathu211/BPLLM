@@ -1,0 +1,19 @@
+The E-commerce process defines the following transitions:
+The process starts from "Customer order arrived".
+The process ends with "Order Fulfilled".
+From "Customer order arrived", the process continues with "Is this a new customer?".
+From "Is this a new customer?", the process can continue with "Create new account" if the branch is "Yes".
+From "Is this a new customer?", the process can continue with "Recover client history" otherwise.
+From "Create new account", the process continues with "Store payment method".
+From "Recover client history", the process continues with "Check payment method".
+From "Select courier", the process continues with "Check courier availability".
+From "Check courier availability", the process continues with "Is the courier available?".
+From "Is the courier available?", the process can continue with "Assign package to courier" otherwise.
+From "Assign package to courier", the process continues with "Receive courier confirmation".
+From "Receive courier confirmation", the process continues with "Estimate arrival time".
+From "Estimate arrival time", the process continues with "Send waiting time to the customer".
+From "Send waiting time to the customer", the process continues with "Receive notification order retired by the courier".
+From "Receive notification order retired by the courier", the process continues with "Receive notification order retired by the client".
+From "Receive notification order retired by the client", the process continues with "Receive customer satisfaction".
+From "Receive customer satisfaction", the process continues with "Pay courier".
+From "Pay courier", the process continues with "Order Fulfilled".

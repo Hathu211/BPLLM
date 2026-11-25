@@ -9,9 +9,10 @@ index (bài báo và enrichment) cùng lúc khi chạy ablation.
 import argparse
 
 from bpllm.chunking.chunking_processor import (CHUNKS_FILE, ENRICHED_CHUNKS_FILE,
-                                               chunk_all, write_jsonl)
+                                              chunk_all, write_jsonl)
 from bpllm.embeddings.embedder import ProcessEmbedder
 from bpllm.vectorstore.qdrant_store import QdrantVectorStore
+from bpllm.config import get_settings
 
 
 def main() -> None:
@@ -23,6 +24,10 @@ def main() -> None:
   parser.add_argument("--collection", default=None,
                       help="tên collection Qdrant; mặc định lấy QDRANT_COLLECTION")
   args = parser.parse_args()
+
+  collection = args.collection or get_settings().qdrant_collection 
+  if args.enrich != collection.endswitch("_enriched"): 
+    parser.error(f"--enrich={args.enrich} không khớp collection '{collection}'")
 
   print("=" * 70)
   print(f" BUILD VECTOR STORE ({'enriched' if args.enrich else 'BPMN-specific'} chunking)")

@@ -1,0 +1,290 @@
+{
+  "process_id": "reimbursement",
+  "process_name": "Reimbursement",
+  "source_file": "reimbursement.bpmn",
+  "participant": "Administration Office",
+  "counts": {
+    "activities": 11,
+    "exclusive_gateways": 5,
+    "parallel_gateways": 0,
+    "start_events": 1,
+    "end_events": 2,
+    "sequence_flows": 20
+  },
+  "nodes": [
+    {
+      "id": "Id_fa5d9e26-c99d-4b68-8819-8461f4725121",
+      "type": "startEvent",
+      "kind": "event",
+      "name": "Expense report received",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0v4lv53",
+      "type": "task",
+      "kind": "activity",
+      "name": "Reformat and send expense report",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_08rst62",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "How much is the amount to be reimbursed?",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Id_e397f9af-fca3-4aee-b3d8-7426a8876228",
+      "type": "task",
+      "kind": "activity",
+      "name": "Review amount",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1mybaex",
+      "type": "task",
+      "kind": "activity",
+      "name": "Assess evaluation report",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1wl94dy",
+      "type": "task",
+      "kind": "activity",
+      "name": "Approve expense report without assessment",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Id_baa0ed78-1a85-4033-baec-2177e138f466",
+      "type": "task",
+      "kind": "activity",
+      "name": "Reject expense report",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Id_0d6d53c6-db6e-4333-b06e-ba007abba16a",
+      "type": "endEvent",
+      "kind": "event",
+      "name": "Reimbursement rejected",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a",
+      "type": "task",
+      "kind": "activity",
+      "name": "Transfer money to bank account",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8",
+      "type": "task",
+      "kind": "activity",
+      "name": "Approve expense report",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0q4b4ku",
+      "type": "task",
+      "kind": "activity",
+      "name": "Send approval notification",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6",
+      "type": "endEvent",
+      "kind": "event",
+      "name": "Money transferred",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_05ixu0l",
+      "type": "task",
+      "kind": "activity",
+      "name": "Notify Employee",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de",
+      "type": "task",
+      "kind": "activity",
+      "name": "Create Employee Account",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Id_004d696c-83de-4e53-a2d9-514f6f27ce2c",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "Is a new account required?",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_1wkso6h",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_08u3u2t",
+      "type": "task",
+      "kind": "activity",
+      "name": "Review expense report",
+      "lane": "",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_098odj7",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "Expense report is OK?",
+      "lane": "",
+      "attached_to": ""
+    }
+  ],
+  "flows": [
+    {
+      "id": "Flow_05t7k6b",
+      "source": "Id_fa5d9e26-c99d-4b68-8819-8461f4725121",
+      "target": "Activity_05ixu0l",
+      "name": ""
+    },
+    {
+      "id": "Id_104f1377-4163-4147-b854-55a5ba0eea20",
+      "source": "Id_004d696c-83de-4e53-a2d9-514f6f27ce2c",
+      "target": "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+      "name": "Account already existing"
+    },
+    {
+      "id": "Id_e276783d-44de-4a56-bda3-d51ba6cfd360",
+      "source": "Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de",
+      "target": "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+      "name": ""
+    },
+    {
+      "id": "Flow_18hsnqo",
+      "source": "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417",
+      "target": "Id_e397f9af-fca3-4aee-b3d8-7426a8876228",
+      "name": ""
+    },
+    {
+      "id": "Flow_1vr0goi",
+      "source": "Gateway_08rst62",
+      "target": "Activity_0v4lv53",
+      "name": "Amount >= 1000"
+    },
+    {
+      "id": "Flow_0uilgiq",
+      "source": "Activity_0v4lv53",
+      "target": "Activity_1mybaex",
+      "name": ""
+    },
+    {
+      "id": "Flow_1eefdha",
+      "source": "Id_e397f9af-fca3-4aee-b3d8-7426a8876228",
+      "target": "Gateway_08rst62",
+      "name": ""
+    },
+    {
+      "id": "Flow_1m8lru7",
+      "source": "Gateway_08rst62",
+      "target": "Activity_1wl94dy",
+      "name": "Amount < 1000"
+    },
+    {
+      "id": "Flow_0unpe9u",
+      "source": "Activity_1mybaex",
+      "target": "Gateway_1wkso6h",
+      "name": ""
+    },
+    {
+      "id": "Flow_0l1aptn",
+      "source": "Activity_1wl94dy",
+      "target": "Gateway_1wkso6h",
+      "name": ""
+    },
+    {
+      "id": "Id_a07af8bb-6cee-477a-9e03-2d1614524715",
+      "source": "Gateway_098odj7",
+      "target": "Id_baa0ed78-1a85-4033-baec-2177e138f466",
+      "name": "Expense report rejected"
+    },
+    {
+      "id": "Flow_0rtaeg2",
+      "source": "Gateway_098odj7",
+      "target": "Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8",
+      "name": "Expense report approved"
+    },
+    {
+      "id": "Id_ef9286e2-d9b4-465c-8a9a-74f15051b870",
+      "source": "Id_baa0ed78-1a85-4033-baec-2177e138f466",
+      "target": "Id_0d6d53c6-db6e-4333-b06e-ba007abba16a",
+      "name": ""
+    },
+    {
+      "id": "Flow_1rxe59t",
+      "source": "Id_3a6608a4-de4a-48b2-87ea-f0ca5f78b9d8",
+      "target": "Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a",
+      "name": ""
+    },
+    {
+      "id": "Flow_0yghqs0",
+      "source": "Id_c998411e-8c2f-49c1-96f6-95a473a7ab9a",
+      "target": "Activity_0q4b4ku",
+      "name": ""
+    },
+    {
+      "id": "Flow_0aac4lq",
+      "source": "Activity_0q4b4ku",
+      "target": "Id_dc9a34ea-8c82-4e54-8eed-6f0a476704f6",
+      "name": ""
+    },
+    {
+      "id": "Flow_1hyof5d",
+      "source": "Activity_05ixu0l",
+      "target": "Id_004d696c-83de-4e53-a2d9-514f6f27ce2c",
+      "name": ""
+    },
+    {
+      "id": "Id_b3f87643-821e-41ad-b2dc-b619f49b2684",
+      "source": "Id_004d696c-83de-4e53-a2d9-514f6f27ce2c",
+      "target": "Id_6d32246b-6dd7-40b9-b78b-6daa7c2175de",
+      "name": "New account required"
+    },
+    {
+      "id": "Flow_06j4qqo",
+      "source": "Gateway_1wkso6h",
+      "target": "Activity_08u3u2t",
+      "name": ""
+    },
+    {
+      "id": "Flow_0tmojyu",
+      "source": "Activity_08u3u2t",
+      "target": "Gateway_098odj7",
+      "name": ""
+    }
+  ]
+}
