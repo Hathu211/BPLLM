@@ -1,0 +1,15 @@
+The Reimbursement process defines the following activities, one per line:
+Approve expense report
+Approve expense report without assessment
+Assess evaluation report
+Create Employee Account
+Expense report received
+Money transferred
+Notify Employee
+Reformat and send expense report
+Reimbursement rejected
+Reject expense report
+Review amount
+Review expense report
+Send approval notification
+Transfer money to bank account

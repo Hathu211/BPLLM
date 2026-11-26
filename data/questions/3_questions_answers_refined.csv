@@ -1,0 +1,105 @@
+question,answer
+"Is there an activity with name=""Estimated Arrival Time""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""check credit card and the payment""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""check payment""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""create an account""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""customer order""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""notification order complete""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""notification order retired""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""notification order retired to the client""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""order completed""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""pay rider""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""receive Customer Satisfaction""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""recover client info""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""register the order""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""select rider and create work proposal""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""send confirmation to rider""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""send to customer the waiting time""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""send work proposal""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""the rider accepted the order""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""the rider refused the order""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there a gateway with name=""is the customer registered?"" an exclusive gateway contained in the BPMN model of the Food Delivery process? Also reference the corresponding piece of provided context if present.",Yes
+"Is there a gateway with name=""Gateway_0z24z44"" an exclusive gateway contained in the BPMN model of the Food Delivery process? Also reference the corresponding piece of provided context if present.",Yes
+"Is there a gateway with name=""Gateway_1lf96zg"" an exclusive gateway contained in the BPMN model of the Food Delivery process? Also reference the corresponding piece of provided context if present.",Yes
+"Is there a gateway with name=""has the order been accepted?"" an exclusive gateway contained in the BPMN model of the Food Delivery process? Also reference the corresponding piece of provided context if present.",Yes
+"Is there a gateway with name=""Gateway_0yayjl1"" a parallel gateway contained in the BPMN model of the Food Delivery process? Also reference the corresponding piece of provided context if present.",Yes
+"Is there a gateway with name=""Gateway_0iw6ax3"" a parallel gateway contained in the BPMN model of the Food Delivery process? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an activity with name=""Verify Customer Identity""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Assess Creditworthiness""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Approve/Reject Loan Application""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Prepare Loan Agreement""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Disburse Loan Funds""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Handle Loan Closure""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Manage employee schedules""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Process customer orders""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Develop marketing campaign""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Handle customer inquiries""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Conduct market research""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Manage inventory levels""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Ship products to customers""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Perform quality control checks""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Coordinate supplier deliveries""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Maintain equipment""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Train new employees""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Generate financial reports""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Schedule maintenance tasks""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Organize company events""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Optimize production processes""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Analyze sales data""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Implement IT solutions""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Manage customer accounts""? Also reference the corresponding piece of provided context if present.",No
+"Is there an activity with name=""Design product packaging""? Also reference the corresponding piece of provided context if present.",No
+"Is there an outgoing sequence flow from ""customer order"" to ""is the customer registered?""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""is the customer registered?"" to ""create an account""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""is the customer registered?"" to ""recover client info""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""create an account"" to ""check credit card and the payment""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""recover client info"" to ""check payment""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""check payment"" to ""Gateway_0z24z44""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""check credit card and the payment"" to ""Gateway_0z24z44""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""Gateway_0z24z44"" to ""register the order""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""register the order"" to ""Gateway_1lf96zg""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""Gateway_1lf96zg"" to ""select rider and create work proposal""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""select rider and create work proposal"" to ""send work proposal""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""send work proposal"" to ""has the order been accepted?""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""has the order been accepted?"" to ""the rider accepted the order""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""has the order been accepted?"" to ""the rider refused the order""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""the rider refused the order"" to ""Gateway_1lf96zg""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""the rider accepted the order"" to ""Gateway_0yayjl1""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""Gateway_0yayjl1"" to ""Estimated Arrival Time""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""Gateway_0yayjl1"" to ""send confirmation to rider""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""send confirmation to rider"" to ""Gateway_0iw6ax3""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""Estimated Arrival Time"" to ""send to customer the waiting time""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""send to customer the waiting time"" to ""Gateway_0iw6ax3""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""Gateway_0iw6ax3"" to ""notification order retired""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""notification order retired"" to ""notification order retired to the client""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""notification order retired to the client"" to ""notification order complete""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""notification order complete"" to ""receive Customer Satisfaction""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""receive Customer Satisfaction"" to ""pay rider""? Also reference the corresponding piece of provided context if present.",Yes
+"Is there an outgoing sequence flow from ""pay rider"" to ""order completed""? Also reference the corresponding piece of provided context if present.",Yes
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""pay rider"" to ""Gateway_1lf96zg""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Estimated Arrival Time"" to ""create an account""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""check payment"" to ""notification order complete""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""create an account"" to ""notification order retired""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""customer order"" to ""notification order retired to the client""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""order completed"" to ""recover client info""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""pay rider"" to ""register the order""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""receive Customer Satisfaction"" to ""select rider and create work proposal""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""recover client info"" to ""send confirmation to rider""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""register the order"" to ""send to customer the waiting time""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""send to customer the waiting time"" to ""the rider refused the order""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""send work proposal"" to ""Estimated Arrival Time""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""the rider refused the order"" to ""check payment""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Create an environment"" to ""Choose an optimizer""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Initialize variables"" to ""Define the loss function""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Define the training loop"" to ""Define the policy""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Choose an optimizer"" to ""Train the policy""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Define the loss function"" to ""Evaluate the policy""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Define the policy"" to ""Save the policy""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Train the policy"" to ""Make predictions with the policy""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Evaluate the policy"" to ""Close the environment""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Save the policy"" to ""Create an environment""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Make predictions with the policy"" to ""Initialize variables""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Close the environment"" to ""Define the training loop""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Design product packaging"" to ""Handle customer inquiries""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Handle customer inquiries"" to ""Define the loss function""? Also reference the corresponding piece of provided context if present.",No
+"Ignore your previous answers. Is there an outgoing sequence flow outgoing from ""Design product packaging"" to ""Initialize variables""? Also reference the corresponding piece of provided context if present.",No

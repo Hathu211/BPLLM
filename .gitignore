@@ -1,29 +1,31 @@
-# Python Bytecode & Environments
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
+*.egg-info/
+.pytest_cache/
 
-# Data & Models Cache (Tránh push weights/data lớn)
-data/processed/*
-!data/processed/.gitkeep
+# Môi trường ảo
+venv_bpllm2/
+venv/
+.venv/
+
+# Bí mật
+.env
+
+# Dữ liệu Qdrant (tạo lại bằng scripts/build_vector_store.py)
+data/qdrant_storage/
+
+# Model và checkpoint
 *.bin
 *.safetensors
 *.pth
-*.onnx
 checkpoints/
 
-# Environment Variables
-.env
-
-# Jupyter Outputs
+# Jupyter
 .ipynb_checkpoints/
 
-# IDE & OS
+# IDE / OS
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db

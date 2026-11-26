@@ -1,0 +1,117 @@
+{
+  "ecommerce": {
+    "source": "ecommerce.bpmn",
+    "from_original": true,
+    "counts": {
+      "activities": 15,
+      "exclusive_gateways": 4,
+      "parallel_gateways": 0,
+      "start_events": 1,
+      "end_events": 1,
+      "sequence_flows": 22
+    },
+    "errors": [],
+    "warnings": [
+      "gateway 'Is this a new customer?': nhánh không có nhãn điều kiện tới ['Recover client history']",
+      "gateway 'Is the courier available?': nhánh không có nhãn điều kiện tới ['Assign package to courier']"
+    ],
+    "removed": {
+      "BPMNDiagram": 1,
+      "BPMNEdge": 22,
+      "BPMNLabel": 22,
+      "BPMNPlane": 1,
+      "BPMNShape": 22,
+      "Bounds": 28,
+      "waypoint": 50
+    },
+    "renamed": [],
+    "gateways": {
+      "named": 2,
+      "unnamed": 2
+    }
+  },
+  "food_delivery": {
+    "source": "food_delivery.bpmn",
+    "from_original": true,
+    "counts": {
+      "activities": 17,
+      "exclusive_gateways": 4,
+      "parallel_gateways": 2,
+      "start_events": 1,
+      "end_events": 1,
+      "sequence_flows": 27
+    },
+    "errors": [],
+    "warnings": [],
+    "removed": {
+      "BPMNDiagram": 1,
+      "BPMNEdge": 33,
+      "BPMNLabel": 8,
+      "BPMNPlane": 1,
+      "BPMNShape": 31,
+      "Bounds": 39,
+      "association": 2,
+      "textAnnotation": 2,
+      "waypoint": 79
+    },
+    "renamed": [
+      {
+        "id": "Activity_1x5mf5x",
+        "tag": "task",
+        "from": "check credit  card and the payment",
+        "to": "check credit card and the payment"
+      }
+    ],
+    "gateways": {
+      "named": 2,
+      "unnamed": 4
+    }
+  },
+  "reimbursement": {
+    "source": "reimbursement.bpmn",
+    "from_original": true,
+    "counts": {
+      "activities": 11,
+      "exclusive_gateways": 5,
+      "parallel_gateways": 0,
+      "start_events": 1,
+      "end_events": 2,
+      "sequence_flows": 20
+    },
+    "errors": [],
+    "warnings": [],
+    "removed": {
+      "BPMNDiagram": 1,
+      "BPMNEdge": 21,
+      "BPMNLabel": 19,
+      "BPMNLabelStyle": 38,
+      "BPMNPlane": 1,
+      "BPMNShape": 21,
+      "BizagiExtensions": 23,
+      "BizagiProperties": 23,
+      "BizagiProperty": 115,
+      "Bounds": 34,
+      "Font": 38,
+      "association": 7,
+      "boundaryEvent": 1,
+      "dataInput": 4,
+      "dataObject": 4,
+      "dataOutput": 2,
+      "dataOutputAssociation": 1,
+      "dataState": 10,
+      "documentation": 32,
+      "extension": 21,
+      "extensionElements": 23,
+      "inputSet": 5,
+      "ioSpecification": 5,
+      "laneSet": 1,
+      "outputSet": 6,
+      "waypoint": 52
+    },
+    "renamed": [],
+    "gateways": {
+      "named": 3,
+      "unnamed": 2
+    }
+  }
+}

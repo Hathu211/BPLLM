@@ -1,0 +1,254 @@
+{
+  "process_id": "food_delivery",
+  "process_name": "Food Delivery",
+  "source_files": [
+    "food_delivery.bpmn"
+  ],
+  "start_events": [
+    "customer order"
+  ],
+  "end_events": [
+    "order completed"
+  ],
+  "activities": [
+    "the rider refused the order",
+    "pay rider",
+    "notification order complete",
+    "create an account",
+    "recover client info",
+    "check payment",
+    "check credit card and the payment",
+    "register the order",
+    "select rider and create work proposal",
+    "send work proposal",
+    "the rider accepted the order",
+    "send confirmation to rider",
+    "Estimated Arrival Time",
+    "send to customer the waiting time",
+    "notification order retired",
+    "notification order retired to the client",
+    "receive Customer Satisfaction"
+  ],
+  "dfg_activities": [
+    "the rider refused the order",
+    "order completed",
+    "pay rider",
+    "notification order complete",
+    "customer order",
+    "create an account",
+    "recover client info",
+    "check payment",
+    "check credit card and the payment",
+    "register the order",
+    "select rider and create work proposal",
+    "send work proposal",
+    "the rider accepted the order",
+    "send confirmation to rider",
+    "Estimated Arrival Time",
+    "send to customer the waiting time",
+    "notification order retired",
+    "notification order retired to the client",
+    "receive Customer Satisfaction"
+  ],
+  "gateways": [
+    "is the customer registered?",
+    "Gateway_0z24z44",
+    "Gateway_1lf96zg",
+    "has the order been accepted?",
+    "Gateway_0yayjl1",
+    "Gateway_0iw6ax3"
+  ],
+  "gateway_details": [
+    {
+      "id": "Gateway_0f3iu05",
+      "name": "is the customer registered?",
+      "reference": "is the customer registered?",
+      "lookup": "name",
+      "type": "exclusiveGateway",
+      "incoming": 1,
+      "outgoing": 2
+    },
+    {
+      "id": "Gateway_0z24z44",
+      "name": "",
+      "reference": "Gateway_0z24z44",
+      "lookup": "id",
+      "type": "exclusiveGateway",
+      "incoming": 2,
+      "outgoing": 1
+    },
+    {
+      "id": "Gateway_1lf96zg",
+      "name": "",
+      "reference": "Gateway_1lf96zg",
+      "lookup": "id",
+      "type": "exclusiveGateway",
+      "incoming": 2,
+      "outgoing": 1
+    },
+    {
+      "id": "Gateway_03ncbpd",
+      "name": "has the order been accepted?",
+      "reference": "has the order been accepted?",
+      "lookup": "name",
+      "type": "exclusiveGateway",
+      "incoming": 1,
+      "outgoing": 2
+    },
+    {
+      "id": "Gateway_0yayjl1",
+      "name": "",
+      "reference": "Gateway_0yayjl1",
+      "lookup": "id",
+      "type": "parallelGateway",
+      "incoming": 1,
+      "outgoing": 2
+    },
+    {
+      "id": "Gateway_0iw6ax3",
+      "name": "",
+      "reference": "Gateway_0iw6ax3",
+      "lookup": "id",
+      "type": "parallelGateway",
+      "incoming": 2,
+      "outgoing": 1
+    }
+  ],
+  "sequence_flows": [
+    {
+      "from": "Gateway_0iw6ax3",
+      "to": "notification order retired",
+      "condition": ""
+    },
+    {
+      "from": "send to customer the waiting time",
+      "to": "Gateway_0iw6ax3",
+      "condition": ""
+    },
+    {
+      "from": "send confirmation to rider",
+      "to": "Gateway_0iw6ax3",
+      "condition": ""
+    },
+    {
+      "from": "Estimated Arrival Time",
+      "to": "send to customer the waiting time",
+      "condition": ""
+    },
+    {
+      "from": "Gateway_0yayjl1",
+      "to": "Estimated Arrival Time",
+      "condition": ""
+    },
+    {
+      "from": "Gateway_0yayjl1",
+      "to": "send confirmation to rider",
+      "condition": ""
+    },
+    {
+      "from": "the rider accepted the order",
+      "to": "Gateway_0yayjl1",
+      "condition": ""
+    },
+    {
+      "from": "the rider refused the order",
+      "to": "Gateway_1lf96zg",
+      "condition": ""
+    },
+    {
+      "from": "has the order been accepted?",
+      "to": "the rider refused the order",
+      "condition": "no"
+    },
+    {
+      "from": "has the order been accepted?",
+      "to": "the rider accepted the order",
+      "condition": "yes"
+    },
+    {
+      "from": "Gateway_1lf96zg",
+      "to": "select rider and create work proposal",
+      "condition": ""
+    },
+    {
+      "from": "select rider and create work proposal",
+      "to": "send work proposal",
+      "condition": ""
+    },
+    {
+      "from": "send work proposal",
+      "to": "has the order been accepted?",
+      "condition": ""
+    },
+    {
+      "from": "notification order complete",
+      "to": "receive Customer Satisfaction",
+      "condition": ""
+    },
+    {
+      "from": "receive Customer Satisfaction",
+      "to": "pay rider",
+      "condition": ""
+    },
+    {
+      "from": "pay rider",
+      "to": "order completed",
+      "condition": ""
+    },
+    {
+      "from": "notification order retired",
+      "to": "notification order retired to the client",
+      "condition": ""
+    },
+    {
+      "from": "notification order retired to the client",
+      "to": "notification order complete",
+      "condition": ""
+    },
+    {
+      "from": "customer order",
+      "to": "is the customer registered?",
+      "condition": ""
+    },
+    {
+      "from": "is the customer registered?",
+      "to": "create an account",
+      "condition": "no"
+    },
+    {
+      "from": "is the customer registered?",
+      "to": "recover client info",
+      "condition": "yes"
+    },
+    {
+      "from": "recover client info",
+      "to": "check payment",
+      "condition": ""
+    },
+    {
+      "from": "create an account",
+      "to": "check credit card and the payment",
+      "condition": ""
+    },
+    {
+      "from": "check credit card and the payment",
+      "to": "Gateway_0z24z44",
+      "condition": ""
+    },
+    {
+      "from": "check payment",
+      "to": "Gateway_0z24z44",
+      "condition": ""
+    },
+    {
+      "from": "Gateway_0z24z44",
+      "to": "register the order",
+      "condition": ""
+    },
+    {
+      "from": "register the order",
+      "to": "Gateway_1lf96zg",
+      "condition": ""
+    }
+  ]
+}

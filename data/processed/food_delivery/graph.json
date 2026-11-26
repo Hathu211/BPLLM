@@ -1,0 +1,380 @@
+{
+  "process_id": "food_delivery",
+  "process_name": "Food Delivery",
+  "source_file": "food_delivery.bpmn",
+  "participant": "Food Delivery system",
+  "counts": {
+    "activities": 17,
+    "exclusive_gateways": 4,
+    "parallel_gateways": 2,
+    "start_events": 1,
+    "end_events": 1,
+    "sequence_flows": 27
+  },
+  "nodes": [
+    {
+      "id": "Activity_1mf8wy9",
+      "type": "task",
+      "kind": "activity",
+      "name": "the rider refused the order",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Event_1iwqv9w",
+      "type": "endEvent",
+      "kind": "event",
+      "name": "order completed",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1axkrpg",
+      "type": "task",
+      "kind": "activity",
+      "name": "pay rider",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0gh475d",
+      "type": "receiveTask",
+      "kind": "activity",
+      "name": "notification order complete",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Event_1uwsphs",
+      "type": "startEvent",
+      "kind": "event",
+      "name": "customer order",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_0f3iu05",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "is the customer registered?",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1uxpywg",
+      "type": "task",
+      "kind": "activity",
+      "name": "create an account",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0zlhwln",
+      "type": "task",
+      "kind": "activity",
+      "name": "recover client info",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_0z24z44",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_0mt2w5k",
+      "type": "task",
+      "kind": "activity",
+      "name": "check payment",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1x5mf5x",
+      "type": "task",
+      "kind": "activity",
+      "name": "check credit card and the payment",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_074nbz9",
+      "type": "task",
+      "kind": "activity",
+      "name": "register the order",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_1lf96zg",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_05qnapc",
+      "type": "task",
+      "kind": "activity",
+      "name": "select rider and create work proposal",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1r7emvp",
+      "type": "sendTask",
+      "kind": "activity",
+      "name": "send work proposal",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_03ncbpd",
+      "type": "exclusiveGateway",
+      "kind": "gateway",
+      "name": "has the order been accepted?",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_00fcmsc",
+      "type": "task",
+      "kind": "activity",
+      "name": "the rider accepted the order",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_0yayjl1",
+      "type": "parallelGateway",
+      "kind": "gateway",
+      "name": "",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_02rjtb4",
+      "type": "task",
+      "kind": "activity",
+      "name": "send confirmation to rider",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1623ajo",
+      "type": "task",
+      "kind": "activity",
+      "name": "Estimated Arrival Time",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1nwzzzm",
+      "type": "task",
+      "kind": "activity",
+      "name": "send to customer the waiting time",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_13779o3",
+      "type": "receiveTask",
+      "kind": "activity",
+      "name": "notification order retired",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Gateway_0iw6ax3",
+      "type": "parallelGateway",
+      "kind": "gateway",
+      "name": "",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1ww6nps",
+      "type": "sendTask",
+      "kind": "activity",
+      "name": "notification order retired to the client",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    },
+    {
+      "id": "Activity_1iwh9bs",
+      "type": "receiveTask",
+      "kind": "activity",
+      "name": "receive Customer Satisfaction",
+      "lane": "Lane_0f7txj4",
+      "attached_to": ""
+    }
+  ],
+  "flows": [
+    {
+      "id": "Flow_0yjijpp",
+      "source": "Gateway_0iw6ax3",
+      "target": "Activity_13779o3",
+      "name": ""
+    },
+    {
+      "id": "Flow_0g20lkr",
+      "source": "Activity_1nwzzzm",
+      "target": "Gateway_0iw6ax3",
+      "name": ""
+    },
+    {
+      "id": "Flow_0k3ykxg",
+      "source": "Activity_02rjtb4",
+      "target": "Gateway_0iw6ax3",
+      "name": ""
+    },
+    {
+      "id": "Flow_04khsl9",
+      "source": "Activity_1623ajo",
+      "target": "Activity_1nwzzzm",
+      "name": ""
+    },
+    {
+      "id": "Flow_1qp3xmw",
+      "source": "Gateway_0yayjl1",
+      "target": "Activity_1623ajo",
+      "name": ""
+    },
+    {
+      "id": "Flow_0vdee2b",
+      "source": "Gateway_0yayjl1",
+      "target": "Activity_02rjtb4",
+      "name": ""
+    },
+    {
+      "id": "Flow_0a6icc7",
+      "source": "Activity_00fcmsc",
+      "target": "Gateway_0yayjl1",
+      "name": ""
+    },
+    {
+      "id": "Flow_096zrl8",
+      "source": "Activity_1mf8wy9",
+      "target": "Gateway_1lf96zg",
+      "name": ""
+    },
+    {
+      "id": "Flow_0xnynh4",
+      "source": "Gateway_03ncbpd",
+      "target": "Activity_1mf8wy9",
+      "name": "no"
+    },
+    {
+      "id": "Flow_03y8s2m",
+      "source": "Gateway_03ncbpd",
+      "target": "Activity_00fcmsc",
+      "name": "yes"
+    },
+    {
+      "id": "Flow_0eb9w8a",
+      "source": "Gateway_1lf96zg",
+      "target": "Activity_05qnapc",
+      "name": ""
+    },
+    {
+      "id": "Flow_14atypc",
+      "source": "Activity_05qnapc",
+      "target": "Activity_1r7emvp",
+      "name": ""
+    },
+    {
+      "id": "Flow_0oe8kpj",
+      "source": "Activity_1r7emvp",
+      "target": "Gateway_03ncbpd",
+      "name": ""
+    },
+    {
+      "id": "Flow_1n1np4q",
+      "source": "Activity_0gh475d",
+      "target": "Activity_1iwh9bs",
+      "name": ""
+    },
+    {
+      "id": "Flow_1shbkt3",
+      "source": "Activity_1iwh9bs",
+      "target": "Activity_1axkrpg",
+      "name": ""
+    },
+    {
+      "id": "Flow_0qsqis4",
+      "source": "Activity_1axkrpg",
+      "target": "Event_1iwqv9w",
+      "name": ""
+    },
+    {
+      "id": "Flow_0wmlhtj",
+      "source": "Activity_13779o3",
+      "target": "Activity_1ww6nps",
+      "name": ""
+    },
+    {
+      "id": "Flow_1ueot8n",
+      "source": "Activity_1ww6nps",
+      "target": "Activity_0gh475d",
+      "name": ""
+    },
+    {
+      "id": "Flow_08ptwir",
+      "source": "Event_1uwsphs",
+      "target": "Gateway_0f3iu05",
+      "name": ""
+    },
+    {
+      "id": "Flow_08xsx3q",
+      "source": "Gateway_0f3iu05",
+      "target": "Activity_1uxpywg",
+      "name": "no"
+    },
+    {
+      "id": "Flow_0npkvg0",
+      "source": "Gateway_0f3iu05",
+      "target": "Activity_0zlhwln",
+      "name": "yes"
+    },
+    {
+      "id": "Flow_07gf68e",
+      "source": "Activity_0zlhwln",
+      "target": "Activity_0mt2w5k",
+      "name": ""
+    },
+    {
+      "id": "Flow_1gno5ei",
+      "source": "Activity_1uxpywg",
+      "target": "Activity_1x5mf5x",
+      "name": ""
+    },
+    {
+      "id": "Flow_0d2a1d9",
+      "source": "Activity_1x5mf5x",
+      "target": "Gateway_0z24z44",
+      "name": ""
+    },
+    {
+      "id": "Flow_0l8n3mx",
+      "source": "Activity_0mt2w5k",
+      "target": "Gateway_0z24z44",
+      "name": ""
+    },
+    {
+      "id": "Flow_1tpgntx",
+      "source": "Gateway_0z24z44",
+      "target": "Activity_074nbz9",
+      "name": ""
+    },
+    {
+      "id": "Flow_0agx772",
+      "source": "Activity_074nbz9",
+      "target": "Gateway_1lf96zg",
+      "name": ""
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+The Reimbursement process defines the following transitions:
+Gateway "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417" is an unnamed exclusive gateway, referred to by its id.
+Gateway "How much is the amount to be reimbursed?" is an exclusive gateway with id "Gateway_08rst62".
+Gateway "Is a new account required?" is an exclusive gateway with id "Id_004d696c-83de-4e53-a2d9-514f6f27ce2c".
+Gateway "Gateway_1wkso6h" is an unnamed exclusive gateway, referred to by its id.
+Gateway "Expense report is OK?" is an exclusive gateway with id "Gateway_098odj7".
+The process starts from "Expense report received".
+The process ends with "Reimbursement rejected".
+The process ends with "Money transferred".
+From "Expense report received", the process continues with "Notify Employee".
+From "Is a new account required?", the process can continue with "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417" if the branch is "Account already existing".
+From "Create Employee Account", the process continues with "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417".
+From "Id_64e4c2ad-686e-4527-b9b5-7eeb40351417", the process continues with "Review amount".
+From "How much is the amount to be reimbursed?", the process can continue with "Reformat and send expense report" if the branch is "Amount >= 1000".
+From "Reformat and send expense report", the process continues with "Assess evaluation report".
+From "Review amount", the process continues with "How much is the amount to be reimbursed?".
+From "How much is the amount to be reimbursed?", the process can continue with "Approve expense report without assessment" if the branch is "Amount < 1000".
+From "Assess evaluation report", the process continues with "Gateway_1wkso6h".
+From "Approve expense report without assessment", the process continues with "Gateway_1wkso6h".
+From "Expense report is OK?", the process can continue with "Reject expense report" if the branch is "Expense report rejected".
+From "Expense report is OK?", the process can continue with "Approve expense report" if the branch is "Expense report approved".
+From "Reject expense report", the process continues with "Reimbursement rejected".
+From "Approve expense report", the process continues with "Transfer money to bank account".
+From "Transfer money to bank account", the process continues with "Send approval notification".
+From "Send approval notification", the process continues with "Money transferred".
+From "Notify Employee", the process continues with "Is a new account required?".
+From "Is a new account required?", the process can continue with "Create Employee Account" if the branch is "New account required".
+From "Gateway_1wkso6h", the process continues with "Review expense report".
+From "Review expense report", the process continues with "Expense report is OK?".

@@ -1,0 +1,18 @@
+The Food Delivery process defines the following transitions:
+The process starts from "customer order".
+The process ends with "order completed".
+From "customer order", the process continues with "is the customer registered?".
+From "is the customer registered?", the process can continue with "create an account" if the branch is "no".
+From "is the customer registered?", the process can continue with "recover client info" if the branch is "yes".
+From "create an account", the process continues with "check credit card and the payment".
+From "recover client info", the process continues with "check payment".
+From "select rider and create work proposal", the process continues with "send work proposal".
+From "Estimated Arrival Time", the process continues with "send to customer the waiting time".
+From "send work proposal", the process continues with "has the order been accepted?".
+From "notification order complete", the process continues with "receive Customer Satisfaction".
+From "notification order retired", the process continues with "notification order retired to the client".
+From "notification order retired to the client", the process continues with "notification order complete".
+From "receive Customer Satisfaction", the process continues with "pay rider".
+From "pay rider", the process continues with "order completed".
+From "has the order been accepted?", the process can continue with "the rider refused the order" if the branch is "no".
+From "has the order been accepted?", the process can continue with "the rider accepted the order" if the branch is "yes".

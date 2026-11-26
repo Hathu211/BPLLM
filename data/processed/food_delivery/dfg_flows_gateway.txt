@@ -1,0 +1,36 @@
+The Food Delivery process defines the following transitions:
+Gateway "is the customer registered?" is an exclusive gateway with id "Gateway_0f3iu05".
+Gateway "Gateway_0z24z44" is an unnamed exclusive gateway, referred to by its id.
+Gateway "Gateway_1lf96zg" is an unnamed exclusive gateway, referred to by its id.
+Gateway "has the order been accepted?" is an exclusive gateway with id "Gateway_03ncbpd".
+Gateway "Gateway_0yayjl1" is an unnamed parallel gateway, referred to by its id.
+Gateway "Gateway_0iw6ax3" is an unnamed parallel gateway, referred to by its id.
+The process starts from "customer order".
+The process ends with "order completed".
+From "Gateway_0iw6ax3", the process continues with "notification order retired".
+From "send to customer the waiting time", the process continues with "Gateway_0iw6ax3".
+From "send confirmation to rider", the process continues with "Gateway_0iw6ax3".
+From "Estimated Arrival Time", the process continues with "send to customer the waiting time".
+From "Gateway_0yayjl1", the process continues with "Estimated Arrival Time".
+From "Gateway_0yayjl1", the process continues with "send confirmation to rider".
+From "the rider accepted the order", the process continues with "Gateway_0yayjl1".
+From "the rider refused the order", the process continues with "Gateway_1lf96zg".
+From "has the order been accepted?", the process can continue with "the rider refused the order" if the branch is "no".
+From "has the order been accepted?", the process can continue with "the rider accepted the order" if the branch is "yes".
+From "Gateway_1lf96zg", the process continues with "select rider and create work proposal".
+From "select rider and create work proposal", the process continues with "send work proposal".
+From "send work proposal", the process continues with "has the order been accepted?".
+From "notification order complete", the process continues with "receive Customer Satisfaction".
+From "receive Customer Satisfaction", the process continues with "pay rider".
+From "pay rider", the process continues with "order completed".
+From "notification order retired", the process continues with "notification order retired to the client".
+From "notification order retired to the client", the process continues with "notification order complete".
+From "customer order", the process continues with "is the customer registered?".
+From "is the customer registered?", the process can continue with "create an account" if the branch is "no".
+From "is the customer registered?", the process can continue with "recover client info" if the branch is "yes".
+From "recover client info", the process continues with "check payment".
+From "create an account", the process continues with "check credit card and the payment".
+From "check credit card and the payment", the process continues with "Gateway_0z24z44".
+From "check payment", the process continues with "Gateway_0z24z44".
+From "Gateway_0z24z44", the process continues with "register the order".
+From "register the order", the process continues with "Gateway_1lf96zg".

@@ -1,0 +1,22 @@
+The Reimbursement process defines the following transitions:
+The process starts from "Expense report received".
+The process ends with "Reimbursement rejected".
+The process ends with "Money transferred".
+From "Expense report received", the process continues with "Notify Employee".
+From "Reformat and send expense report", the process continues with "Assess evaluation report".
+From "How much is the amount to be reimbursed?", the process can continue with "Reformat and send expense report" if the branch is "Amount >= 1000".
+From "How much is the amount to be reimbursed?", the process can continue with "Approve expense report without assessment" if the branch is "Amount < 1000".
+From "Review amount", the process continues with "How much is the amount to be reimbursed?".
+From "Assess evaluation report", the process continues with "Review expense report".
+From "Approve expense report without assessment", the process continues with "Review expense report".
+From "Reject expense report", the process continues with "Reimbursement rejected".
+From "Transfer money to bank account", the process continues with "Send approval notification".
+From "Approve expense report", the process continues with "Transfer money to bank account".
+From "Send approval notification", the process continues with "Money transferred".
+From "Notify Employee", the process continues with "Is a new account required?".
+From "Create Employee Account", the process continues with "Review amount".
+From "Is a new account required?", the process can continue with "Review amount" if the branch is "Account already existing".
+From "Is a new account required?", the process can continue with "Create Employee Account" if the branch is "New account required".
+From "Review expense report", the process continues with "Expense report is OK?".
+From "Expense report is OK?", the process can continue with "Reject expense report" if the branch is "Expense report rejected".
+From "Expense report is OK?", the process can continue with "Approve expense report" if the branch is "Expense report approved".
